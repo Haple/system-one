@@ -1,0 +1,411 @@
+{
+ "id": "05-noul",
+ "number": 5,
+ "slug": "noul-yes-no-questions",
+ "module": "Asking good questions",
+ "title": "Noul: the probability of yes",
+ "short": "Noul",
+ "summary": "The simplest decision is yes or no. A Noul returns the probability that the answer is yes, and that single number carries both the answer and the doubt. Here is how to read it, where to put thresholds, why 0.5 never means medium, and how to phrase yes/no questions the model can't misread.",
+ "takeaways": [
+  "A Noul returns one number: the probability that the answer is yes. Near 1 is a strong yes, near 0 a strong no, near 0.5 means it can't tell.",
+  "0.5 is not 'medium'. If you need a degree, use a Score with described levels.",
+  "Thresholds live in your code and depend on the cost of each mistake; values in the middle can go to a person.",
+  "One condition per question, phrased so a high value means yes, with the exact condition spelled out.",
+  "Short, plain questions beat long qualified ones; keep the fine print in your code."
+ ],
+ "practices": [
+  "Use a Noul for a clean yes/no condition; use a Score when the answer is a degree.",
+  "Write one condition per Noul and phrase it so a high probability means yes; avoid negations.",
+  "Threshold Noul values in code, with a review band in the middle sized by the cost of errors.",
+  "Add true/false criteria when the boundary is subtle, and keep questions short and literal."
+ ],
+ "sources": [
+  {
+   "id": "ts-docs-primitives-noul"
+  },
+  {
+   "id": "ts-docs-primitives"
+  },
+  {
+   "id": "simonw-jev"
+  },
+  {
+   "id": "flaviocopes-jev"
+  },
+  {
+   "id": "unsiloed-doc-review"
+  },
+  {
+   "id": "lindfors-first-look"
+  },
+  {
+   "id": "strands-evaluation-readme"
+  },
+  {
+   "id": "hn-jev-launch"
+  },
+  {
+   "id": "hamel-llm-judge"
+  },
+  {
+   "id": "GL0XhAj5LPE",
+   "t": 768
+  },
+  {
+   "id": "_U-O5lYhJ7Q",
+   "t": 140
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "The simplest decision is yes or no. In Jev it's called a Noul, short for Bernoulli. You ask a yes or no question, and you get back one number. Let's learn to read it, and to write questions it can't misread.",
+   "params": {
+    "kicker": "Lesson 5",
+    "module": "Module 2 · Asking good questions",
+    "title": "Noul: the probability of *yes*",
+    "subtitle": "One number that carries the answer and the doubt.",
+    "cast": [
+     "snap",
+     "curly"
+    ],
+    "bubble": "0.99",
+    "bubble_at": "one number"
+   }
+  },
+  {
+   "template": "noul",
+   "chapter": "Reading a Noul",
+   "narration": "Here's one question, is the customer asking for a human agent, asked about six messages. Thanks, that fixed it: point oh three, a strong no. I need this sorted today: point two six, urgent but not asking for a person. Are you a bot: point three six, a hint without a request. And the last one is a clear yes at point nine nine.",
+   "params": {
+    "question": "Is the customer asking for a human agent?",
+    "rows": [
+     {
+      "text": "Thanks, that fixed it!",
+      "p": 0.03,
+      "at": "Thanks"
+     },
+     {
+      "text": "How do I reset my password?",
+      "p": 0.07
+     },
+     {
+      "text": "I need this sorted today, whatever it takes.",
+      "p": 0.26,
+      "at": "sorted today"
+     },
+     {
+      "text": "Are you a bot?",
+      "p": 0.36,
+      "at": "bot"
+     },
+     {
+      "text": "Is there any way to speak to someone about my invoice?",
+      "p": 0.86
+     },
+     {
+      "text": "I have asked three times now. Can I please just talk to a real person?",
+      "p": 0.99,
+      "at": "last one"
+     }
+    ],
+    "hnote": {
+     "text": "rerun on jev-1.13.0 for this course",
+     "at": "six messages",
+     "p": [
+      80,
+      12
+     ],
+     "pp": [
+      62,
+      12
+     ]
+    }
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Reading a Noul",
+   "narration": "So the number is the answer and the certainty at once. That's why a Noul has no separate confidence field. And it means point five is not medium. Point five means the model gives yes and no the same chance. It can't tell.",
+   "params": {
+    "eyebrow": "The most common misreading",
+    "text": "0.5 doesn't mean *medium*. It means *can't tell*.",
+    "art": "snap",
+    "mood": "unsure",
+    "punch": "can't tell"
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "Degree needs a Score",
+   "narration": "If you actually want a degree, ask for one. Is the candidate strong in Python climbs from point oh three to point nine two, but the spacing between candidates means nothing you chose. A Score with four described levels puts each candidate on your scale: no experience, some familiarity, regular use, deep expertise.",
+   "params": {
+    "title": "Same four candidates, two question types",
+    "cols": [
+     "Candidate says",
+     "Noul: strong in Python?",
+     "Score: how much experience?"
+    ],
+    "widths": "2.2fr 1fr 1.2fr",
+    "rows": [
+     {
+      "cells": [
+       "Java and Go. No Python.",
+       "0.03",
+       "0.00 · no experience"
+      ],
+      "at": "point oh three"
+     },
+     {
+      "cells": [
+       "Python for small scripts sometimes",
+       "0.14",
+       "1.00 · some familiarity"
+      ]
+     },
+     {
+      "cells": [
+       "Python daily for two years at work",
+       "0.81",
+       "2.05 · regular use"
+      ]
+     },
+     {
+      "cells": [
+       "Python daily for eight years, big Django app",
+       "0.92",
+       "*2.88 · deep expertise*"
+      ],
+      "at": "your scale"
+     }
+    ],
+    "note": "Rerun on jev-1.13.0, 2026-10-15 (the TypeSafe docs show the same pattern)."
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Thresholds live in code",
+   "narration": "In code, you turn the probability into behavior with thresholds. A clear yes goes one way, a clear no the other, and anything in the middle goes to a person. The thresholds are yours, and they're one line to change.",
+   "params": {
+    "file": "route.py",
+    "lang": "py",
+    "lines": [
+     "p = answers[\"is_human_escalation\"].noul",
+     "",
+     "YES, NO = 0.8, 0.2           # yours to tune",
+     "if p >= YES:",
+     "    route_to_agent(ticket)   # clear yes",
+     "elif p <= NO:",
+     "    route_to_bot(ticket)     # clear no",
+     "else:",
+     "    send_to_review(ticket)   # can't tell"
+    ],
+    "hl": [
+     {
+      "from": 3,
+      "to": 3,
+      "label": "one line to change",
+      "tone": "agent",
+      "at": "one line"
+     },
+     {
+      "from": 8,
+      "to": 9,
+      "label": "the middle goes to a person",
+      "tone": "s2",
+      "at": "middle"
+     }
+    ]
+   }
+  },
+  {
+   "template": "noul",
+   "chapter": "Thresholds live in code",
+   "narration": "Where should the thresholds go? It depends on what a mistake costs. If acting on a false yes is expensive, like issuing a refund or paging someone at night, raise the bar. If missing a true yes is expensive, like a safety report, lower it. And the review band in the middle is your budget for human attention.",
+   "params": {
+    "question": "Where the bar goes depends on the stakes",
+    "rows": [
+     {
+      "text": "Is this a refund request? (acting costs money)",
+      "p": 0.86,
+      "at": "issuing a refund"
+     },
+     {
+      "text": "Does this report a safety issue? (missing it is dangerous)",
+      "p": 0.42,
+      "at": "safety report"
+     }
+    ],
+    "zones": {
+     "no": 0.3,
+     "yes": 0.9
+    },
+    "zones_at": "review band",
+    "labels": {
+     "no": "treat as no",
+     "review": "a person checks",
+     "yes": "act"
+    }
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "Writing a good Noul",
+   "narration": "Now, writing them. First, one condition per question. Is the customer angry and asking for a refund came back point oh eight for this furious customer. Split it, and you learn more: angry, point nine eight. Refund, point oh four. They want a fix, not their money back.",
+   "params": {
+    "title": "One condition per Noul",
+    "left": {
+     "title": "Two conditions, one number",
+     "tone": "bad",
+     "items": [
+      {
+       "text": "Angry **and** asking for a refund? → 0.08",
+       "at": "angry and asking"
+      }
+     ]
+    },
+    "right": {
+     "title": "Two Nouls, two signals",
+     "tone": "good",
+     "items": [
+      {
+       "text": "Is the customer angry? → **0.98**",
+       "at": "angry, point nine eight"
+      },
+      {
+       "text": "Asking for a refund? → **0.04**",
+       "at": "Refund, point oh four"
+      },
+      {
+       "text": "So: fix it, don't refund it",
+       "at": "want a fix"
+      }
+     ]
+    },
+    "vs": "vs",
+    "hnote": {
+     "text": "“I'm furious… I don't want my money back, I want it fixed.”",
+     "at": "furious customer",
+     "p": [
+      50,
+      76
+     ],
+     "pp": [
+      50,
+      72
+     ]
+    }
+   }
+  },
+  {
+   "template": "list",
+   "chapter": "Writing a good Noul",
+   "narration": "Three more rules. Phrase it so a high value means yes: does it contain personal data, not is it free of personal data. Your code will read it backwards someday. Avoid negations: AWS found that questions like which does this not fit often get answered as if the not weren't there. And say exactly what you mean: does the user want a human now, if now is what matters.",
+   "params": {
+    "title": "Write it so it can't be misread",
+    "style": "check",
+    "items": [
+     {
+      "text": "**High means yes:** “Contains personal data?”, not “Free of personal data?”",
+      "at": "high value means yes"
+     },
+     {
+      "text": "**No negations:** “…NOT fit?” is often read as “…fit?”",
+      "at": "Avoid negations"
+     },
+     {
+      "text": "**Exact condition:** “Wants a human **now**?” if *now* matters",
+      "at": "exactly what you mean"
+     }
+    ]
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "Criteria for subtle boundaries",
+   "narration": "When the boundary is subtle, add criteria: a short description of what counts as yes and what counts as no. Here, has the customer contacted us before scores point eight six on its own. With criteria that name prior attempts and tickets, it's a firmer point nine four.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.31,
+    "state": "I have asked three times now. Can I please just talk to a real person?",
+    "questions": [
+     {
+      "id": "plain",
+      "type": "noul",
+      "text": "Contacted support before? (instructions only)",
+      "ans": {
+       "v": 0.86
+      },
+      "say_at": "on its own"
+     },
+     {
+      "id": "crit",
+      "type": "noul",
+      "text": "Same question + criteria: true = mentions a prior attempt or ticket; false = no sign of previous contact",
+      "ans": {
+       "v": 0.94
+      },
+      "say_at": "With criteria"
+     }
+    ],
+    "send_at": "scores",
+    "ans_at": "point eight six",
+    "hl": "crit",
+    "hl_at": "firmer"
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Keep it short",
+   "narration": "And keep it short. Emil Lindfors tested this in early access. Rewriting his questions into long, carefully qualified instructions lowered agreement and tripled the calibration error, pushing answers toward the middle. His advice: write them the way you'd ask a colleague across the desk.",
+   "params": {
+    "text": "Write them the way you would ask a colleague across the desk, and *keep the fine print in your own code*.",
+    "who": "Emil Lindfors",
+    "role": "early-access test of Jev",
+    "src": "lindfors.no, Sep 2026"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. Your Noul, is this bug severe, comes back near point five on most tickets. What's the best fix?",
+   "params": {
+    "q": "“Is this bug severe?” returns **≈0.5 on most tickets**. Best fix?",
+    "options": [
+     "Lower the threshold to 0.5",
+     "Average it over three calls",
+     "Ask about an exact condition, or use a Score with described levels",
+     "Add more context to the state"
+    ],
+    "answer": 2,
+    "explain": "“Severe” has no boundary, so the model can't tell. Ask a checkable condition (“Does it block checkout?”) or measure degree with a Score."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent turn the yes or no decisions in your code into Nouls, with exact conditions, and thresholds in code.",
+   "params": {
+    "title": "Rewrite your yes/no prompts",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Find yes/no decisions we currently ask an LLM to make. For each, write a\nNoul question: one condition, phrased so a high probability means yes,\nno negations, the exact condition spelled out. Add true/false criteria\nonly where the boundary is subtle. Then add YES/NO thresholds in code,\nwith a middle band that goes to human review, and explain each\nthreshold by the cost of a false yes versus a missed yes."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: a Noul is the probability of yes. Point five means can't tell, not medium. Thresholds live in code and follow the cost of mistakes. And one exact condition per question, phrased so high means yes. Next: when the answer is one of several options, the Choice.",
+   "params": {
+    "items": [
+     "A Noul is the probability of yes: answer and doubt in one number.",
+     "0.5 means can't tell. For degree, use a Score.",
+     "Thresholds live in code, set by the cost of each mistake.",
+     "One exact condition, high means yes, short and literal."
+    ],
+    "next": "Choice: one answer from a set",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

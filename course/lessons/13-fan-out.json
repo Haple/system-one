@@ -1,0 +1,310 @@
+{
+ "id": "13-fan-out",
+ "number": 13,
+ "slug": "speculative-fan-out",
+ "module": "Composing judgments",
+ "title": "Ask everything at once",
+ "short": "Fan-out",
+ "summary": "Questions about the same state belong in one request: they are evaluated in parallel and independently, so extra questions add a few tokens and almost no time. Here is what we measured with 13 questions, why you should ask speculative questions you might not need, and the few cases where a second request is genuinely warranted.",
+ "takeaways": [
+  "Every question in a request sees the same state and is evaluated independently and in parallel.",
+  "In our test, 13 questions in one request took 0.27 seconds and 1,828 tokens; 13 separate requests took 3.3 seconds and 18,940 tokens, with the same answers.",
+  "Ask speculative questions: everything your code might need, including ones that only matter on some branches, and let code ignore the rest.",
+  "A second request is warranted only when an earlier answer changes the state or the options of the next question.",
+  "Coding agents tend to write one question per call; check their integrations for this."
+ ],
+ "practices": [
+  "Batch every question about the same state into one request, including speculative ones for later branches.",
+  "Split into a second request only when the next question's state or options depend on an earlier answer.",
+  "Review agent-written integrations for one-question-per-call loops and merge them."
+ ],
+ "sources": [
+  {
+   "id": "ts-docs-patterns-fan-out"
+  },
+  {
+   "id": "ts-docs-primitives"
+  },
+  {
+   "id": "ts-docs-cookbooks-parallel_questions"
+  },
+  {
+   "id": "ts-docs-cookbooks-skill_suggestion"
+  },
+  {
+   "id": "ts-docs-cookbooks-autoformat"
+  },
+  {
+   "id": "ts-docs-cookbooks-hierarchical_classification"
+  },
+  {
+   "id": "flaviocopes-jev"
+  },
+  {
+   "id": "strands-docs-inference"
+  },
+  {
+   "id": "brooker-why-not-encoder"
+  },
+  {
+   "id": "ts-agent-skill"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Once you're asking many small questions, the next question is how to send them. The answer is: all at once. Let's see why, with numbers.",
+   "params": {
+    "kicker": "Lesson 13",
+    "module": "Module 4 · Composing judgments",
+    "title": "Ask *everything* at once",
+    "subtitle": "Many questions, one state, one request.",
+    "cast": [
+     "snap",
+     "curly"
+    ]
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Parallel and independent",
+   "narration": "In one request, every question sees the same state, and each is evaluated on its own, in parallel. One answer is never hidden context for another. So adding a question costs a few tokens for its text, and almost no time.",
+   "params": {
+    "eyebrow": "How a request is evaluated",
+    "text": "Every question sees the same state. *None sees another's answer.*",
+    "sub": "So adding a question costs a few tokens and almost no time.",
+    "sub_at": "adding a question",
+    "art": "layers",
+    "tone": "agent",
+    "punch": "on its own"
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "What we measured",
+   "narration": "We tested it. One support ticket, the customer's record, and a seven hundred word policy, about eighteen hundred tokens of state. Thirteen questions: the category, a refund request, a duplicate charge, whether policy allows it, a login problem, a repeat contact, a churn threat, and more. All thirteen came back together.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.27,
+    "state": "Ticket: “Hi, I was charged twice for order A-104 last Thursday and I still can't log in since your update. This is the third time I'm writing. If this isn't fixed today I'm cancelling…” + customer record + 745-word support policy",
+    "questions": [
+     {
+      "id": "c",
+      "type": "choice",
+      "text": "Main request?",
+      "ans": {
+       "choice": "billing",
+       "p": 0.93
+      },
+      "say_at": "the category"
+     },
+     {
+      "id": "r",
+      "type": "noul",
+      "text": "Explicitly asks for a refund?",
+      "ans": {
+       "v": 0.13
+      },
+      "say_at": "a refund request"
+     },
+     {
+      "id": "d",
+      "type": "noul",
+      "text": "Duplicate charge?",
+      "ans": {
+       "v": 0.98
+      }
+     },
+     {
+      "id": "p",
+      "type": "noul",
+      "text": "Policy allows a refund?",
+      "ans": {
+       "v": 0.99
+      }
+     },
+     {
+      "id": "l",
+      "type": "noul",
+      "text": "Login problem?",
+      "ans": {
+       "v": 0.99
+      }
+     },
+     {
+      "id": "rep",
+      "type": "noul",
+      "text": "Repeat contact?",
+      "ans": {
+       "v": 0.96
+      }
+     },
+     {
+      "id": "ch",
+      "type": "noul",
+      "text": "Threatens to cancel?",
+      "ans": {
+       "v": 0.98
+      },
+      "say_at": "a churn threat"
+     }
+    ],
+    "send_at": "Thirteen questions",
+    "ans_at": "All thirteen",
+    "footer": "7 of the 13 shown. Real answers, jev-1.13.0, 2026-10-15."
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "What we measured",
+   "narration": "In one request, thirteen questions took a quarter of a second and eighteen hundred tokens. As thirteen separate requests, one after another, they took three point three seconds and almost nineteen thousand tokens, because the state was sent thirteen times. Firing the thirteen in parallel fixes the time, but not the bill. And the answers? The same, within point oh four.",
+   "params": {
+    "title": "13 questions, same state",
+    "items": [
+     {
+      "value": 0.27,
+      "decimals": 2,
+      "suffix": " s",
+      "label": "one request · 1,828 tokens",
+      "tone": "good",
+      "at": "In one request",
+      "hero": true
+     },
+     {
+      "value": 3.3,
+      "decimals": 1,
+      "suffix": " s",
+      "label": "13 requests in sequence · 18,940 tokens",
+      "tone": "bad",
+      "at": "three point three"
+     },
+     {
+      "value": 0.37,
+      "decimals": 2,
+      "suffix": " s",
+      "label": "13 requests in parallel · 18,940 tokens",
+      "tone": "s2",
+      "at": "in parallel"
+     }
+    ],
+    "src": "Medians of 5 runs each, jev-1.13.0, measured 2026-10-15. Answers differed by at most 0.04."
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Speculative questions",
+   "narration": "So ask speculatively. Include every question your code might need, even ones that only matter on some branches. Bug severity only matters if it's a bug report. A refund question only matters for billing. Ask them all anyway, and let the code use what applies.",
+   "params": {
+    "file": "triage.py",
+    "lang": "py",
+    "lines": [
+     "questions = {",
+     "    \"category\": Choice(...),          # always needed",
+     "    \"bug_severity\": Score(...),       # only if category == bug",
+     "    \"has_repro_steps\": Noul(...),    # only if category == bug",
+     "    \"refund_requested\": Noul(...),   # only if category == billing",
+     "    \"frustration\": Score(...),       # always useful",
+     "}",
+     "a = client.system_one(state=ticket, questions=questions).answers",
+     "if a[\"category\"].choice == \"bug\" and a[\"bug_severity\"].score > 1.5:",
+     "    escalate(ticket)                  # the speculative answers were ready"
+    ],
+    "hl": [
+     {
+      "from": 3,
+      "to": 5,
+      "label": "speculative: maybe needed",
+      "tone": "agent",
+      "at": "Ask them all anyway"
+     },
+     {
+      "from": 9,
+      "to": 10,
+      "label": "code uses what applies",
+      "tone": "good",
+      "at": "let the code use"
+     }
+    ]
+   }
+  },
+  {
+   "template": "list",
+   "chapter": "When a second request is right",
+   "narration": "When is a second request justified? Only when an earlier answer changes what you'd send next. TypeSafe's cookbooks have three real cases. Skill suggestion ranks a hundred eighty two skills, then fetches the full text of the top three and judges them again. Structure recovery first decides which line breaks split sentences, then classifies the paragraphs that didn't exist before. And hierarchical classification uses each level's answer to pick the next level's options.",
+   "params": {
+    "title": "A second request only when the next question depends on the first",
+    "style": "num",
+    "items": [
+     {
+      "text": "**New evidence:** rank 182 skills, then fetch the top 3 and re-judge",
+      "at": "Skill suggestion"
+     },
+     {
+      "text": "**New state:** rebuild paragraphs, then classify them",
+      "at": "Structure recovery"
+     },
+     {
+      "text": "**New options:** each level's answer picks the next level's choices",
+      "at": "hierarchical classification"
+     }
+    ]
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Watch your agent",
+   "narration": "One warning from the TypeSafe docs: coding agents fall into the one question per call habit more than people do. If an agent writes your integration, look for a loop that sends one question at a time, and merge it.",
+   "params": {
+    "eyebrow": "TypeSafe docs",
+    "text": "Coding agents fall into the *one question per call* habit.",
+    "sub": "Look for loops that send one question at a time, and merge them into one request.",
+    "sub_at": "look for a loop",
+    "art": "bot",
+    "tone": "bad",
+    "punch": "one question per call"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. You need to know a ticket's category, and if it's billing, whether a refund was requested. What's the best way to ask?",
+   "params": {
+    "q": "You need the **category**, and **if billing**, whether a refund was asked for. Best approach?",
+    "options": [
+     "Ask the category, then send a second request for billing tickets",
+     "Ask both in one request; ignore the refund answer for non-billing tickets",
+     "Ask one combined question: is this a billing refund request?",
+     "Ask an LLM to write both answers as JSON"
+    ],
+    "answer": 1,
+    "explain": "The refund question doesn't depend on the category answer; it can be asked of any ticket. Ask it speculatively in the same request and let code decide whether to use it."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent find and merge your one question per call loops, and measure the difference.",
+   "params": {
+    "title": "Merge your calls",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Find every place we call a decision model (or an LLM classifier) more\nthan once about the same input. Merge the questions into one request,\nadding speculative questions that later branches might need. Keep a\nsecond request only where the next question's state or options depend\non an earlier answer, and add a comment explaining why. Measure latency\nand input tokens before and after on 20 real inputs."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: questions about the same state go in one request. They're evaluated in parallel and independently, so extra questions are nearly free. Ask speculatively, and only make a second request when the next question depends on the first. Next: routing requests to the right handler.",
+   "params": {
+    "items": [
+     "One state, many questions, one request.",
+     "13 questions: 0.27 s and 1.8k tokens vs 3.3 s and 18.9k.",
+     "Ask speculative questions; let code ignore the rest.",
+     "Second request only when the next question depends on the first."
+    ],
+    "next": "Route and cascade",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

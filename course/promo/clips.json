@@ -1,0 +1,11 @@
+{
+ "cta": {"kicker": "Free course", "module": "System One", "title": "Learn to build with *decision models*", "subtitle": "22 short animated lessons · learn-system-one.pages.dev", "cast": ["snap", {"who": "mull", "mood": "happy"}], "dur": 3.5},
+ "clips": [
+  {"id": "clip-fan-out", "lesson": "13-fan-out", "scenes": [1, 2, 3],
+   "caption": "13 questions about one support ticket. One request: 0.27 s and 1,828 tokens. Thirteen requests: 3.3 s and 18,940 tokens. Same answers. Measured on Jev 1.13 for the free System One course."},
+  {"id": "clip-jagged", "lesson": "19-jagged-edges", "scenes": [1, 2, 9],
+   "caption": "Decision models are brilliant at meaning and bad at counting. One question: 5 fruits (wrong). Twelve tiny yes/no questions summed in code: 6. Reason in code, decide with the model."},
+  {"id": "clip-capstone", "lesson": "22-capstone", "scenes": [5, 6],
+   "caption": "Our triage pipeline's first run got 14 of 24 tickets right. Three badly written questions caused every miss. Here's what we fixed, and why 12 out of 12 on held-out tickets still isn't proof."}
+ ]
+}

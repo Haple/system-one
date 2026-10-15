@@ -1,0 +1,298 @@
+{
+ "id": "14-route",
+ "number": 14,
+ "slug": "routing-and-cascades",
+ "module": "Composing judgments",
+ "title": "Route and cascade",
+ "short": "Route and cascade",
+ "summary": "One fast decision in front of expensive things. Here is intent routing (code, a specialist model, or a person), the cascade (cheap model first, escalate only the uncertain), how to tune it so it matches a strong model at a fraction of the cost, and the prompt-cache gotcha that turned one developer's model router into a money loser.",
+ "takeaways": [
+  "Routing: one cheap, fast decision chooses the handler, which may be plain code, a specialist LLM, or a person.",
+  "If you can map the whole decision tree, build it explicitly and optimize each node; don't hand it to an agent loop.",
+  "A cascade answers with the cheap model when it's confident and escalates the rest to a stronger model or a person.",
+  "Tune the cascade on a sample of a few hundred items: pick the cheapest threshold that still agrees with the strong model at your target rate.",
+  "Route per task, not mid-session: switching models mid-conversation throws away the prompt cache."
+ ],
+ "practices": [
+  "Put one fast decision (intent + complexity) in front of expensive handlers, and send low-confidence routes to a person.",
+  "Implement cascades: accept confident cheap answers, escalate the rest, and tune the threshold on labeled data against the strong model's answers.",
+  "Prefer routing whole tasks or reasoning effort over swapping models mid-session, which invalidates prompt caches."
+ ],
+ "sources": [
+  {
+   "id": "ts-docs-patterns-intent-routing"
+  },
+  {
+   "id": "ts-docs-cookbooks-sde_cascade"
+  },
+  {
+   "id": "anthropic-effective-agents"
+  },
+  {
+   "id": "D7_ipDqhtwk",
+   "t": 171
+  },
+  {
+   "id": "FWFjLF_VoVI",
+   "t": 283
+  },
+  {
+   "id": "frugalgpt"
+  },
+  {
+   "id": "routellm"
+  },
+  {
+   "id": "jeff-repo"
+  },
+  {
+   "id": "hn-jev-25-lines"
+  },
+  {
+   "id": "hn-openai-decisions"
+  },
+  {
+   "id": "QbYBRjOaGOo",
+   "t": 284
+  },
+  {
+   "id": "dsebastien-semantic-if"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Expensive models are great, and wasteful when they're used for everything. The fix is old and simple: put one fast decision in front of the expensive things.",
+   "params": {
+    "kicker": "Lesson 14",
+    "module": "Module 4 · Composing judgments",
+    "title": "Route and *cascade*",
+    "subtitle": "One fast decision in front of expensive things.",
+    "cast": [
+     "snap",
+     {
+      "who": "mull",
+      "mood": "tired"
+     }
+    ]
+   }
+  },
+  {
+   "template": "router",
+   "chapter": "Intent routing",
+   "narration": "Here's intent routing. A customer message comes in. One Choice decides the intent, and one Score estimates how complex it is, in a single fast call. Order status goes to plain code: a database lookup, no model at all. Product questions go to an LLM with product knowledge. Complaints that are complex, or unclear, go to a person.",
+   "params": {
+    "source": {
+     "label": "customer message",
+     "text": "Where is my order A-104? It was due Monday."
+    },
+    "hub": {
+     "label": "intent + complexity",
+     "sub": "one request, ~0.3 s"
+    },
+    "routes": [
+     {
+      "label": "Order lookup",
+      "sub": "plain code, no model",
+      "icon": "db",
+      "tone": "ink",
+      "at": "plain code"
+     },
+     {
+      "label": "Product specialist",
+      "sub": "an LLM with product docs",
+      "who": "mull",
+      "tone": "s2",
+      "at": "Product questions"
+     },
+     {
+      "label": "A person",
+      "sub": "complex or unclear",
+      "who": "you",
+      "tone": "human",
+      "at": "go to a person"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Intent routing",
+   "narration": "Anthropic's Barry Zhang gives the same advice for agents. If you can map out the entire decision tree pretty easily, just build that explicitly, and then optimize every node. It's cheaper, and it gives you more control. A decision model is how you make each node smart.",
+   "params": {
+    "text": "If you can map out the entire decision tree pretty easily, *just build that explicitly* and then optimize every node.",
+    "who": "Barry Zhang",
+    "role": "Anthropic",
+    "src": "How We Build Effective Agents",
+    "t": 171
+   }
+  },
+  {
+   "template": "flow",
+   "chapter": "The cascade",
+   "narration": "The cascade is routing by confidence. Every item goes to the cheap, fast model first. If it's confident, you keep its answer. If not, the item goes to a stronger, slower model, and only the leftovers reach a person. Most items never touch the expensive part.",
+   "params": {
+    "title": "Cheap first, escalate the uncertain",
+    "nodes": [
+     {
+      "label": "Decision model",
+      "sub": "every item · cents",
+      "kind": "snap",
+      "edge": "unsure",
+      "at": "cheap, fast model"
+     },
+     {
+      "label": "Reasoning model",
+      "sub": "the uncertain few",
+      "kind": "mull",
+      "edge": "still unsure",
+      "at": "stronger, slower"
+     },
+     {
+      "label": "A person",
+      "sub": "the leftovers",
+      "kind": "you",
+      "at": "leftovers"
+     }
+    ],
+    "caption": "Confident answers exit at each step.",
+    "caption_at": "never touch"
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "The cascade",
+   "narration": "The savings can be dramatic. The FrugalGPT paper reported matching GPT-4's performance with up to ninety eight percent lower cost on its benchmarks. And the open model Jeff, on one Apple M4 Max, beat a twenty seven billion parameter model deciding directly, ninety five versus eighty seven percent, in under half a second instead of eight.",
+   "params": {
+    "items": [
+     {
+      "value": 98,
+      "suffix": "%",
+      "label": "max cost cut at GPT-4 quality (FrugalGPT, 2023)",
+      "tone": "agent",
+      "at": "ninety eight percent"
+     },
+     {
+      "value": 95.0,
+      "decimals": 1,
+      "suffix": "%",
+      "label": "Jeff cascade, 0.46 s per decision",
+      "tone": "good",
+      "at": "ninety five"
+     },
+     {
+      "value": 86.6,
+      "decimals": 1,
+      "suffix": "%",
+      "label": "27B model alone, 8.1 s",
+      "tone": "bad",
+      "at": "eighty seven"
+     }
+    ],
+    "src": "Authors' own measurements (FrugalGPT paper; Jeff README, Apple M4 Max).",
+    "punch": false
+   }
+  },
+  {
+   "template": "list",
+   "chapter": "Tuning it",
+   "narration": "How do you set the cascade's threshold? Shreya Shankar's recipe: treat the strong model as the oracle. Run both on a sample, say five hundred items. Simulate each threshold, measuring how often the cascade agrees with the oracle, and what it costs. Throw out every threshold below your target, and pick the cheapest one left. And if confidence carries no signal, the only threshold left sends everything to the oracle. The procedure tells you there's nothing to save, instead of pretending.",
+   "params": {
+    "title": "Tune against the strong model",
+    "style": "num",
+    "items": [
+     {
+      "text": "The strong model's answers are the **oracle**",
+      "at": "oracle"
+     },
+     {
+      "text": "Run both on a sample of **~500** items",
+      "at": "five hundred"
+     },
+     {
+      "text": "For each threshold: **agreement** with the oracle and **cost**",
+      "at": "Simulate each threshold"
+     },
+     {
+      "text": "Drop thresholds below target; pick the **cheapest** left",
+      "at": "cheapest"
+     },
+     {
+      "text": "Only “send everything” qualifies? Confidence has **no signal**",
+      "at": "only threshold left"
+     }
+    ]
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Routing effort",
+   "narration": "You can route effort, not just models. The Jeff team put a small decision model inside a coding agent, deciding at each step whether the big model should think hard. Over twelve hundred tasks, it kept the same pass rate, sixty two percent, in about two thirds of the time. Simply turning thinking off was faster too, but seven and a half points worse.",
+   "params": {
+    "eyebrow": "Jeff-Code: a decision model decides when to think",
+    "text": "Same pass rate (62.4% vs 62.8%), *32% less time*.",
+    "sub": "Turning thinking off entirely: 7.6 points worse. The fast judge is what keeps quality.",
+    "sub_at": "turning thinking off",
+    "art": "clock",
+    "tone": "agent",
+    "punch": "two thirds of the time"
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "The cache gotcha",
+   "narration": "One gotcha from Hacker News. A developer used a decision model to route each turn of a session between small and large models, and lost money. Swapping models mid-session invalidates the prompt cache, which is where a lot of the savings live. Route whole tasks, or route the effort level, instead.",
+   "params": {
+    "eyebrow": "Hacker News, “Jev in 25 lines of Python” thread",
+    "text": "Mid-session swapping *invalidates the cache*.",
+    "sub": "Route whole tasks, or the reasoning effort, not every turn.",
+    "sub_at": "Route whole tasks",
+    "art": "warn",
+    "tone": "bad",
+    "punch": "lost money"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. In your cascade, the decision model's answers above point nine agree with the strong model only as often as its answers below point five. What does that tell you?",
+   "params": {
+    "q": "Answers above 0.9 agree with the oracle **no more often** than answers below 0.5. What now?",
+    "options": [
+     "Raise the threshold to 0.99",
+     "Confidence carries no signal on this task: don't cascade it this way",
+     "Lower the threshold to 0.5",
+     "Add more questions to the request"
+    ],
+    "answer": 1,
+    "explain": "A cascade only works if confidence tracks correctness. Here it doesn't, so any threshold routes at random. Improve the questions or the model, or send everything to the strong model."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent put a router or a cascade in front of your most expensive model call.",
+   "params": {
+    "title": "Put a judge in front",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Find our most expensive or slowest LLM call. Put a decision model in\nfront of it: either a router (one Choice for intent + one Score for\ncomplexity, sending easy cases to code or a cheap path) or a cascade\n(accept confident answers, escalate the rest). Tune the threshold on\n300 logged inputs using the expensive model's outputs as the oracle,\nand report agreement, cost and latency at each threshold. Route whole\ntasks, never switch models mid-session."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: one fast decision in front of expensive things. Route to code, a specialist, or a person. Cascade: cheap first, escalate the uncertain, tuned against a strong model. Route effort, not just models, and never mid-session. Next: getting exact values out, without generating them.",
+   "params": {
+    "items": [
+     "One fast decision picks the handler: code, LLM, or person.",
+     "Cascade: accept confident answers, escalate the rest.",
+     "Tune thresholds against the strong model on a ~500-item sample.",
+     "Route whole tasks or effort; mid-session swaps kill the cache."
+    ],
+    "next": "Select, don't generate",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

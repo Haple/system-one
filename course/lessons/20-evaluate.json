@@ -1,0 +1,342 @@
+{
+ "id": "20-evaluate",
+ "number": 20,
+ "slug": "evaluate-on-your-data",
+ "module": "Shipping it",
+ "title": "Evaluate on your own data",
+ "short": "Evaluate",
+ "summary": "The only benchmark that matters is the one you ship. Here is the evaluation loop for decision models: real inputs, careful labels, per-question results, enough examples to trust a difference, and a regression test that pins the model version, with what we measured when Jev went from 1.13 to 1.14.",
+ "takeaways": [
+  "Evaluate on real inputs from your own logs, labeled by people who know the domain; there is no way around labeling some data.",
+  "Thirty examples can reveal your failure modes, but measuring accuracy takes hundreds: at 80% accuracy the margin is about ±14 points with 30 labels and ±4.5 with 300.",
+  "Look per question, not just overall: one weak question can hide inside a good average.",
+  "Test every change, even wording: in one test, more careful wording made agreement and calibration worse.",
+  "Pin the model version; in our tests, Jev 1.14 put 6% fewer answers above 0.99, so the same threshold automated less."
+ ],
+ "practices": [
+  "Build the eval set from real, recent inputs (stratified to include rare cases), labeled by domain experts with a written label guide.",
+  "Report accuracy with its margin of error, per question, and include calibration and coverage at your target.",
+  "Pin the exact model version and rerun the eval as a regression test on every change to questions, criteria, state or model.",
+  "Rerun threshold tuning after any model upgrade before switching traffic."
+ ],
+ "sources": [
+  {
+   "id": "GL0XhAj5LPE",
+   "t": 353
+  },
+  {
+   "id": "BsWxPI9UM4c"
+  },
+  {
+   "id": "lindfors-first-look"
+  },
+  {
+   "id": "Uihz1NkhFM0",
+   "t": 261
+  },
+  {
+   "id": "anthus-decisions-confidence"
+  },
+  {
+   "id": "_U-O5lYhJ7Q",
+   "t": 1710
+  },
+  {
+   "id": "ts-blog-antibenchmaxxing"
+  },
+  {
+   "id": "jevbench-repo"
+  },
+  {
+   "id": "vals-jev-eval"
+  },
+  {
+   "id": "arxiv-crash-narratives"
+  },
+  {
+   "id": "hamel-llm-judge"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Every number in this course came from someone else's data, or ours. None of them is your data. This lesson is about getting the only numbers that count.",
+   "params": {
+    "kicker": "Lesson 20",
+    "module": "Module 6 · Shipping it",
+    "title": "Evaluate on *your own data*",
+    "subtitle": "The only benchmark that matters is the one you ship.",
+    "cast": [
+     "you",
+     "snap"
+    ]
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Label some data",
+   "narration": "Hamel Husain, who consults on AI evals, sees teams resist one step more than any other. There is no getting out of it: you have to label some data. It's the only way to build trust.",
+   "params": {
+    "text": "There is no getting out of: *you have to label some data*.",
+    "who": "Hamel Husain",
+    "role": "AI evals consultant",
+    "src": "LLM Evals: Common Mistakes",
+    "t": 353
+   }
+  },
+  {
+   "template": "flow",
+   "chapter": "The loop",
+   "narration": "Here's the loop. Sample real inputs from your logs, not examples you made up, and include the rare cases on purpose. Have people who know the domain label them, with a written guide, and where two experts disagree, fix the guide first. Run the model and keep every probability. Then measure, fix the biggest failure, and run it again.",
+   "params": {
+    "title": "The evaluation loop",
+    "nodes": [
+     {
+      "label": "Sample real inputs",
+      "sub": "from logs, rare cases included",
+      "kind": "curly",
+      "edge": "inputs",
+      "at": "Sample real inputs"
+     },
+     {
+      "label": "Experts label",
+      "sub": "a written guide; resolve disagreement",
+      "kind": "you",
+      "edge": "labels",
+      "at": "know the domain"
+     },
+     {
+      "label": "Run and measure",
+      "sub": "per question, keep probabilities",
+      "kind": "snap",
+      "at": "Run the model"
+     }
+    ],
+    "caption": "Fix the biggest failure, then run it again.",
+    "caption_at": "fix the biggest"
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "How many labels?",
+   "narration": "How many labels? Husain finds that around thirty examples is often when you stop discovering new kinds of failure. But thirty is far too few to measure accuracy. At eighty percent, the margin of error with thirty labels is plus or minus fourteen points. With three hundred, four and a half. With a thousand, two and a half.",
+   "params": {
+    "title": "95% margin of error when accuracy is 80%",
+    "items": [
+     {
+      "value": 14,
+      "prefix": "±",
+      "suffix": " pts",
+      "label": "30 labels",
+      "tone": "bad",
+      "at": "thirty labels"
+     },
+     {
+      "value": 4.5,
+      "decimals": 1,
+      "prefix": "±",
+      "suffix": " pts",
+      "label": "300 labels",
+      "tone": "s2",
+      "at": "three hundred"
+     },
+     {
+      "value": 2.5,
+      "decimals": 1,
+      "prefix": "±",
+      "suffix": " pts",
+      "label": "1,000 labels",
+      "tone": "good",
+      "at": "a thousand"
+     }
+    ],
+    "src": "1.96 × √(p(1−p)/n), with p = 0.8. Thirty examples find failure modes; hundreds measure them.",
+    "punch": false
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Per question",
+   "narration": "Look at each question separately. A Better Stack test compared Jev and Clef on five questions about comments, against a Claude referee. Overall, Jev agreed eighty six percent of the time, Clef eighty three. But Clef won three of the five questions. The whole gap came from one question about tone, where Clef scored forty nine percent. It loves calling things neutral.",
+   "params": {
+    "eyebrow": "Better Stack, Jev vs Clef on five questions",
+    "text": "86% vs 83% overall. But *one question* held the whole gap.",
+    "sub": "Clef won 3 of 5 questions, and scored 49% on tone.",
+    "sub_at": "won three of the five",
+    "art": "chart",
+    "tone": "s2",
+    "punch": "forty nine percent"
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "Test every change",
+   "narration": "Test every change, even wording. Emil Lindfors had Jev read Norwegian consultation letters about a salmon tax, first with short draft questions, then with careful ones, full of qualifiers about passing mentions and quotes. The careful version was worse. Agreement went down, and calibration error almost tripled, as answers drifted toward the middle. His advice: ask the way you'd ask a colleague across the desk, and keep the fine print in your code.",
+   "params": {
+    "title": "Same questions, two wordings (192 judgments)",
+    "cols": [
+     "",
+     "Draft wording",
+     "Careful wording"
+    ],
+    "widths": "1.4fr 1fr 1fr",
+    "rows": [
+     {
+      "cells": [
+       "Agreement with reference",
+       "0.89",
+       "0.86"
+      ],
+      "at": "Agreement went down"
+     },
+     {
+      "cells": [
+       "Calibration error (ECE)",
+       "*0.040*",
+       "0.116"
+      ],
+      "hl": true,
+      "at": "almost tripled"
+     },
+     {
+      "cells": [
+       "Answers between 0.3 and 0.7",
+       "24",
+       "41"
+      ],
+      "at": "toward the middle"
+     }
+    ],
+    "note": "Emil Lindfors, an early-access test of TypeSafe's Jev (24 documents, jev-1.13.0).",
+    "note_at": "colleague across the desk"
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "Pin the version",
+   "narration": "And pin the model version. When Jev one point fourteen came out, we reran both of our tests. Accuracy held, and calibration improved. But on the banking test, the share of answers at point nine nine or above fell from fifty to forty four percent. If your code auto-approves above point nine nine, the upgrade quietly sends six percent more of your traffic to people. Better model, different thresholds.",
+   "params": {
+    "title": "BANKING77, 3,080 messages, same questions",
+    "cols": [
+     "",
+     "jev-1.13.0",
+     "jev-1.14.0"
+    ],
+    "widths": "1.5fr 1fr 1fr",
+    "rows": [
+     {
+      "cells": [
+       "Accuracy",
+       "80.1%",
+       "80.3%"
+      ],
+      "at": "Accuracy held"
+     },
+     {
+      "cells": [
+       "Calibration error (ECE)",
+       "0.089",
+       "0.071"
+      ],
+      "at": "calibration improved"
+     },
+     {
+      "cells": [
+       "Answers ≥ 0.99",
+       "50.3%",
+       "*44.4%*"
+      ],
+      "hl": true,
+      "at": "fifty to forty four"
+     },
+     {
+      "cells": [
+       "Accuracy of those answers",
+       "96.3%",
+       "96.4%"
+      ]
+     }
+    ],
+    "note": "Measured 2026-10-15. On our fresh news test, answers ≥ 0.99 fell from 54.5% to 49.5%.",
+    "note_at": "Better model"
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Make it a test",
+   "narration": "So make your eval a test. Pin the exact model. Keep a few hundred labeled, real inputs in the repository. And fail the build if accuracy, calibration or coverage at your target drops. Run it whenever a question, a criterion, the state or the model changes.",
+   "params": {
+    "file": "test_refund_decision.py",
+    "lang": "py",
+    "lines": [
+     "MODEL = \"jev-1.13.0\"                 # pinned: never \"latest\"",
+     "",
+     "def test_refund_decision():",
+     "    rows = load_jsonl(\"evals/refund_300.jsonl\")   # real, expert-labeled",
+     "    res = run_decisions(MODEL, rows)             # keeps every probability",
+     "    assert accuracy(res) >= 0.90",
+     "    assert ece(res) <= 0.08",
+     "    assert coverage(res, target=0.95) >= 0.55     # share we can automate"
+    ],
+    "hl": [
+     {
+      "from": 1,
+      "to": 1,
+      "label": "pin the version",
+      "tone": "agent",
+      "at": "Pin the exact model"
+     },
+     {
+      "from": 6,
+      "to": 8,
+      "label": "fail the build on regressions",
+      "tone": "bad",
+      "at": "fail the build"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. On thirty labeled examples, model A scores eighty seven percent and model B eighty three. What can you conclude?",
+   "params": {
+    "q": "On **30** labeled examples, model A scores **87%**, model B **83%**. Conclusion?",
+    "options": [
+     "Model A is better; switch to it",
+     "Almost nothing: that's one example, inside a ±13-point margin",
+     "Model B is better calibrated",
+     "Average the two models"
+    ],
+    "answer": 1,
+    "explain": "The difference is a single example. Thirty labels are good for finding failure modes, not for ranking models: label a few hundred, and compare per question."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent turn one of your decisions into a pinned regression eval.",
+   "params": {
+    "title": "Build a regression eval",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "For our most important decision-model question, build a regression eval:\n1. Sample 300 recent real inputs from logs (stratify so rare classes\n   appear) and export them for expert labeling with a short label guide.\n2. Pin the exact model version in one constant.\n3. Write a test that reports accuracy with its 95% margin, per-question\n   results, calibration error and coverage at our target, and fails if\n   any drops below the current baseline.\n4. Run it in CI on every change to questions, criteria, state or model."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: label some data, from real inputs, with experts. Thirty labels find failures, hundreds measure them. Look per question. Test every change, even wording. And pin the version, because a better model can still move your thresholds. Next: deciding responsibly.",
+   "params": {
+    "items": [
+     "Real inputs, expert labels: no way around it.",
+     "30 labels find failures; hundreds measure them.",
+     "Per question; every change, even wording.",
+     "Pin the version; rerun before you upgrade."
+    ],
+    "next": "Decide responsibly",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

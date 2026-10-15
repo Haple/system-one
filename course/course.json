@@ -1,0 +1,43 @@
+{
+  "title": "System One",
+  "site": "https://learn-system-one.pages.dev",
+  "repo": "https://github.com/Haple/system-one",
+  "tagline": "A free, animated course on decision models: typed judgments, calibrated probabilities, and software that decides.",
+  "description": "Learn to build with System One decision models like TypeSafe's Jev, OpenAI's Decisions API, Cloudflare's Clef and AWS's Strands Decider. 22 short animated lessons on typed questions, calibrated probabilities, thresholds, composition patterns and evaluation, distilled from the docs, 57 talks and 70+ articles and papers, plus original measurements. Free and open source, and your agent can take it too.",
+  "modules": [
+    {"id": "m1", "title": "The idea", "blurb": "Why software needs decisions, and what a decision model is.", "lessons": [
+      {"id": "01-decisions-not-essays", "slug": "software-needs-decisions", "title": "Software needs decisions, not essays"},
+      {"id": "02-two-systems", "slug": "system-one-and-system-two", "title": "System One and System Two"},
+      {"id": "03-how-it-works", "slug": "how-decision-models-work", "title": "How a decision model works"},
+      {"id": "04-landscape", "slug": "decision-models-compared", "title": "Jev, Decisions, Clef, Strands: the landscape"}
+    ]},
+    {"id": "m2", "title": "Asking good questions", "blurb": "The three primitives, and the state they read.", "lessons": [
+      {"id": "05-noul", "slug": "noul-yes-no-questions", "title": "Noul: the probability of yes"},
+      {"id": "06-choice", "slug": "choice-questions", "title": "Choice: one answer from a set"},
+      {"id": "07-score", "slug": "score-questions", "title": "Score: a position on a scale you describe"},
+      {"id": "08-state", "slug": "designing-state", "title": "State: give it what it needs"}
+    ]},
+    {"id": "m3", "title": "Probabilities you can act on", "blurb": "Calibration, confidence and thresholds.", "lessons": [
+      {"id": "09-calibration", "slug": "calibration", "title": "Calibration: does 0.9 mean 90%?"},
+      {"id": "10-thresholds", "slug": "confidence-thresholds", "title": "Confidence and thresholds"},
+      {"id": "11-automate-the-sure-ones", "slug": "selective-automation", "title": "Automate the sure ones"}
+    ]},
+    {"id": "m4", "title": "Composing judgments", "blurb": "Small questions, combined in code.", "lessons": [
+      {"id": "12-decompose", "slug": "decompose-judgments", "title": "Decompose: many small questions"},
+      {"id": "13-fan-out", "slug": "speculative-fan-out", "title": "Ask everything at once"},
+      {"id": "14-route", "slug": "routing-and-cascades", "title": "Route and cascade"},
+      {"id": "15-select", "slug": "select-dont-generate", "title": "Select, don't generate"},
+      {"id": "16-verify", "slug": "verification-and-guardrails", "title": "Verify and guard"}
+    ]},
+    {"id": "m5", "title": "Real systems", "blurb": "Decision models inside agents and data pipelines.", "lessons": [
+      {"id": "17-agents", "slug": "decision-models-in-agents", "title": "Decision models inside agents"},
+      {"id": "18-judgments-as-data", "slug": "judgments-as-data", "title": "Judgments as data"}
+    ]},
+    {"id": "m6", "title": "Shipping it", "blurb": "Limits, evaluation, responsibility, and a full build.", "lessons": [
+      {"id": "19-jagged-edges", "slug": "jagged-edges", "title": "Know the jagged edges"},
+      {"id": "20-evaluate", "slug": "evaluate-on-your-data", "title": "Evaluate on your own data"},
+      {"id": "21-responsible", "slug": "responsible-decisions", "title": "Decide responsibly"},
+      {"id": "22-capstone", "slug": "capstone-support-triage", "title": "Capstone: a support triage pipeline"}
+    ]}
+  ]
+}

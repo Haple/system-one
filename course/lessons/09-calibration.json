@@ -1,0 +1,421 @@
+{
+ "id": "09-calibration",
+ "number": 9,
+ "slug": "calibration",
+ "module": "Probabilities you can act on",
+ "title": "Calibration: does 0.9 mean 90%?",
+ "short": "Calibration",
+ "summary": "A probability is only useful if it means what it says. Here is what calibration is, how to see it in a reliability diagram, why chat-trained models drift into overconfidence, what independent tests and our own measurements found for decision models, and how a few hundred labels let you measure and fix it.",
+ "takeaways": [
+  "Calibrated means: of all the answers given probability 0.8, about 80% turn out right.",
+  "A reliability diagram plots stated probability against how often the model was right; the diagonal is perfect.",
+  "Post-training for chat tends to make models overconfident; decision models are trained to keep probabilities honest, but that is a claim to test.",
+  "Calibration is a property of each model on each task: in our tests Jev was slightly overconfident at the top, and on fresh news an LLM's stated confidence was better calibrated.",
+  "Measure it on a few hundred of your own labels (ECE, Brier score), and fix systematic bias with simple recalibration such as Platt scaling."
+ ],
+ "practices": [
+  "Before relying on probabilities, measure calibration on a labeled sample from your own traffic: a reliability table, ECE and Brier score.",
+  "Never assume a vendor's calibration claim holds on your data; re-check after every model version change.",
+  "If probabilities are systematically off, fit a recalibration map (Platt scaling or isotonic regression) on held-out labels; it fixes calibration but cannot add information.",
+  "Prefer native probabilities to numbers a model writes as text, but measure both if you use both."
+ ],
+ "sources": [
+  {
+   "id": "AunotauS5yI",
+   "t": 56
+  },
+  {
+   "id": "YGgNBcIgI4s",
+   "t": 615
+  },
+  {
+   "id": "Kvgy36vIv-0",
+   "t": 1175
+  },
+  {
+   "id": "CjVQJdIrDJ0",
+   "t": 2735
+  },
+  {
+   "id": "anthus-decisions-confidence"
+  },
+  {
+   "id": "arxiv-crash-narratives"
+  },
+  {
+   "id": "arxiv-pinocchio"
+  },
+  {
+   "id": "gpt4-report"
+  },
+  {
+   "id": "guo-calibration"
+  },
+  {
+   "id": "kadavath-know"
+  },
+  {
+   "id": "brier-score"
+  },
+  {
+   "id": "ts-docs-introduction-machine-learning-primer"
+  },
+  {
+   "id": "9Aato-NfjoU",
+   "t": 3353
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Every answer from a decision model comes with probabilities. But a probability is only useful if it means what it says. This lesson is about checking that.",
+   "params": {
+    "kicker": "Lesson 9",
+    "module": "Module 3 · Probabilities you can act on",
+    "title": "Calibration: does 0.9 *mean 90%*?",
+    "subtitle": "A probability is only useful if it means what it says.",
+    "cast": [
+     "snap",
+     "you"
+    ],
+    "bubble": "0.9… right?",
+    "bubble_at": "means what it says"
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "What calibration means",
+   "narration": "Think of a weather forecaster. On the days they say seventy percent chance of rain, it should rain on about seventy percent of them. That's calibration. It's not about any single day. It's about the group. Of all the answers a model gives at point eight, about eight in ten should be right.",
+   "params": {
+    "eyebrow": "Calibration",
+    "text": "Of all the answers given *0.8*, about *8 in 10* should be right.",
+    "sub": "It's a property of groups of answers, never a promise about one.",
+    "sub_at": "not about any single day",
+    "art": "sun",
+    "tone": "agent",
+    "punch": "eight in ten"
+   }
+  },
+  {
+   "template": "reliability",
+   "chapter": "Seeing it",
+   "narration": "You see calibration in a reliability diagram. Group answers by the probability the model gave, and plot how often each group was right. Perfect calibration is the diagonal. Here's Jev 1.13 on our 3,080 banking messages. Mostly close, but slightly below the line at the top: answers it gave about point nine nine were right ninety two percent of the time. A little overconfident.",
+   "params": {
+    "title": "Jev 1.13 on BANKING77",
+    "series": [
+     {
+      "name": "Jev 1.13 · 3,080 messages",
+      "tone": "s1",
+      "stat": "ECE 0.089",
+      "gaps": true,
+      "at": "Here's Jev",
+      "bins": [
+       {
+        "conf": 0.345,
+        "acc": 0.367,
+        "n": 30
+       },
+       {
+        "conf": 0.452,
+        "acc": 0.367,
+        "n": 79
+       },
+       {
+        "conf": 0.541,
+        "acc": 0.478,
+        "n": 186
+       },
+       {
+        "conf": 0.645,
+        "acc": 0.542,
+        "n": 190
+       },
+       {
+        "conf": 0.746,
+        "acc": 0.497,
+        "n": 195
+       },
+       {
+        "conf": 0.848,
+        "acc": 0.679,
+        "n": 280
+       },
+       {
+        "conf": 0.986,
+        "acc": 0.92,
+        "n": 2117
+       }
+      ]
+     }
+    ],
+    "diag_at": "Perfect calibration",
+    "note": "Dots below the line: more confident than right. Dot size = number of answers.",
+    "note_at": "A little overconfident"
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Why chatbots drift",
+   "narration": "Why does this need saying at all? Because chat models are famously badly calibrated. Pretrained models are fairly well calibrated, but post-training for chat, as researcher Desi Ivanova puts it, destroys calibration. People like answers that sound sure, so models learn to sound sure.",
+   "params": {
+    "text": "Post training… the losses there are not proper scoring rules… *actually destroys calibration*, and this is also very well documented.",
+    "who": "Desi Ivanova",
+    "role": "researcher, on LLM uncertainty",
+    "src": "Estimating and Calibrating Uncertainty in LLMs",
+    "t": 1175
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "Independent tests",
+   "narration": "Independent testers have checked the decision models directly. Ryan Porter ran 3,600 hard reasoning questions through OpenAI's Decisions API and Jev. Luna said ninety nine percent or more on 2,672 answers, and only sixty eight percent of those were right. Jev said ninety nine percent on 1,667 answers, and was right on ninety eight point nine.",
+   "params": {
+    "title": "Answers stated at ≥ 99% (3,600 hard questions)",
+    "left": {
+     "title": "Decisions API (Luna)",
+     "who": "mull",
+     "tone": "bad",
+     "items": [
+      {
+       "text": "**2,672** answers at ≥ 99%",
+       "at": "2,672"
+      },
+      {
+       "text": "**68%** of them right",
+       "at": "sixty eight"
+      }
+     ]
+    },
+    "right": {
+     "title": "Jev",
+     "who": "snap",
+     "tone": "good",
+     "items": [
+      {
+       "text": "**1,667** answers at ≥ 99%",
+       "at": "1,667"
+      },
+      {
+       "text": "**98.9%** of them right",
+       "at": "ninety eight point nine"
+      }
+     ]
+    },
+    "vs": "vs",
+    "hnote": {
+     "text": "Ryan Porter, Anthus, Oct 2026",
+     "at": "Ryan Porter",
+     "p": [
+      50,
+      77
+     ],
+     "pp": [
+      50,
+      76
+     ]
+    }
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Model by model",
+   "narration": "But don't turn that into a rule about paradigms. A team that checked Jev against 2,416 human judgments of police crash reports found it wasn't overconfident there at all. It hedged, staying too close to the middle. Their conclusion is the one to remember: calibration turns out to be a property of the individual model, rather than of the paradigm.",
+   "params": {
+    "text": "Calibration turns out to be *a property of the individual model* rather than of the paradigm.",
+    "who": "Amir Rafe & Subasish Das",
+    "role": "Calibrated Decisions at Scale (arXiv)",
+    "src": "police crash narratives with Jev, 2026"
+   }
+  },
+  {
+   "template": "reliability",
+   "chapter": "Model by model",
+   "narration": "We saw the same thing on our fresh news test. Jev 1.14 was more accurate, but its top answers were a bit overconfident. The LLM, asked to write its confidence as a number, was actually better calibrated on this task. Calibration has to be measured, task by task.",
+   "params": {
+    "title": "Fresh news, 279 stories",
+    "series": [
+     {
+      "name": "Jev 1.14",
+      "tone": "s1",
+      "stat": "81.7% right · ECE 0.10",
+      "at": "Jev 1.14",
+      "bins": [
+       {
+        "conf": 0.547,
+        "acc": 0.529,
+        "n": 17
+       },
+       {
+        "conf": 0.644,
+        "acc": 0.846,
+        "n": 13
+       },
+       {
+        "conf": 0.75,
+        "acc": 0.652,
+        "n": 23
+       },
+       {
+        "conf": 0.857,
+        "acc": 0.692,
+        "n": 26
+       },
+       {
+        "conf": 0.984,
+        "acc": 0.89,
+        "n": 191
+       }
+      ]
+     },
+     {
+      "name": "Haiku 5.5, stated",
+      "tone": "s2",
+      "stat": "79.6% right · ECE 0.065",
+      "at": "The LLM",
+      "bins": [
+       {
+        "conf": 0.62,
+        "acc": 0.444,
+        "n": 27
+       },
+       {
+        "conf": 0.747,
+        "acc": 0.758,
+        "n": 33
+       },
+       {
+        "conf": 0.85,
+        "acc": 0.735,
+        "n": 102
+       },
+       {
+        "conf": 0.949,
+        "acc": 0.948,
+        "n": 115
+       }
+      ]
+     }
+    ],
+    "note": "Measured for this course, 2026-10-15. Bins with fewer than 10 answers left out.",
+    "note_at": "task by task"
+   }
+  },
+  {
+   "template": "formula",
+   "chapter": "Measuring it",
+   "narration": "Two numbers summarize it. Expected calibration error is the average gap between stated probability and actual accuracy, weighted by how many answers fall in each bin. Zero is perfect. The Brier score is the mean squared error of the probabilities themselves. Always guessing fifty fifty on a yes or no question scores point two five, so you want to be well below that.",
+   "params": {
+    "title": "Two numbers to track",
+    "parts": [
+     {
+      "text": "ECE",
+      "sub": "weighted gap between stated and actual · 0 is perfect",
+      "tone": "agent",
+      "at": "Expected calibration error"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "text": "Brier",
+      "sub": "mean squared error of the probabilities · coin flip = 0.25",
+      "tone": "s2",
+      "at": "Brier score"
+     }
+    ],
+    "caption": "Track both, per question, on a few hundred labeled examples from your own traffic.",
+    "caption_at": "well below"
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Measuring it",
+   "narration": "You can measure it in a dozen lines. Bin the answers by stated probability, compare each bin's average probability with its accuracy, and weight the gaps. Run it on a few hundred of your own labeled examples, per question, and again whenever the model version changes.",
+   "params": {
+    "file": "calibration.py",
+    "lang": "py",
+    "lines": [
+     "def ece(rows, bins=10):",
+     "    # rows: (stated_probability, was_right)",
+     "    groups = [[] for _ in range(bins)]",
+     "    for p, ok in rows:",
+     "        groups[min(int(p * bins), bins - 1)].append((p, ok))",
+     "    err = 0.0",
+     "    for grp in groups:",
+     "        if grp:",
+     "            conf = sum(p for p, _ in grp) / len(grp)",
+     "            acc = sum(ok for _, ok in grp) / len(grp)",
+     "            err += len(grp) / len(rows) * abs(conf - acc)",
+     "    return err",
+     "",
+     "brier = sum((p - ok) ** 2 for p, ok in rows) / len(rows)"
+    ],
+    "hl": [
+     {
+      "from": 9,
+      "to": 11,
+      "label": "stated vs actual, weighted",
+      "tone": "agent",
+      "at": "compare each bin"
+     }
+    ]
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Fixing it",
+   "narration": "And if it's off in a consistent direction, you can fix it cheaply. Fit a tiny logistic regression from the model's probability to what actually happened, called Platt scaling, on held-out labels. The crash narrative team cut calibration error by a factor of three point three this way. One limit: remapping fixes calibration, but it can't add information the probabilities don't carry.",
+   "params": {
+    "eyebrow": "Platt scaling: a 2-parameter fix",
+    "text": "Recalibration fixes the *numbers*, not the *ranking*.",
+    "sub": "Crash-narrative study: ECE 0.0231 → 0.0069 (3.3×) with a few thousand labels.",
+    "sub_at": "three point three",
+    "art": "tool",
+    "tone": "good",
+    "punch": "three point three"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. A model gave probability point nine on five hundred answers, and four hundred of them were right. What does that tell you?",
+   "params": {
+    "q": "500 answers stated at **0.9**; **400** were right. What does that tell you?",
+    "options": [
+     "The model is well calibrated",
+     "It's overconfident at 0.9: those answers are right about 80% of the time",
+     "It's underconfident",
+     "Nothing: calibration is about single answers"
+    ],
+    "answer": 1,
+    "explain": "400 of 500 is 80%, below the 90% it claimed. Recalibrate, or treat its 0.9 as 0.8 when you set thresholds."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent build a calibration report for one of your decisions.",
+   "params": {
+    "title": "Measure your calibration",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "For one decision we make with a model, collect 200-300 examples with\ntrusted labels from real traffic. Run the model on all of them and log\nthe probability of the chosen answer. Then report: accuracy, a\n10-bin reliability table (stated vs actual), ECE and Brier score.\nFit Platt scaling on half the data and report ECE on the other half,\nbefore and after. Save the script so we can rerun it on every model\nversion change."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: calibrated means point eight is right eight times in ten. See it in a reliability diagram, summarize it with ECE and Brier. Chat training drifts toward overconfidence, but every model has to be measured on every task. And a simple recalibration fixes the numbers. Next: turning probabilities into actions with thresholds.",
+   "params": {
+    "items": [
+     "Calibrated: of answers given 0.8, ~80% are right.",
+     "Reliability diagram + ECE + Brier, on your own labels.",
+     "It's per model, per task: measure, never assume.",
+     "Platt scaling fixes the numbers, not the ranking."
+    ],
+    "next": "Confidence and thresholds",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

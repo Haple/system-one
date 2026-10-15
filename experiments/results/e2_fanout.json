@@ -1,0 +1,1313 @@
+{
+ "batched": [
+  {
+   "lat": 0.3171,
+   "tok": 1828,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.91,
+     "probabilities": {
+      "billing": 0.93,
+      "account": 0.04,
+      "feature_request": 0.0,
+      "bug_report": 0.03
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.13
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.97,
+     "confidence": 0.95,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.03,
+      "2": 0.97
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.87
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 0.2651,
+   "tok": 1828,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.93,
+     "probabilities": {
+      "billing": 0.95,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.12
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.97,
+     "confidence": 0.95,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.03,
+      "2": 0.97
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.86
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 0.2615,
+   "tok": 1828,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.93,
+     "probabilities": {
+      "billing": 0.95,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.15
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.97,
+     "confidence": 0.95,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.03,
+      "2": 0.97
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.85
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 0.2672,
+   "tok": 1828,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.93,
+     "probabilities": {
+      "billing": 0.95,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.15
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.97,
+     "confidence": 0.95,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.03,
+      "2": 0.97
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.86
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.98
+    }
+   }
+  },
+  {
+   "lat": 0.2632,
+   "tok": 1828,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.93,
+     "probabilities": {
+      "billing": 0.95,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.13
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.96,
+     "confidence": 0.94,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.04,
+      "2": 0.96
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.85
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  }
+ ],
+ "sequential": [
+  {
+   "lat": 3.3871887493878603,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.95,
+     "probabilities": {
+      "billing": 0.96,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.01
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.14
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.96,
+     "confidence": 0.94,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.04,
+      "2": 0.96
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.85
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 3.2539838012307882,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.92,
+     "probabilities": {
+      "billing": 0.94,
+      "account": 0.04,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.13
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.96,
+     "confidence": 0.95,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.03,
+      "2": 0.97
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.85
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 3.54409721121192,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.91,
+     "probabilities": {
+      "billing": 0.93,
+      "account": 0.05,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.15
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.96,
+     "confidence": 0.94,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.04,
+      "2": 0.96
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.87
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 3.2842689342796803,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.95,
+     "probabilities": {
+      "billing": 0.96,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.01
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.13
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.96,
+     "confidence": 0.94,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.04,
+      "2": 0.96
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.88
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 3.249423937872052,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.91,
+     "probabilities": {
+      "billing": 0.93,
+      "account": 0.04,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.14
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.97,
+     "confidence": 0.95,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.03,
+      "2": 0.97
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.87
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  }
+ ],
+ "concurrent": [
+  {
+   "lat": 0.2927709370851517,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.92,
+     "probabilities": {
+      "billing": 0.94,
+      "account": 0.04,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.16
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.96,
+     "confidence": 0.94,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.04,
+      "2": 0.96
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.86
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.98
+    }
+   }
+  },
+  {
+   "lat": 0.3808955028653145,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.93,
+     "probabilities": {
+      "billing": 0.95,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.12
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.96,
+     "confidence": 0.94,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.04,
+      "2": 0.96
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.85
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 0.28307068161666393,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.93,
+     "probabilities": {
+      "billing": 0.95,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.15
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.96,
+     "confidence": 0.94,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.04,
+      "2": 0.96
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.86
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 0.3724146354943514,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.91,
+     "probabilities": {
+      "billing": 0.93,
+      "account": 0.05,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.16
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.97
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.97,
+     "confidence": 0.95,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.03,
+      "2": 0.97
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.87
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  },
+  {
+   "lat": 0.3865859340876341,
+   "tok": 18940,
+   "ans": {
+    "category": {
+     "type": "choice",
+     "choice": "billing",
+     "confidence": 0.93,
+     "probabilities": {
+      "billing": 0.95,
+      "account": 0.03,
+      "feature_request": 0.0,
+      "bug_report": 0.02
+     }
+    },
+    "refund_requested": {
+     "type": "noul",
+     "noul": 0.13
+    },
+    "duplicate_charge": {
+     "type": "noul",
+     "noul": 0.97
+    },
+    "policy_allows_refund": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "login_problem": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "repeat_contact": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "churn_threat": {
+     "type": "noul",
+     "noul": 0.98
+    },
+    "feature_request": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "mentions_order": {
+     "type": "noul",
+     "noul": 0.99
+    },
+    "frustration": {
+     "type": "score",
+     "score": 1.97,
+     "confidence": 0.95,
+     "legend": {
+      "0": "Calm and matter-of-fact",
+      "1": "Frustrated but civil",
+      "2": "Very angry or threatening to leave"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.03,
+      "2": 0.97
+     }
+    },
+    "urgency": {
+     "type": "score",
+     "score": 2.0,
+     "confidence": 1.0,
+     "legend": {
+      "0": "No time pressure",
+      "1": "Wants it soon",
+      "2": "Demands a fix today"
+     },
+     "probabilities": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 1.0
+     }
+    },
+    "needs_human": {
+     "type": "noul",
+     "noul": 0.86
+    },
+    "policy_escalation": {
+     "type": "noul",
+     "noul": 0.97
+    }
+   }
+  }
+ ]
+}

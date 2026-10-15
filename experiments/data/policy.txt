@@ -1,0 +1,31 @@
+ACME CLOUD SUPPORT POLICY (v4.2)
+
+1. Scope. This policy covers billing, account access, orders, and product feedback for all ACME Cloud plans (Free, Pro, Business, Enterprise).
+
+2. Refunds. Duplicate charges for the same order are always refunded in full to the original payment method within 5 business days. Refunds for annual plans are prorated if requested within 30 days of renewal. Refunds are not available for usage-based overages unless caused by a verified platform incident. Support agents may issue credits up to $100 without approval; larger credits require a billing lead.
+
+3. Account access. Customers who cannot log in must be verified by email before any account change. Agents must never ask a customer to share a password, a security code, or an API key. Password resets are sent only to the email address on file. Accounts locked after five failed attempts unlock automatically after 30 minutes.
+
+4. Escalation. Tickets that mention cancellation, legal action, or a data breach are escalated to a team lead within one hour. Customers on Business and Enterprise plans receive a named contact. A customer who has contacted support three or more times about the same issue is flagged as repeat contact and handled by a senior agent.
+
+5. Orders and delivery. Hardware orders ship within 2 business days. Tracking numbers are emailed at dispatch. Lost packages are replaced after a 7-day carrier investigation. Damaged items may be returned within 30 days for a replacement or refund.
+
+6. Feature requests. Feature requests are logged in the product feedback board and acknowledged within 3 business days. Agents should not promise delivery dates for unreleased features.
+
+7. Communication. Agents respond to Pro tickets within 8 business hours, Business within 4 hours, Enterprise within 1 hour, and Free within 3 business days. Messages should be clear, polite and specific about next steps.
+
+8. Definitions. 'Business day' means Monday to Friday excluding public holidays in the customer's billing country. 'Credit' means a balance applied to future invoices. 'Verified incident' means an outage published on the ACME status page. 8. Definitions. 'Business day' means Monday to Friday excluding public holidays in the customer's billing country. 'Credit' means a balance applied to future invoices. 'Verified incident' means an outage published on the ACME status page. 8. Definitions. 'Business day' means Monday to Friday excluding public holidays in the customer's billing country. 'Credit' means a balance applied to future invoices. 'Verified incident' means an outage published on the ACME status page. 
+
+9. Appendix 1. Historical notes on policy changes: in version 3.0 the refund window was adjusted, the escalation matrix was revised for regional teams, and the definitions of business hours were aligned with the customer's billing country. These notes are informational and do not change the rules above.
+
+10. Appendix 2. Historical notes on policy changes: in version 4.0 the refund window was adjusted, the escalation matrix was revised for regional teams, and the definitions of business hours were aligned with the customer's billing country. These notes are informational and do not change the rules above.
+
+11. Appendix 3. Historical notes on policy changes: in version 5.0 the refund window was adjusted, the escalation matrix was revised for regional teams, and the definitions of business hours were aligned with the customer's billing country. These notes are informational and do not change the rules above.
+
+12. Appendix 4. Historical notes on policy changes: in version 6.0 the refund window was adjusted, the escalation matrix was revised for regional teams, and the definitions of business hours were aligned with the customer's billing country. These notes are informational and do not change the rules above.
+
+13. Appendix 5. Historical notes on policy changes: in version 7.0 the refund window was adjusted, the escalation matrix was revised for regional teams, and the definitions of business hours were aligned with the customer's billing country. These notes are informational and do not change the rules above.
+
+14. Appendix 6. Historical notes on policy changes: in version 8.0 the refund window was adjusted, the escalation matrix was revised for regional teams, and the definitions of business hours were aligned with the customer's billing country. These notes are informational and do not change the rules above.
+
+15. Appendix 7. Historical notes on policy changes: in version 9.0 the refund window was adjusted, the escalation matrix was revised for regional teams, and the definitions of business hours were aligned with the customer's billing country. These notes are informational and do not change the rules above.

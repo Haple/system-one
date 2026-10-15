@@ -1,0 +1,330 @@
+{
+ "id": "21-responsible",
+ "number": 21,
+ "slug": "responsible-decisions",
+ "module": "Shipping it",
+ "title": "Decide responsibly",
+ "short": "Decide responsibly",
+ "summary": "A decision model makes the same call the same way, millions of times. That removes noise, and it makes any bias systematic. Here is how to audit decisions about people (including the name-swap test we ran), where the reasons come from when the model gives none, and what a responsible deployment logs, samples and leaves to a person.",
+ "takeaways": [
+  "Decision models have little noise, so their mistakes are systematic: the same error, for the same kind of case, every time.",
+  "Bias can hide in a criterion as well as in a model: the Apgar score's skin-color item gives Black newborns lower scores.",
+  "Audit by subgroup and with counterfactual tests; in our name-swap test, answers moved at most 0.06 and no decision flipped, which is one test, not proof of fairness.",
+  "The model gives numbers, not reasons; your decomposed questions and thresholds are the reasons, so log them and turn them into explanations.",
+  "Keep a person accountable: sample automated decisions for review, give people a way to appeal, and be most careful with decisions about jobs, money, housing and health."
+ ],
+ "practices": [
+  "Before automating decisions about people, run counterfactual tests (swap names and other attributes that must not matter) and compare outcomes by subgroup on labeled data.",
+  "Log every decision with input reference, model version, every answer, thresholds and the action taken, and generate explanations from that log.",
+  "Sample a share of automated decisions for human review every week, and provide an appeal path to a person.",
+  "Use decision models to assist, not decide alone, for hiring, credit, housing and health, and check the rules that apply where you operate."
+ ],
+ "sources": [
+  {
+   "id": "simonw-jev"
+  },
+  {
+   "id": "dsebastien-semantic-if"
+  },
+  {
+   "id": "wiYaXOGE_e4",
+   "t": 524
+  },
+  {
+   "id": "zt2cFBC8hdw",
+   "t": 327
+  },
+  {
+   "id": "apgar-score"
+  },
+  {
+   "id": "UwwBG-MbniY",
+   "t": 2242
+  },
+  {
+   "id": "mRkJTXDromw",
+   "t": 1190
+  },
+  {
+   "id": "unsiloed-doc-review"
+  },
+  {
+   "id": "GL0XhAj5LPE",
+   "t": 1586
+  },
+  {
+   "id": "ts-docs-cookbooks-parallel_questions"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "A decision model will make the same call the same way, a million times a day. That's its strength. It's also why some of those calls deserve extra care.",
+   "params": {
+    "kicker": "Lesson 21",
+    "module": "Module 6 · Shipping it",
+    "title": "Decide *responsibly*",
+    "subtitle": "Consistent is not the same as fair.",
+    "cast": [
+     "you",
+     {
+      "who": "snap",
+      "mood": "unsure"
+     }
+    ]
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "Noise and bias",
+   "narration": "Olivier Sibony and Daniel Kahneman separate two kinds of error. Noise is scatter: in one audit at an investment firm, two analysts valuing the same security differed by forty four percent on average. Bias is a shared, predictable error. Decision models have very little noise: in our tests, repeated runs moved by four hundredths at most. So whatever errors they have are systematic. The same mistake, for the same kind of case, every time.",
+   "params": {
+    "left": {
+     "title": "People: noise",
+     "who": "you",
+     "tone": "s2",
+     "items": [
+      {
+       "text": "Scatter: same case, different answers",
+       "at": "Noise is scatter"
+      },
+      {
+       "text": "Two analysts, same security: 44% apart"
+      },
+      {
+       "text": "Fix: average independent judgments"
+      }
+     ]
+    },
+    "right": {
+     "title": "Decision models: bias",
+     "who": "snap",
+     "tone": "bad",
+     "items": [
+      {
+       "text": "Repeat runs moved ≤ 0.04",
+       "at": "very little noise"
+      },
+      {
+       "text": "Errors are systematic",
+       "at": "systematic"
+      },
+      {
+       "text": "Same mistake, every time, at scale"
+      }
+     ]
+    },
+    "vs": "vs"
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Decisions about people",
+   "narration": "That matters most when the decision is about a person. Simon Willison wrote on launch day: I really hope nobody uses Jev to rank job applicants. That floating point number could conceal all manner of unseen bias baked into the models.",
+   "params": {
+    "text": "I really hope nobody uses Jev to rank job applicants: that floating point number could conceal *all manner of unseen bias*.",
+    "who": "Simon Willison",
+    "role": "simonwillison.net",
+    "src": "Jev introduces a new shape of LLM"
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "Bias in the criteria",
+   "narration": "And bias doesn't only live inside models. It can live in your criteria. Remember the Apgar score from lesson twelve? One of its five items is skin color. A study of more than nine million American newborns found that three point three percent of white babies scored a perfect ten, and only one point four percent of Black babies, which can mean unneeded treatment for healthy infants.",
+   "params": {
+    "title": "Apgar scores, 9 million US newborns (2016–2019)",
+    "items": [
+     {
+      "value": 3.3,
+      "decimals": 1,
+      "suffix": "%",
+      "label": "of white newborns scored a perfect 10",
+      "tone": "s2",
+      "at": "three point three"
+     },
+     {
+      "value": 1.4,
+      "decimals": 1,
+      "suffix": "%",
+      "label": "of Black newborns",
+      "tone": "bad",
+      "at": "one point four",
+      "hero": true
+     }
+    ],
+    "src": "Grünebaum et al., via Wikipedia, Apgar score. The appearance item scores skin color.",
+    "punch": false
+   }
+  },
+  {
+   "template": "chart",
+   "chapter": "Test it",
+   "narration": "So test it, with counterfactuals. Change only what must not matter, and see if the answer moves. We wrote twelve candidate summaries for a backend job and sent each one five times: with no name, and as Emily Walsh, Greg Baker, Lakisha Washington and Jamal Jones. The average chance of an interview barely moved. No single answer moved by more than point oh six, and no decision flipped.",
+   "params": {
+    "title": "Should we interview? Same 12 candidates, only the name changes",
+    "kind": "bar",
+    "ymax": 0.7,
+    "data": [
+     {
+      "x": "no name",
+      "y": 0.55,
+      "label": "0.55",
+      "tone": "s2",
+      "at": "with no name"
+     },
+     {
+      "x": "Emily Walsh",
+      "y": 0.536,
+      "label": "0.54",
+      "at": "Emily Walsh"
+     },
+     {
+      "x": "Greg Baker",
+      "y": 0.533,
+      "label": "0.53"
+     },
+     {
+      "x": "Lakisha Washington",
+      "y": 0.535,
+      "label": "0.54"
+     },
+     {
+      "x": "Jamal Jones",
+      "y": 0.534,
+      "label": "0.53",
+      "at": "Jamal Jones"
+     }
+    ],
+    "src": "jev-1.13.0, 60 requests, 2026-10-15. Largest change for any one candidate: 0.06. Decisions flipped: 0 of 12."
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Test it",
+   "narration": "That's reassuring, and it proves very little. It's one test, of one attribute, on twelve made-up people. Bias can travel through proxies a name test never touches: schools, addresses, gaps in a career, the way someone writes. As Willison's advice goes, a model like this needs more evals, not fewer. Test by subgroup on real, labeled cases too.",
+   "params": {
+    "eyebrow": "One passed test is not fairness",
+    "text": "A model like this needs *more evals, not fewer*.",
+    "sub": "Proxies (schools, addresses, career gaps, writing style) can carry bias a name swap never sees.",
+    "sub_at": "proxies",
+    "art": "scale",
+    "tone": "s2",
+    "punch": "proves very little"
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Where the reasons come from",
+   "narration": "People also ask for reasons. Kahneman pointed out that algorithms clearly better than judges at predicting parole violations still meet resistance, because they can't explain their reasoning. A decision model gives you numbers, not reasons. But your design has them. Unsiloed put it simply: the explanations come from our application. Jev returns the typed answers.",
+   "params": {
+    "text": "The explanations and routing labels come from our application; *Jev returns the typed answers*, not those explanations.",
+    "who": "Unsiloed",
+    "role": "document review with Jev",
+    "src": "unsiloed.ai"
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Where the reasons come from",
+   "narration": "So log the reasons you designed. Every decision record holds the model version, every narrow answer, the thresholds and the action. That's an audit trail. And when someone asks why, turn that log into an explanation, with a template or an LLM. The decision stays in your code; only the wording is generated.",
+   "params": {
+    "file": "decision_log.py",
+    "lang": "py",
+    "lines": [
+     "log.write({",
+     "  \"case\": ticket.id, \"model\": \"jev-1.13.0\", \"at\": now(),",
+     "  \"answers\": {\"duplicate_charge\": 0.98, \"policy_allows\": 0.99},",
+     "  \"rule\": \"refund if both > 0.80\", \"action\": \"auto_refund\",",
+     "  \"review_sample\": random() < 0.02,             # a person checks 2%",
+     "})",
+     "explain = explain_from(log)   # a template or an LLM: wording only"
+    ],
+    "hl": [
+     {
+      "from": 2,
+      "to": 4,
+      "label": "the audit trail",
+      "tone": "agent",
+      "at": "audit trail"
+     },
+     {
+      "from": 7,
+      "to": 7,
+      "label": "explanation from the log",
+      "tone": "good",
+      "at": "turn that log"
+     }
+    ]
+   }
+  },
+  {
+   "template": "list",
+   "chapter": "Keep a person accountable",
+   "narration": "And keep a person accountable. Sample automated decisions for review, every week, because a threshold that worked at launch can drift. Give people a way to appeal to a human. Audit outcomes by subgroup. And for decisions about jobs, money, housing or health, let the model assist a person rather than decide alone, and check the rules where you operate.",
+   "params": {
+    "title": "A responsible deployment",
+    "items": [
+     {
+      "text": "**Sample** automated decisions for human review, weekly",
+      "at": "Sample automated"
+     },
+     {
+      "text": "Offer an **appeal** to a person",
+      "at": "appeal"
+     },
+     {
+      "text": "**Audit** outcomes by subgroup, and with counterfactuals",
+      "at": "Audit outcomes"
+     },
+     {
+      "text": "Jobs, money, housing, health: **assist**, don't decide alone",
+      "at": "assist a person"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. Your name-swap test shows no change in any decision. What can you conclude?",
+   "params": {
+    "q": "A name-swap test changes **no decisions**. What can you conclude?",
+    "options": [
+     "The model is fair; ship it",
+     "Names alone didn't move these cases; proxies and real subgroups still need testing",
+     "The test was broken",
+     "Bias only matters for LLMs"
+    ],
+    "answer": 1,
+    "explain": "A counterfactual test checks one path for bias. Proxies like schools or addresses, and outcomes on real labeled cases by subgroup, still need checking."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent add a decision log and a counterfactual test to one decision that touches people.",
+   "params": {
+    "title": "Log it and test it",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "For one decision in our product that affects a person (approvals,\nrefunds, moderation, screening):\n1. Log every decision: input reference, model version, every answer,\n   thresholds, action, and a flag that sends 2% to human review.\n2. Generate a plain-language explanation from that log.\n3. Write a counterfactual test: for 20 real cases, swap attributes that\n   must not matter (names, pronouns, locations) and report the largest\n   change in each answer and any decision that flips."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: decision models trade noise for systematic error. Bias can sit in models and in criteria, so test with counterfactuals and by subgroup, and don't treat one pass as proof. Your questions are the reasons: log them. And keep a person accountable. Next, the capstone: putting the whole course together.",
+   "params": {
+    "items": [
+     "Little noise, so errors are systematic.",
+     "Bias hides in criteria too (Apgar).",
+     "Counterfactuals + subgroups; one pass isn't proof.",
+     "Log the reasons; keep a person accountable."
+    ],
+    "next": "Capstone: a support triage pipeline",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

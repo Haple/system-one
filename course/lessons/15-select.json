@@ -1,0 +1,331 @@
+{
+ "id": "15-select",
+ "number": 15,
+ "slug": "select-dont-generate",
+ "module": "Composing judgments",
+ "title": "Select, don't generate",
+ "short": "Select, don't generate",
+ "summary": "A decision model can't write a value, but most extraction is really selection: the value is already in the text. Let code find the candidates and let the model pick one, then copy it verbatim. Here is that pattern for phone numbers, dates, search reranking, line-level search and deep taxonomies.",
+ "takeaways": [
+  "Most extraction is selection: the value already exists in the source, so the model only has to pick it.",
+  "Code finds candidates (regex, parser, search), the model chooses, code copies the value verbatim, so nothing is invented.",
+  "Dates are parts: month, day and year are each a small Choice with a 'not stated' option; code assembles and does the arithmetic.",
+  "Reranking is selection too: a cheap search finds candidates, one Noul per candidate scores relevance.",
+  "Big taxonomies go level by level, keeping the best few paths instead of one greedy guess."
+ ],
+ "practices": [
+  "For extraction, generate candidates in code and ask a Choice which candidate is the requested value; always include a none option.",
+  "Extract dates as separate Choices for each part with 'not stated'; build and compare dates in code.",
+  "Rerank search results with one relevance question per candidate and sort by probability.",
+  "Walk hierarchical taxonomies level by level with a small beam of top paths."
+ ],
+ "sources": [
+  {
+   "id": "ts-docs-cookbooks-pre_parsed_value_extraction_cookbook"
+  },
+  {
+   "id": "ts-docs-cookbooks-date_extraction_cookbook"
+  },
+  {
+   "id": "ts-docs-cookbooks-rerank_typesafe"
+  },
+  {
+   "id": "ts-docs-cookbooks-semantic_find"
+  },
+  {
+   "id": "ts-docs-cookbooks-hierarchical_classification"
+  },
+  {
+   "id": "ts-docs-cookbooks-autoformat"
+  },
+  {
+   "id": "ts-docs-model-jaggedness-jev-1.13"
+  },
+  {
+   "id": "simonw-jev"
+  },
+  {
+   "id": "ts-agent-skill"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "A decision model can't write. So how do you get a phone number, a date, or the right paragraph out of a document? You don't ask it to write the value. You let it choose.",
+   "params": {
+    "kicker": "Lesson 15",
+    "module": "Module 4 · Composing judgments",
+    "title": "Select, *don't generate*",
+    "subtitle": "Code finds the candidates. The model picks. Code copies.",
+    "cast": [
+     "curly",
+     "snap"
+    ]
+   }
+  },
+  {
+   "template": "flow",
+   "chapter": "The pattern",
+   "narration": "Here's the pattern. Most extraction is really selection, because the value is already sitting in the text. So code finds the candidates, with a regular expression, a parser or a search. The model picks the one you asked for. And code copies it verbatim. Nothing can be invented, because the model only ever chooses.",
+   "params": {
+    "title": "Find, choose, copy",
+    "nodes": [
+     {
+      "label": "Code finds candidates",
+      "sub": "regex, parser, search",
+      "kind": "curly",
+      "edge": "candidates",
+      "at": "code finds"
+     },
+     {
+      "label": "Model picks one",
+      "sub": "a Choice, plus “none”",
+      "kind": "snap",
+      "edge": "a choice",
+      "at": "The model picks"
+     },
+     {
+      "label": "Code copies it",
+      "sub": "verbatim, then normalizes",
+      "kind": "curly",
+      "at": "copies it verbatim"
+     }
+    ]
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "Pick a value",
+   "narration": "This email signature has three phone numbers: a finance desk, a direct line, and a support hotline. A regex finds all three. Then one Choice: which candidate is the twenty four seven support number? The hotline, at one point oh. Your code copies that exact string, and there's no way to get a digit wrong.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.31,
+    "state": {
+     "text": "…billing questions call our finance desk at +1 (415) 555-0142. My direct line is 415-555-0199… Our 24/7 support hotline is (800) 555-0123.",
+     "candidates": [
+      "+1 (415) 555-0142",
+      "415-555-0199",
+      "(800) 555-0123"
+     ]
+    },
+    "questions": [
+     {
+      "id": "phone",
+      "type": "choice",
+      "text": "Which value in `candidates` is the 24/7 support number in `text`?",
+      "ans": {
+       "choice": "(800) 555-0123",
+       "p": 1.0
+      },
+      "say_at": "one Choice"
+     }
+    ],
+    "send_at": "Then one Choice",
+    "ans_at": "The hotline",
+    "footer": "Options: the three candidates + “none”. Real answer, jev-1.13.0."
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "Dates are parts",
+   "narration": "Dates work the same way, part by part. Jev reads dates as text, not as numbers, so don't ask it which date is earlier. Ask three small Choices: which month, which day, which year, each with a not stated option. Here, March, the third, twenty twenty six. Then code builds the real date, and does every comparison.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.25,
+    "state": "This agreement starts on the date of signature, the third of March 2026, and renews each year unless cancelled.",
+    "questions": [
+     {
+      "id": "m",
+      "type": "choice",
+      "text": "Start month? (12 months + not_stated)",
+      "ans": {
+       "choice": "March",
+       "p": 1.0
+      },
+      "at": "which month"
+     },
+     {
+      "id": "d",
+      "type": "choice",
+      "text": "Start day? (1–31 + not_stated)",
+      "ans": {
+       "choice": "3",
+       "p": 1.0
+      },
+      "at": "which day"
+     },
+     {
+      "id": "y",
+      "type": "choice",
+      "text": "Start year? (2020–2030 + not_stated)",
+      "ans": {
+       "choice": "2026",
+       "p": 1.0
+      },
+      "at": "which year"
+     }
+    ],
+    "send_at": "Here, March",
+    "ans_at": "Here, March"
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Dates are parts",
+   "narration": "The model's job ends at the parts. Building the date, checking it's valid, computing a renewal or a deadline, comparing two dates: that's arithmetic, and arithmetic belongs in code. If any part comes back not stated, or with low confidence, ask a person.",
+   "params": {
+    "file": "dates.py",
+    "lang": "py",
+    "lines": [
+     "m, d, y = (a[k].choice for k in (\"start_month\", \"start_day\", \"start_year\"))",
+     "if \"not_stated\" in (m, d, y) or min(a[k].confidence for k in a) < 0.8:",
+     "    return send_to_review(doc)",
+     "start = date(int(y), MONTHS.index(m) + 1, int(d))   # validates, too",
+     "renewal = start.replace(year=start.year + 1)",
+     "days_left = (renewal - today).days                  # code, not the model"
+    ],
+    "hl": [
+     {
+      "from": 2,
+      "to": 3,
+      "label": "missing or unsure: a person",
+      "tone": "s2",
+      "at": "not stated"
+     },
+     {
+      "from": 4,
+      "to": 6,
+      "label": "arithmetic stays in code",
+      "tone": "good",
+      "at": "belongs in code"
+     }
+    ]
+   }
+  },
+  {
+   "template": "chart",
+   "chapter": "Rerank",
+   "narration": "Search is selection too. In a TypeSafe cookbook, a cheap keyword search found thirty candidate passages for each of forty legal questions. The right one was always in the list, but it came first only five percent of the time. One Noul per candidate, is this passage relevant, then sort by probability. Now the right passage came first eighteen percent of the time, and in the top ten sixty two percent.",
+   "params": {
+    "title": "40 legal queries · 30 BM25 candidates each",
+    "kind": "bar",
+    "ymax": 0.75,
+    "data": [
+     {
+      "x": "top-1, search only",
+      "y": 0.05,
+      "label": "5%",
+      "at": "five percent"
+     },
+     {
+      "x": "top-1, reranked",
+      "y": 0.18,
+      "label": "18%",
+      "hl": true,
+      "at": "eighteen percent"
+     },
+     {
+      "x": "top-10, search only",
+      "y": 0.38,
+      "label": "38%",
+      "tone": "s2"
+     },
+     {
+      "x": "top-10, reranked",
+      "y": 0.62,
+      "label": "62%",
+      "hl": true,
+      "at": "sixty two"
+     }
+    ],
+    "src": "TypeSafe cookbook: Re-ranking (CLERC legal retrieval)"
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Find the line",
+   "narration": "You can even point at lines. Another cookbook numbers the two hundred eighteen lines of GitHub's terms of service, and uses them as the options of a single Choice: which line answers this question? Plus one Noul: does the document answer it at all? Search without generating a word.",
+   "params": {
+    "eyebrow": "Cookbook: line-by-line search",
+    "text": "218 numbered lines become *the options of one Choice*.",
+    "sub": "Plus one Noul: “Does the document contain an answer?”",
+    "sub_at": "Plus one Noul",
+    "art": "search",
+    "tone": "agent",
+    "punch": "two hundred eighteen"
+   }
+  },
+  {
+   "template": "flow",
+   "chapter": "Deep taxonomies",
+   "narration": "And for taxonomies with thousands of leaves, like patent classes or product categories, go level by level. At each level, a Choice picks among the children. Keep the best few paths, not just one, so a near miss early on can recover. That's a beam search over the model's probabilities.",
+   "params": {
+    "title": "Level by level, keep the best few paths",
+    "nodes": [
+     {
+      "label": "Level 1",
+      "sub": "Choice among top classes",
+      "kind": "snap",
+      "edge": "top 3 paths",
+      "at": "level by level"
+     },
+     {
+      "label": "Level 2",
+      "sub": "Choice among children",
+      "kind": "snap",
+      "edge": "top 3 paths",
+      "at": "Keep the best few"
+     },
+     {
+      "label": "Leaf",
+      "sub": "best full path wins",
+      "kind": "curly",
+      "at": "beam search"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. You need the invoice total from a PDF's text. What's the select-don't-generate way to get it?",
+   "params": {
+    "q": "Get the **invoice total** from extracted PDF text. The select-don't-generate way?",
+    "options": [
+     "Ask a Score for the amount, from 0 to 10,000",
+     "Regex every money amount, ask a Choice which one is the total (plus “none”), copy it",
+     "Ask a Noul for each possible number from 1 to 10,000",
+     "Ask the model to type the total"
+    ],
+    "answer": 1,
+    "explain": "Code finds the candidates, the model picks the one that's the total, and code copies it exactly. The model never has to produce digits."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent replace one generated extraction in your code with find, choose, copy.",
+   "params": {
+    "title": "Find, choose, copy",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Find one place where we ask an LLM to extract a value (an amount, email,\nID, date, name) from text. Replace it with select-don't-generate:\ncandidates from regex/parsing in code, one Choice that picks the\nrequested candidate (always with a \"none\" option), and code that copies\nthe chosen string verbatim and normalizes it. For dates, ask month/day/\nyear as separate Choices with \"not_stated\". Compare both versions on\n50 real documents."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: when you need a value, select it, don't generate it. Code finds candidates, the model picks, code copies. Dates are parts. Reranking and line search are selection. And deep taxonomies go level by level. Next: using decision models to check other models' work.",
+   "params": {
+    "items": [
+     "Most extraction is selection: the value is already in the text.",
+     "Code finds candidates; the model picks; code copies verbatim.",
+     "Dates: a Choice per part, arithmetic in code.",
+     "Rerank with a Noul per candidate; walk taxonomies level by level."
+    ],
+    "next": "Verify and guard",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

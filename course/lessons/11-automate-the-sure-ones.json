@@ -1,0 +1,351 @@
+{
+ "id": "11-automate-the-sure-ones",
+ "number": 11,
+ "slug": "selective-automation",
+ "module": "Probabilities you can act on",
+ "title": "Automate the sure ones",
+ "short": "Automate the sure ones",
+ "summary": "You don't need a model that is right about everything. You need to know which answers you can trust. Here is the coverage curve that answers 'how much can we automate at 95%?', how to pick thresholds from a few hundred labels, what confidence-ordered review saves on our own data, and how to answer less precisely instead of wrongly.",
+ "takeaways": [
+  "The real question is: what share of decisions can we automate at the accuracy we need?",
+  "A coverage curve answers it: on our banking data, Jev was 80% right overall, but 96% right on the half it was surest about.",
+  "Pick thresholds from 200 to 500 labeled examples by simulating each cutoff; treat the result as an estimate.",
+  "Reviewing the least confident answers first reached 95% system accuracy with 33% human review, versus 75% for random review.",
+  "When unsure, answer less precisely: falling back to a broader category turned 40% right into 70% right in TypeSafe's SEC example."
+ ],
+ "practices": [
+  "Build a coverage table (threshold, share automated, accuracy) from labeled examples before choosing a threshold.",
+  "Route the least confident answers to people first, and size the review queue from the coverage table.",
+  "When a taxonomy is hierarchical, return the parent category instead of a guess when confidence is low.",
+  "For rare positive classes, judge thresholds by precision and recall on the flagged items, not overall accuracy."
+ ],
+ "sources": [
+  {
+   "id": "hn-jev-launch"
+  },
+  {
+   "id": "ts-docs-cookbooks-classification_using_confidence"
+  },
+  {
+   "id": "ts-docs-confidence"
+  },
+  {
+   "id": "FWFjLF_VoVI",
+   "t": 580
+  },
+  {
+   "id": "nyl9IQbk5Zk",
+   "t": 409
+  },
+  {
+   "id": "kev-repo"
+  },
+  {
+   "id": "geifman-selective"
+  },
+  {
+   "id": "arxiv-pinocchio"
+  },
+  {
+   "id": "arxiv-crash-narratives"
+  },
+  {
+   "id": "lindfors-first-look"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "No model is right about everything. But you don't need that. You need to know which of its answers you can trust, and send the rest somewhere else. That's selective automation.",
+   "params": {
+    "kicker": "Lesson 11",
+    "module": "Module 3 · Probabilities you can act on",
+    "title": "Automate *the sure ones*",
+    "subtitle": "Know which answers to trust, and route the rest.",
+    "cast": [
+     "snap",
+     "you"
+    ]
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "The real question",
+   "narration": "On launch day, a Hacker News commenter asked the question that matters. Set a confidence threshold, trust the decisions above it, reject the rest. Then ask: what percent of decisions can we automate, and still hit ninety percent accuracy?",
+   "params": {
+    "text": "What % of decisions can we automate *to achieve 90% accuracy*?",
+    "who": "ActivePattern",
+    "role": "Hacker News, Jev launch thread",
+    "src": "news.ycombinator.com"
+   }
+  },
+  {
+   "template": "coverage",
+   "chapter": "The coverage curve",
+   "narration": "Here's that answer for Jev on our 3,080 banking messages. Automate everything, and it's eighty percent right. Only automate answers above point nine, and you handle sixty nine percent of messages at ninety two percent. Above point nine nine: half of all messages, at ninety six percent. To hit ninety five, you can automate about fifty seven percent.",
+   "params": {
+    "title": "How much can we automate?",
+    "curve": [
+     {
+      "t": 0,
+      "coverage": 1,
+      "acc": 0.801
+     },
+     {
+      "t": 0.5,
+      "coverage": 0.964,
+      "acc": 0.817
+     },
+     {
+      "t": 0.7,
+      "coverage": 0.842,
+      "acc": 0.862
+     },
+     {
+      "t": 0.8,
+      "coverage": 0.778,
+      "acc": 0.892
+     },
+     {
+      "t": 0.9,
+      "coverage": 0.687,
+      "acc": 0.92
+     },
+     {
+      "t": 0.95,
+      "coverage": 0.621,
+      "acc": 0.939
+     },
+     {
+      "t": 0.99,
+      "coverage": 0.503,
+      "acc": 0.963
+     },
+     {
+      "t": 1.0,
+      "coverage": 0.425,
+      "acc": 0.973
+     }
+    ],
+    "stops": [
+     {
+      "t": 0,
+      "coverage": 1,
+      "acc": 0.801,
+      "at": "Automate everything"
+     },
+     {
+      "t": 0.9,
+      "coverage": 0.687,
+      "acc": 0.92,
+      "at": "above point nine"
+     },
+     {
+      "t": 0.99,
+      "coverage": 0.503,
+      "acc": 0.963,
+      "at": "point nine nine",
+      "note": "≈57% of messages clear 95%"
+     }
+    ],
+    "target": {
+     "acc": 0.95,
+     "label": "95% target",
+     "at": "To hit ninety five"
+    },
+    "ymin": 0.78,
+    "curve_at": "Here's that answer"
+   }
+  },
+  {
+   "template": "list",
+   "chapter": "Picking a threshold",
+   "narration": "How do you find your curve? Shreya Shankar, who researches LLM pipelines, uses a simple recipe. Take a sample of real examples; she uses five hundred. Label them. Run the model and record its probabilities. Then simulate every cutoff, and pick the one that meets your accuracy target with the most automation. It's an estimate from a sample, so leave some margin.",
+   "params": {
+    "title": "Pick the threshold from data",
+    "style": "num",
+    "items": [
+     {
+      "text": "Sample real examples (she uses **500**)",
+      "at": "a sample of real examples"
+     },
+     {
+      "text": "Label them (people, or a careful reasoning model)",
+      "at": "Label them"
+     },
+     {
+      "text": "Run the model; record each probability",
+      "at": "record its probabilities"
+     },
+     {
+      "text": "Simulate every cutoff: share automated vs accuracy",
+      "at": "simulate every cutoff"
+     },
+     {
+      "text": "Pick the most automation that meets your target, with margin",
+      "at": "leave some margin"
+     }
+    ]
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "Review the doubtful first",
+   "narration": "Probabilities also tell people where to look. Suppose reviewers fix every answer they check. To get the whole system to ninety five percent, reviewing a random sample means checking three out of every four messages. Reviewing the least confident first, it's one in three.",
+   "params": {
+    "title": "Human review needed to reach 95% overall (BANKING77, Jev 1.13)",
+    "items": [
+     {
+      "value": 75,
+      "suffix": "%",
+      "label": "random review",
+      "tone": "bad",
+      "at": "random sample"
+     },
+     {
+      "value": 33,
+      "suffix": "%",
+      "label": "least confident first",
+      "tone": "good",
+      "at": "least confident first",
+      "hero": true
+     }
+    ],
+    "src": "Computed from our 3,080 answers, assuming reviewers are always right. To reach 90%: 19% vs 50%."
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Ranking beats accuracy",
+   "narration": "Which means the property that matters most isn't raw accuracy. It's whether wrong answers come with low probability. One independent test on the same banking set found a fine tuned model whose accuracy moved by under a point, while the share it could handle on its own jumped from sixty four to ninety two in a hundred.",
+   "params": {
+    "eyebrow": "Model Fatigue, testing open decision models on BANKING77",
+    "text": "Accuracy moved *under a point*. Automation went from *64 to 92* in a hundred.",
+    "sub": "What matters is whether wrong answers come with low probability.",
+    "sub_at": "wrong answers",
+    "art": "chart",
+    "tone": "agent",
+    "punch": "sixty four to ninety two"
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "Answer less precisely",
+   "narration": "There's another option besides asking a person: answer less precisely. TypeSafe classified sixty company filings into seventy five industry groups. Where the model was sure, it was right twenty seven times out of thirty. Where it wasn't, only twelve. But reporting those uncertain ones at the broader division level took them to seventy percent. Same request, no second call.",
+   "params": {
+    "title": "60 SEC filings, 75 industry groups",
+    "left": {
+     "title": "Sure (confidence ≥ 0.9)",
+     "tone": "good",
+     "items": [
+      {
+       "text": "**27/30** right at group level",
+       "at": "twenty seven"
+      }
+     ],
+     "who": "snap"
+    },
+    "right": {
+     "title": "Unsure (< 0.9)",
+     "tone": "warn",
+     "items": [
+      {
+       "text": "**12/30** right as a group",
+       "at": "only twelve"
+      },
+      {
+       "text": "**21/30** right as a division",
+       "at": "seventy percent"
+      }
+     ],
+     "who": "snap"
+    },
+    "vs": "vs",
+    "hnote": {
+     "text": "48 of 60 useful answers",
+     "at": "Same request",
+     "p": [
+      50,
+      77
+     ],
+     "pp": [
+      50,
+      76
+     ]
+    }
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Honest uncertainty",
+   "narration": "This is the deeper point of the whole module. The TypeSafe docs put it plainly: if an intelligent system, whether human or machine, cannot express honest uncertainty, the system cannot be trusted. I don't know is a feature. Build paths for it.",
+   "params": {
+    "eyebrow": "TypeSafe docs, Confidence",
+    "text": "If a system can't express *honest uncertainty*, it can't be trusted.",
+    "art": "snap",
+    "mood": "unsure",
+    "react": {
+     "at": "I don't know is a feature",
+     "mood": "happy"
+    },
+    "punch": "honest uncertainty"
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Rare cases",
+   "narration": "One trap. When the thing you're looking for is rare, accuracy lies. If one percent of messages report fraud, a rule that never flags anything is ninety nine percent accurate, and useless. For rare classes, judge thresholds by precision and recall on the flagged items, and count how many a person must read.",
+   "params": {
+    "eyebrow": "The rare-positive trap",
+    "text": "If 1% is fraud, “never flag” is *99% accurate* and useless.",
+    "sub": "Judge rare classes by precision and recall, and by the review workload they create.",
+    "sub_at": "precision and recall",
+    "art": "warn",
+    "tone": "bad",
+    "punch": "useless"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. On your labeled sample, answers above point nine five are ninety seven percent right and cover sixty percent of traffic. Your target is ninety five percent. What do you do with the other forty percent?",
+   "params": {
+    "q": "≥ 0.95 covers **60%** of traffic at **97%**. Target is 95%. The other 40%?",
+    "options": [
+     "Automate them too; the average is still fine",
+     "Route them to review, least confident first, or answer them less precisely",
+     "Drop them",
+     "Lower the threshold until everything is automated"
+    ],
+    "answer": 1,
+    "explain": "Automate the sure 60%. Send the rest to people (least confident first) or to a coarser answer, and re-measure as traffic changes."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent build a coverage table for one of your decisions, and turn it into a threshold and a review budget.",
+   "params": {
+    "title": "Build your coverage table",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Using 300 labeled examples of one decision, run the model and record the\nprobability of its answer. For thresholds 0, 0.5, 0.7, 0.8, 0.9, 0.95,\n0.99, print: share automated, accuracy on the automated share, and how\nmany items per day would go to review at our current volume. Recommend\nthe threshold that meets a 95% target with the most automation, and\nexplain the margin you left. If there's a parent category, also report\naccuracy when unsure answers fall back to it."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: ask how much you can automate at the accuracy you need, and read it off a coverage curve built from your own labels. Review the doubtful first. Answer less precisely when you can. And watch out for rare classes. That's module three. Next: composing many small judgments.",
+   "params": {
+    "items": [
+     "Ask: what share can we automate at the accuracy we need?",
+     "Read it off a coverage curve from 200–500 labels.",
+     "Review least confident first: 33% vs 75% to reach 95%.",
+     "Fall back to coarser answers; judge rare classes by precision."
+    ],
+    "next": "Decompose: many small questions",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

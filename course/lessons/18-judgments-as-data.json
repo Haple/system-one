@@ -1,0 +1,300 @@
+{
+ "id": "18-judgments-as-data",
+ "number": 18,
+ "slug": "judgments-as-data",
+ "module": "Real systems",
+ "title": "Judgments as data",
+ "short": "Judgments as data",
+ "summary": "At a fraction of a cent per answer, judgments stop being calls you make and become data you keep: columns you can sort, filter, weight and train on. Here is a study that coded half a million police narratives for $25, a loop that turned tasting notes into features for a classic model, and why cheaper judgment will mean much more of it.",
+ "takeaways": [
+  "Ask once, store the answers, and reuse them: changing a weight or a filter doesn't need another model call.",
+  "Whole corpora are now affordable: a study screened 499,500 police narratives for $25 and coded 195,857 with 27 questions for $30.",
+  "Judgments make great features: questions turned wine notes into 67 numeric columns, and a classic model beat every baseline.",
+  "With labels, let the data choose the questions: an autoresearch loop proposes questions and keeps the ones that cut error.",
+  "Cheaper judgment means more judgment, which is why TypeSafe named Jev after Jevons."
+ ],
+ "practices": [
+  "Store raw per-question answers (probabilities, model ID, date) as data, and recompute composites in code when weights change.",
+  "Before coding a large corpus, run a lean screening schema first and the full schema only where it applies.",
+  "When you have labels, use decision-model answers as features for a classic model, and keep only questions that improve held-out error.",
+  "Estimate cost per 1,000 items from measured token counts before launching a big run."
+ ],
+ "sources": [
+  {
+   "id": "arxiv-crash-narratives"
+  },
+  {
+   "id": "ts-docs-cookbooks-autoresearch_feature_discovery"
+  },
+  {
+   "id": "ts-docs-patterns-composite-scoring"
+  },
+  {
+   "id": "ts-agent-skill"
+  },
+  {
+   "id": "lindfors-first-look"
+  },
+  {
+   "id": "ts-blog-introducing-system-one-models-and-jev"
+  },
+  {
+   "id": "jevons-paradox"
+  },
+  {
+   "id": "backnotprop-poker"
+  },
+  {
+   "id": "hn-jev-launch"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "When a judgment costs a fraction of a cent, you stop thinking of it as a call. It becomes data: a column you compute once, store, and use in a hundred ways.",
+   "params": {
+    "kicker": "Lesson 18",
+    "module": "Module 5 · Real systems",
+    "title": "Judgments as *data*",
+    "subtitle": "Compute once. Sort, filter, weight and train forever.",
+    "cast": [
+     "snap",
+     "curly"
+    ]
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Ask once, reuse",
+   "narration": "The habit is simple. Store the raw answers: every probability, with the model version and the date. Then your weights, thresholds and filters are just code over a table. Change a weight and the ranking updates instantly, with no new model calls. One tester put it neatly: the judgments are cached, so rewriting the composition rules costs nothing.",
+   "params": {
+    "file": "judgments.sql",
+    "lang": "text",
+    "lines": [
+     "-- one row per item, one column per question (raw probabilities)",
+     "CREATE TABLE ticket_judgments (",
+     "  ticket_id TEXT, model TEXT, judged_at DATE,",
+     "  refund_requested REAL, duplicate_charge REAL,",
+     "  churn_threat REAL, frustration REAL);",
+     "",
+     "-- change the weights any time: no new model calls",
+     "SELECT ticket_id,",
+     "  0.5*churn_threat + 0.3*frustration/2 + 0.2*duplicate_charge AS priority",
+     "FROM ticket_judgments ORDER BY priority DESC;"
+    ],
+    "hl": [
+     {
+      "from": 3,
+      "to": 5,
+      "label": "raw answers + model + date",
+      "tone": "agent",
+      "at": "Store the raw answers"
+     },
+     {
+      "from": 8,
+      "to": 10,
+      "label": "composites are just code",
+      "tone": "good",
+      "at": "Change a weight"
+     }
+    ]
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "Whole corpora",
+   "narration": "That changes what's affordable. Texas has five million police crash narratives that analysts rarely read, because coding them with a frontier model is too expensive. A research team screened half a million of them with ten questions, for twenty five dollars. Then they coded almost two hundred thousand with twenty seven questions, for thirty dollars, with zero failed calls. The whole five million would cost about seven hundred seventy four.",
+   "params": {
+    "title": "Police crash narratives, Texas, with Jev",
+    "items": [
+     {
+      "value": 499500,
+      "label": "screened, 10 questions each",
+      "tone": "agent",
+      "at": "half a million"
+     },
+     {
+      "value": 25,
+      "prefix": "$",
+      "label": "for the screening run",
+      "tone": "good",
+      "at": "twenty five dollars"
+     },
+     {
+      "value": 30,
+      "prefix": "$",
+      "label": "to code 195,857 with 27 questions",
+      "tone": "good",
+      "at": "thirty dollars",
+      "hero": true
+     }
+    ],
+    "src": "Rafe & Das (Texas State University), Calibrated Decisions at Scale, arXiv 2026. Projected for all 5,018,080 narratives: $774.",
+    "punch": false
+   }
+  },
+  {
+   "template": "flow",
+   "chapter": "Whole corpora",
+   "narration": "Notice the two stages. A lean screen with ten presence questions runs over everything. The detailed twenty seven question schema only runs where the screen found something to code. The raw probabilities overstated how common things were, but once recalibrated on human labels, the review budget became a number: how many records a person would still need to read.",
+   "params": {
+    "title": "Screen everything, code what matters, review what's uncertain",
+    "nodes": [
+     {
+      "label": "Screen",
+      "sub": "10 presence Nouls on every record",
+      "kind": "snap",
+      "edge": "a hit",
+      "at": "lean screen"
+     },
+     {
+      "label": "Code",
+      "sub": "27 questions where it applies",
+      "kind": "snap",
+      "edge": "uncertain",
+      "at": "detailed"
+     },
+     {
+      "label": "Review budget",
+      "sub": "records a person must read",
+      "kind": "you",
+      "at": "review"
+     }
+    ]
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "Judgments as features",
+   "narration": "Judgments also make great features for classic machine learning. A TypeSafe cookbook predicts a wine critic's score from the tasting note. Predicting the average gives an error of three point oh nine points. Word counts get two point four seven. Asking the decision model for the score directly, two point one five. But thirty eight narrow questions, fed as features to a CatBoost model, got it down to one point seven seven.",
+   "params": {
+    "title": "Predict a critic's score (80–100) from a tasting note",
+    "cols": [
+     "Approach",
+     "Held-out error (RMSE, points)"
+    ],
+    "widths": "2fr 1fr",
+    "rows": [
+     {
+      "cells": [
+       "Always predict the average",
+       "3.09"
+      ],
+      "at": "three point oh nine"
+     },
+     {
+      "cells": [
+       "CatBoost on word counts",
+       "2.47"
+      ],
+      "at": "Word counts"
+     },
+     {
+      "cells": [
+       "Ask the decision model for the score",
+       "2.15"
+      ],
+      "at": "directly"
+     },
+     {
+      "cells": [
+       "*38 narrow questions → CatBoost*",
+       "*1.77*"
+      ],
+      "hl": true,
+      "at": "thirty eight narrow questions"
+     }
+    ],
+    "note": "TypeSafe cookbook: Autoresearch feature discovery, 2,000 wine reviews, 800 held out."
+   }
+  },
+  {
+   "template": "flow",
+   "chapter": "Let the data pick the questions",
+   "narration": "And nobody wrote those thirty eight questions by hand. An LLM proposed them, the decision model answered them for every row, and CatBoost reported which questions helped and which rows it still got wrong. The next round read that report and proposed better questions. Five rounds took the error from one point eight seven to one point seven seven. Trying a change costs no API calls, because the answers are already stored.",
+   "params": {
+    "title": "An autoresearch loop",
+    "nodes": [
+     {
+      "label": "LLM proposes questions",
+      "sub": "reads last round's errors",
+      "kind": "mull",
+      "edge": "questions",
+      "at": "An LLM proposed them"
+     },
+     {
+      "label": "Decider answers every row",
+      "sub": "probabilities become columns",
+      "kind": "snap",
+      "edge": "features",
+      "at": "answered them"
+     },
+     {
+      "label": "CatBoost trains",
+      "sub": "reports what helped",
+      "kind": "curly",
+      "at": "CatBoost reported"
+     }
+    ],
+    "caption": "Keep a question only if held-out error improves.",
+    "caption_at": "five rounds"
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Jevons",
+   "narration": "Which brings us to the name. TypeSafe named Jev after William Stanley Jevons, who noticed in 1865 that more efficient steam engines made Britain burn more coal, not less. Their bet: every order of magnitude drop in the cost of intelligence unlocks orders of magnitude more uses. Whether that holds depends on demand, but it's the right way to think about judgments as data.",
+   "params": {
+    "eyebrow": "Why it's called Jev",
+    "text": "Cheaper judgment means *more* judgment, not less.",
+    "sub": "Jevons (1865): efficient engines raised coal use. TypeSafe's bet: cheaper intelligence unlocks far more uses.",
+    "sub_at": "more uses",
+    "art": "coin",
+    "tone": "agent",
+    "punch": "more coal"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. You scored ten thousand tickets with six questions last week. Today the team wants to change the priority weights. What do you need to do?",
+   "params": {
+    "q": "10,000 tickets were scored with 6 questions last week. New priority **weights** today. What now?",
+    "options": [
+     "Rescore all 10,000 tickets",
+     "Recompute the priority in code from the stored answers",
+     "Ask one new question per ticket",
+     "Retrain the decision model"
+    ],
+    "answer": 1,
+    "explain": "The judgments didn't change, only how you combine them. If you stored the raw answers, a new weighting is a query, not a model call."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent turn one judgment in your product into a stored, reusable table.",
+   "params": {
+    "title": "Make judgments a table",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Pick one judgment we make about records (tickets, leads, reviews,\ndocuments). Create a table that stores the raw answer for each question\n(probabilities), the model ID and the date, keyed by record. Backfill\n1,000 records in batches and report the measured cost per 1,000. Move\nthe weighting and thresholds into a query or function over that table,\nand show that changing a weight needs no new model calls."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: judgments are data. Store the raw answers with the model and date, and compute composites in code. Whole corpora are affordable now, so screen first, then code. Use judgments as features, and let the data pick the questions. That's module five. Next, module six: shipping it, starting with the jagged edges.",
+   "params": {
+    "items": [
+     "Store raw answers + model + date; composites are code.",
+     "Corpora are affordable: 499,500 narratives screened for $25.",
+     "Judgments make features: 38 questions beat every baseline.",
+     "Cheaper judgment means more judgment (Jevons)."
+    ],
+    "next": "Know the jagged edges",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

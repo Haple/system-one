@@ -1,0 +1,348 @@
+{
+ "id": "17-agents",
+ "number": 17,
+ "slug": "decision-models-in-agents",
+ "module": "Real systems",
+ "title": "Decision models inside agents",
+ "short": "Inside agents",
+ "summary": "Agents make dozens of small decisions per task: which tool, which skill, are these arguments grounded, is it time to ask the user, is the task done. Here is where a fast decision model fits in an agent loop, a gate that stops an agent from guessing, what skill selection gained in TypeSafe's test, and real-time control at ten decisions a second.",
+ "takeaways": [
+  "Most of an agent's decisions are rote; let a decision model make those and save the LLM for the hard ones.",
+  "Good spots: model routing, tool and skill selection, argument checks before a tool runs, guardrails, and 'is it done?' checks.",
+  "A before-tool-call gate with two narrow questions can make an agent ask instead of guessing.",
+  "Selecting skills with a decision model cut wrong skill loads from 16.8% to 7.3% in TypeSafe's test of 182 skills.",
+  "Prefer workflows (code-defined paths with smart nodes) when you can map the decision tree; use agents when you can't."
+ ],
+ "practices": [
+  "Gate tool calls on narrow questions (are the arguments grounded in what the user said? is it premature to act?) and guide the agent back instead of hard-failing.",
+  "Use a decision model to pick the few relevant tools or skills to load per step, instead of loading everything into context.",
+  "Give long-running agents a cheap 'ask the decision model' tool for yes/no and classification checks over files or pages.",
+  "Set a deadline for real-time decisions with a deterministic fallback when the answer is late."
+ ],
+ "sources": [
+  {
+   "id": "ip7Qej0ONoE",
+   "t": 413
+  },
+  {
+   "id": "anthropic-effective-agents"
+  },
+  {
+   "id": "strands-readme"
+  },
+  {
+   "id": "strands-examples-strands-readme"
+  },
+  {
+   "id": "strands-blog"
+  },
+  {
+   "id": "ts-docs-cookbooks-skill_suggestion"
+  },
+  {
+   "id": "_U-O5lYhJ7Q",
+   "t": 1280
+  },
+  {
+   "id": "Spn-F83ZHH0",
+   "t": 456
+  },
+  {
+   "id": "ts-blog-introducing-system-one-models-and-jev"
+  },
+  {
+   "id": "jevman"
+  },
+  {
+   "id": "hn-strands-decider"
+  },
+  {
+   "id": "9Aato-NfjoU",
+   "t": 4429
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Agents are where language models make the most decisions per minute: which tool, which file, ask or act, done or not. Most of those decisions are small. That's where a fast decision model belongs.",
+   "params": {
+    "kicker": "Lesson 17",
+    "module": "Module 5 · Real systems",
+    "title": "Decision models *inside agents*",
+    "subtitle": "Let the LLM make the hard calls, and a decider the rote ones.",
+    "cast": [
+     "mull",
+     "snap"
+    ]
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Plus, not versus",
+   "narration": "TypeSafe's founder is clear that this isn't a rivalry. The future, he says, is not going to be System One models versus LLMs. It's System One models plus code. And for agents, plus the LLM.",
+   "params": {
+    "text": "The future is not going to be Jev or System 1 models versus LLMs. We think it's going to be *Jev or System 1 models plus code*.",
+    "who": "Diogo Almeida",
+    "role": "TypeSafe AI",
+    "src": "Runtime 2026",
+    "t": 413
+   }
+  },
+  {
+   "template": "systems",
+   "chapter": "Where it fits",
+   "narration": "AWS built Strands Decider for exactly this. Its README lists the spots: route each task to the right model. Pick the next tool. Check a tool call's arguments before it runs. Triage, guardrails, cheap evaluations. And hybrid agents, where the LLM makes the hard decisions and a decider makes the rote ones.",
+   "params": {
+    "title": "Rote decisions inside an agent loop",
+    "cols": [
+     {
+      "who": "snap",
+      "title": "Before acting",
+      "sub": "decider",
+      "items": [
+       "Which model for this task?",
+       "Which tool or skill next?",
+       "Are the arguments grounded?"
+      ]
+     },
+     {
+      "who": "mull",
+      "title": "The hard part",
+      "sub": "the LLM",
+      "items": [
+       "Plan the approach",
+       "Write the code or reply",
+       "Recover from surprises"
+      ]
+     },
+     {
+      "who": "snap",
+      "title": "After acting",
+      "sub": "decider",
+      "items": [
+       "Did the step succeed?",
+       "Is the task done?",
+       "Should a person look?"
+      ],
+      "react": {
+       "at": "rote ones",
+       "mood": "sure"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "A gate before tools",
+   "narration": "Here's the Strands example. The agent has a weather tool, and an eager system prompt. A user asks: what's the weather? No city. The agent guesses one and calls the tool. But before the call runs, a hook asks the decider two narrow questions. Are the argument values grounded in facts the user actually gave? Is it premature to call this tool before clarifying? A few lines of Python, and the agent goes back and asks which city.",
+   "params": {
+    "file": "weather_gate.py",
+    "lang": "py",
+    "lines": [
+     "class GroundingGate(InterventionHandler):",
+     "    def before_tool_call(self, call, conversation):",
+     "        a = decider.ask(",
+     "            state={\"conversation\": conversation, \"call\": call},",
+     "            questions={",
+     "                \"grounded\": Noul(\"Are the argument values grounded \"",
+     "                                 \"in facts the user provided?\"),",
+     "                \"premature\": Noul(\"Is it premature to call this tool \"",
+     "                                  \"before clarifying with the user?\"),",
+     "            })",
+     "        if a[\"grounded\"] < 0.5 or a[\"premature\"] > 0.5:",
+     "            return Guide(\"Ask the user which city they mean.\")",
+     "        return Proceed()"
+    ],
+    "hl": [
+     {
+      "from": 6,
+      "to": 9,
+      "label": "two narrow questions",
+      "tone": "agent",
+      "at": "two narrow questions"
+     },
+     {
+      "from": 11,
+      "to": 12,
+      "label": "guide, don't refuse",
+      "tone": "good",
+      "at": "asks which city"
+     }
+    ],
+    "caption": "Adapted from strands-decider/examples/strands. `Guide` hands the turn back with feedback instead of failing.",
+    "caption_at": "A few lines"
+   }
+  },
+  {
+   "template": "chart",
+   "chapter": "Pick the right skill",
+   "narration": "Skill selection is another big one. Agents usually stuff every skill description into the prompt and hope. TypeSafe tested an agent with a hundred eighty two skills. On its own, it loaded the wrong skill for sixteen point eight percent of requests that had a matching skill. With a decider ranking skills first, then rechecking the top three with their full text, that fell to seven point three percent. Needless loads fell from nine point eight to four.",
+   "params": {
+    "title": "182 skills: how often the agent loaded a skill wrongly",
+    "kind": "bar",
+    "ymax": 0.21,
+    "data": [
+     {
+      "x": "wrong skill, agent alone",
+      "y": 0.168,
+      "label": "16.8%",
+      "tone": "bad",
+      "at": "sixteen point eight"
+     },
+     {
+      "x": "wrong skill, with decider",
+      "y": 0.073,
+      "label": "7.3%",
+      "hl": true,
+      "at": "seven point three"
+     },
+     {
+      "x": "needless load, agent alone",
+      "y": 0.098,
+      "label": "9.8%",
+      "tone": "bad",
+      "at": "Needless loads"
+     },
+     {
+      "x": "needless load, with decider",
+      "y": 0.04,
+      "label": "4.0%",
+      "hl": true,
+      "at": "to four"
+     }
+    ],
+    "src": "TypeSafe cookbook: Skill suggestion (Nous Research's Hermes catalog), two requests per turn"
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Ask the decider",
+   "narration": "You can also hand the agent the decision model as a tool. Developer IndyDevDan gave his coding agent an ask Jev tool for yes or no and classification questions about files. The agent stopped reading whole files into its expensive context just to answer a simple question. His words: we delegated a QA task for file reading outside of my expensive language model to Jev.",
+   "params": {
+    "eyebrow": "IndyDevDan, “10 Levels of Jev For Agentic Engineers”",
+    "text": "We delegated a QA task for file reading *outside of my expensive language model* to Jev.",
+    "art": "bot",
+    "tone": "s2",
+    "punch": "outside of my expensive"
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "Real time",
+   "narration": "And speed opens a new kind of agent: one that acts in real time. TypeSafe's demo plays Doom at ten decisions a second, which costs about seven dollars an hour. Opper's Pac-Man benchmark gives each decision a two second deadline: answer late, and a simple backup rule moves instead.",
+   "params": {
+    "items": [
+     {
+      "value": 10,
+      "suffix": "/s",
+      "label": "decisions per second in TypeSafe's Doom demo",
+      "tone": "agent",
+      "at": "ten decisions a second"
+     },
+     {
+      "value": 7,
+      "prefix": "~$",
+      "suffix": "/h",
+      "label": "the cost of running it",
+      "tone": "good",
+      "at": "seven dollars an hour"
+     },
+     {
+      "value": 2,
+      "suffix": " s",
+      "label": "deadline in Opper's JevMan, then a backup rule",
+      "tone": "s2",
+      "at": "two second deadline"
+     }
+    ],
+    "src": "TypeSafe launch post; Opper AI, JevMan benchmark",
+    "punch": false
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "Workflow or agent?",
+   "narration": "Finally, step back. Anthropic separates workflows, where code defines the paths, from agents, where the LLM decides its own steps. A decision model makes workflows far more capable, because every node can now judge meaning. So before you build an agent, ask: could this be a workflow with smart nodes? If you can map the decision tree, it should be.",
+   "params": {
+    "left": {
+     "title": "Workflow + decision model",
+     "who": "curly",
+     "tone": "good",
+     "items": [
+      {
+       "text": "Code defines the paths",
+       "at": "code defines the paths"
+      },
+      {
+       "text": "Each node judges meaning, fast"
+      },
+      {
+       "text": "Predictable, testable, cheap"
+      }
+     ]
+    },
+    "right": {
+     "title": "Agent",
+     "who": "mull",
+     "tone": "s2",
+     "items": [
+      {
+       "text": "The LLM decides its own steps",
+       "at": "decides its own steps"
+      },
+      {
+       "text": "For open-ended tasks"
+      },
+      {
+       "text": "Use deciders for its rote calls"
+      }
+     ]
+    },
+    "vs": "or"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. Your agent sometimes calls a payment tool with an amount the user never mentioned. What's the best fix with a decision model?",
+   "params": {
+    "q": "An agent calls a payment tool with an **amount the user never said**. Best fix?",
+    "options": [
+     "Tell the agent in the prompt to be careful",
+     "A before-tool-call gate: “Is the amount grounded in what the user said?” → guide it back to ask",
+     "Ask the decider to choose the amount",
+     "Lower the model temperature"
+    ],
+    "answer": 1,
+    "explain": "A narrow grounding question before the call catches invented arguments, and guiding the agent back makes it ask the user instead of guessing."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent add a decision model gate to its own tool calls.",
+   "params": {
+    "title": "Gate your tools",
+    "intro": "Paste this into your coding agent (works best on an agent you are building):",
+    "prompt": "In our agent, add a hook that runs before every tool call. It sends the\nconversation and the proposed call to a decision model with narrow\nquestions: are the argument values grounded in what the user said? is\nit premature to act before clarifying? is this tool appropriate for the\nrequest? If any check fails, hand the turn back to the agent with\nspecific feedback instead of failing. Log the probabilities, and add a\ntest where the user omits a required detail."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: decision models go inside agents, not instead of them. Route, pick tools and skills, check arguments, decide when it's done. Gate risky calls and guide the agent back. And when you can map the decision tree, build a workflow with smart nodes. That's module five's first half. Next: turning judgments into data.",
+   "params": {
+    "items": [
+     "System One plus code plus the LLM, not versus.",
+     "Deciders take the rote calls: route, tool, skill, done?",
+     "Gate tool calls on grounded arguments; guide, don't refuse.",
+     "Mappable decision tree? Build a workflow with smart nodes."
+    ],
+    "next": "Judgments as data",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

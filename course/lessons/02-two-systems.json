@@ -1,0 +1,341 @@
+{
+ "id": "02-two-systems",
+ "number": 2,
+ "slug": "system-one-and-system-two",
+ "module": "The idea",
+ "title": "System One and System Two",
+ "short": "System One and System Two",
+ "summary": "The name comes from Daniel Kahneman: fast, automatic judgment versus slow, effortful reasoning. Here is what the metaphor gets right about decision models, where it breaks, and the rule of thumb it gives you: if an expert could answer in a few seconds, it is a System One question.",
+ "takeaways": [
+  "Kahneman's System 1 is fast, automatic and effortless; System 2 is slow, serial and effortful. Decision models aim at the first kind of judgment.",
+  "Rule of thumb: if a knowledgeable person could answer in a few seconds with the right context, it is a System One question.",
+  "Tasks that need several steps of reasoning, new text or planning are System Two work: send them to a reasoning model, a person, or decompose them.",
+  "The useful architecture is a layer cake: code is exact, the decision model judges, the language model thinks.",
+  "The two systems are a metaphor, and fast does not have to mean sloppy: what makes fast judgments usable is honest uncertainty."
+ ],
+ "practices": [
+  "Before calling a decision model, check that each question is a few-second judgment for an expert given the state; if not, split it or route it to a reasoning model.",
+  "Keep exact computation (math, dates, counting, lookups) in code, never in a fast judgment.",
+  "Escalate System Two work (multi-step reasoning, writing, planning) to an LLM or a person instead of forcing it into one question."
+ ],
+ "sources": [
+  {
+   "id": "kahneman-nobel"
+  },
+  {
+   "id": "UwwBG-MbniY",
+   "t": 549
+  },
+  {
+   "id": "UwwBG-MbniY",
+   "t": 889
+  },
+  {
+   "id": "CjVQJdIrDJ0",
+   "t": 1000
+  },
+  {
+   "id": "CjVQJdIrDJ0",
+   "t": 1241
+  },
+  {
+   "id": "FtUbMG3rlFs",
+   "t": 240
+  },
+  {
+   "id": "zjkBMFhNj_g",
+   "t": 2160
+  },
+  {
+   "id": "ts-docs-introduction"
+  },
+  {
+   "id": "zaLQ0AnY9dI",
+   "t": 7
+  },
+  {
+   "id": "devto-model-doesnt-talk"
+  },
+  {
+   "id": "ip7Qej0ONoE",
+   "t": 413
+  },
+  {
+   "id": "latent-space-jev",
+   "t": 4883
+  },
+  {
+   "id": "ts-blog-introducing-system-one-models-and-jev"
+  },
+  {
+   "id": "dual-process"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Why call a model System One? The name comes from psychology, and it hands you the most useful rule in this course: which questions belong to a fast model, and which don't.",
+   "params": {
+    "kicker": "Lesson 2",
+    "module": "Module 1 · The idea",
+    "title": "System One and *System Two*",
+    "subtitle": "Where the name comes from, and the rule of thumb it gives you.",
+    "cast": [
+     "snap",
+     {
+      "who": "mull",
+      "mood": "think"
+     }
+    ]
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "Two ways to think",
+   "narration": "Try this. What's two plus two? The answer just appears. Now, what's seventeen times twenty four? You can feel yourself start to work. Daniel Kahneman, who won a Nobel prize for his work on judgment and decision making, called these System 1 and System 2.",
+   "params": {
+    "left": {
+     "title": "2 + 2 = ?",
+     "who": "snap",
+     "tone": "good",
+     "items": [
+      {
+       "text": "The answer just appears",
+       "at": "just appears"
+      },
+      {
+       "text": "Automatic, effortless"
+      }
+     ],
+     "at": "two plus two"
+    },
+    "right": {
+     "title": "17 × 24 = ?",
+     "who": "mull",
+     "tone": "s2",
+     "items": [
+      {
+       "text": "You feel yourself start to work",
+       "at": "start to work"
+      },
+      {
+       "text": "Serial, effortful"
+      }
+     ],
+     "at": "seventeen"
+    },
+    "vs": "vs"
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Two ways to think",
+   "narration": "In his Nobel lecture he described them like this. System 1 is fast, automatic, effortless and associative. System 2 is slower, serial, effortful and deliberately controlled.",
+   "params": {
+    "text": "The operations of System 1 are *fast, automatic, effortless, associative*… The operations of System 2 are slower, serial, effortful, and deliberately controlled.",
+    "who": "Daniel Kahneman",
+    "role": "Nobel lecture, 2002",
+    "src": "Maps of Bounded Rationality"
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Fast is not dumb",
+   "narration": "And System 1 isn't the dumb one. Kahneman's point is that this is where skill lives. A chess master's strong moves come to mind instantly. System 2 just checks them.",
+   "params": {
+    "text": "System 1 is *where skill is*. That is when we get to be skilled at something it becomes automatic.",
+    "who": "Daniel Kahneman",
+    "role": "Talks at Google",
+    "src": "Thinking, Fast and Slow",
+    "t": 1000
+   }
+  },
+  {
+   "template": "spectrum",
+   "chapter": "Models on the spectrum",
+   "narration": "Models sit on the same spectrum. A decision model reads the state once and answers in a single pass, in a fraction of a second. Reasoning models do the opposite: they spend tokens thinking, step by step, and trade time for accuracy.",
+   "params": {
+    "title": "From one pass to many steps",
+    "left": {
+     "label": "System One",
+     "sub": "one pass, ~0.25 s",
+     "who": "snap"
+    },
+    "right": {
+     "label": "System Two",
+     "sub": "thinks step by step, seconds to minutes",
+     "who": "mull"
+    },
+    "marks": [
+     {
+      "pos": 0.08,
+      "label": "Is this a refund request?",
+      "at": "single pass"
+     },
+     {
+      "pos": 0.3,
+      "label": "Which team owns it?"
+     },
+     {
+      "pos": 0.62,
+      "label": "Draft the reply",
+      "at": "Reasoning models"
+     },
+     {
+      "pos": 0.92,
+      "label": "Plan the migration",
+      "at": "trade time"
+     }
+    ]
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "The rule of thumb",
+   "narration": "So here's the rule of thumb, straight from the TypeSafe docs. Make each question a gut check: the kind of judgment a knowledgeable person could make in a few seconds, given the right context.",
+   "params": {
+    "eyebrow": "The rule of thumb",
+    "text": "If an expert could answer it *in a few seconds*, it's a System One question.",
+    "art": "snap",
+    "mood": "sure",
+    "punch": "in a few seconds"
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "The rule of thumb",
+   "narration": "Is this customer asking for a refund? Which team should handle it? How severe is this bug? An expert answers those at a glance. But should we make an exception for this customer, given three years of history? Write the apology? Plan the rollout? Those need System Two.",
+   "params": {
+    "left": {
+     "title": "System One questions",
+     "who": "snap",
+     "tone": "good",
+     "items": [
+      {
+       "text": "Is the customer asking for a refund?",
+       "at": "asking for a refund"
+      },
+      {
+       "text": "Which team should handle it?",
+       "at": "Which team"
+      },
+      {
+       "text": "How severe is this bug?",
+       "at": "How severe"
+      }
+     ]
+    },
+    "right": {
+     "title": "System Two work",
+     "who": "mull",
+     "tone": "s2",
+     "items": [
+      {
+       "text": "Make an exception, given 3 years of history?",
+       "at": "exception"
+      },
+      {
+       "text": "Write the apology",
+       "at": "apology"
+      },
+      {
+       "text": "Plan the rollout",
+       "at": "rollout"
+      }
+     ],
+     "at": "But should we"
+    },
+    "vs": "vs"
+   }
+  },
+  {
+   "template": "flow",
+   "chapter": "The layer cake",
+   "narration": "Developer Daniel Sam summed up the architecture in one line: put a decision layer between your rules and your reasoner. Let code be exact, let the model judge, let the LLM think.",
+   "params": {
+    "title": "Let code be exact, let the model judge, let the LLM think",
+    "nodes": [
+     {
+      "label": "Code",
+      "sub": "exact: rules, math, dates",
+      "kind": "curly",
+      "at": "code be exact",
+      "edge": "narrow questions"
+     },
+     {
+      "label": "Decision model",
+      "sub": "judges: typed answers",
+      "kind": "snap",
+      "at": "model judge",
+      "edge": "hard cases"
+     },
+     {
+      "label": "LLM or person",
+      "sub": "thinks: reasoning, writing",
+      "kind": "mull",
+      "at": "LLM think"
+     }
+    ]
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Where the metaphor breaks",
+   "narration": "One caution. Kahneman himself called the two systems fictitious characters, a way to talk, not two boxes in the brain. And System 1 thinking is famous for its biases. A fast model can be confidently wrong too. What makes fast judgments usable in software is honest uncertainty, which is module three of this course.",
+   "params": {
+    "eyebrow": "Kahneman, Talks at Google",
+    "text": "“Those are *fictitious characters*. They don't exist.”",
+    "sub": "Fast can still be wrong. What makes it usable is honest uncertainty.",
+    "sub_at": "honest uncertainty",
+    "art": "snap",
+    "mood": "unsure",
+    "react": {
+     "at": "confidently wrong",
+     "mood": "unsure"
+    }
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. Which of these is a System One question?",
+   "params": {
+    "q": "Which of these is a **System One** question?",
+    "options": [
+     "Given this contract and our policy history, should we waive the penalty?",
+     "Does this message mention a delivery problem?",
+     "Write a migration plan for this database",
+     "How many invoices in this list are overdue?"
+    ],
+    "answer": 1,
+    "explain": "An expert spots a delivery problem at a glance. Waiving a penalty and planning a migration need reasoning or writing, and counting overdue invoices is exact work for code."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Take the list of hidden decisions from the last lesson and have your agent sort them into System One questions and System Two work.",
+   "params": {
+    "title": "Sort your decisions",
+    "intro": "Paste this into your coding agent, with last lesson's list:",
+    "prompt": "For each LLM decision we found in this codebase, classify it:\n- System One: an expert could answer it in a few seconds from the given data\n- System Two: it needs multi-step reasoning, new text, or planning\n- Code: it is exact (math, dates, counting, lookups)\nFor every System Two item, propose how to split it into narrow\nquestions plus code, or say why it should stay with an LLM."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: System One is fast, automatic judgment, and that's what decision models aim for. If an expert could answer in seconds, it's a System One question. Code stays exact, and System Two takes the hard cases. Next: what's actually inside a decision model.",
+   "params": {
+    "items": [
+     "System 1: fast, automatic. System 2: slow, effortful.",
+     "An expert could answer in seconds? It's a System One question.",
+     "Code is exact, the model judges, the LLM thinks.",
+     "Fast can be wrong: honest uncertainty is what makes it usable."
+    ],
+    "next": "How a decision model works",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

@@ -1,0 +1,379 @@
+{
+ "id": "03-how-it-works",
+ "number": 3,
+ "slug": "how-decision-models-work",
+ "module": "The idea",
+ "title": "How a decision model works",
+ "short": "How it works",
+ "summary": "A language model writes its answer one token at a time. A decision model reads your state once and scores every allowed answer in a single pass. Here is the core trick in a few lines of Python, what production models add on top (trained readout heads, shared state, calibration training), and why typed output is not the same as a correct answer.",
+ "takeaways": [
+  "An LLM's answer costs one sequential pass per output token; a decision model scores all allowed answers in one pass.",
+  "The core trick: read the model's probability for each allowed option instead of generating text, then normalize.",
+  "Production decision models add a trained readout head, shared state across questions, and training aimed at calibrated probabilities.",
+  "Because it only scores the options you supplied, it can never return a value outside your schema.",
+  "Typed is not the same as correct: a decision model can still be confidently wrong. That is why probabilities and calibration matter."
+ ],
+ "practices": [
+  "Treat a decision model's output as a probability distribution over your options, not as a fact.",
+  "Never assume 'cannot return an invalid value' means 'cannot be wrong'; gate risky actions on probability and test on your data.",
+  "Keep the set of allowed answers complete, including a none-of-the-above option when inputs can fall outside it."
+ ],
+ "sources": [
+  {
+   "id": "devto-model-doesnt-talk"
+  },
+  {
+   "id": "nobodywho-jev-25-lines"
+  },
+  {
+   "id": "FN7oaLcIlvk",
+   "t": 60
+  },
+  {
+   "id": "Kvgy36vIv-0",
+   "t": 644
+  },
+  {
+   "id": "strands-readme"
+  },
+  {
+   "id": "cf-clef-blog"
+  },
+  {
+   "id": "hf-clef-card"
+  },
+  {
+   "id": "brooker-why-not-encoder"
+  },
+  {
+   "id": "ts-blog-introducing-system-one-models-and-jev"
+  },
+  {
+   "id": "9Aato-NfjoU",
+   "t": 383
+  },
+  {
+   "id": "cJ0EOzey--o",
+   "t": 976
+  },
+  {
+   "id": "hn-jev-launch"
+  },
+  {
+   "id": "flaviocopes-jev"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "What's actually inside a decision model? Less magic than you'd think. In this lesson, you'll see the core trick in a few lines of code, and what the real models add on top.",
+   "params": {
+    "kicker": "Lesson 3",
+    "module": "Module 1 · The idea",
+    "title": "How a decision model *works*",
+    "subtitle": "Read once. Score every allowed answer. Return a distribution.",
+    "cast": [
+     "snap",
+     "curly"
+    ]
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "Generate vs score",
+   "narration": "Start with a normal language model. It writes its answer one token at a time, and every token is another full pass through the network. A fifty token answer is fifty passes, one after another. A decision model never writes. It reads your state once, and scores every allowed answer in a single pass.",
+   "params": {
+    "left": {
+     "title": "Language model",
+     "who": "mull",
+     "tone": "s2",
+     "items": [
+      {
+       "text": "pass 1 → `{`",
+       "at": "one token at a time"
+      },
+      {
+       "text": "pass 2 → `\"team\"`"
+      },
+      {
+       "text": "pass 3 → `:`"
+      },
+      {
+       "text": "… pass 50 → `}`",
+       "at": "fifty passes"
+      }
+     ]
+    },
+    "right": {
+     "title": "Decision model",
+     "who": "snap",
+     "tone": "good",
+     "items": [
+      {
+       "text": "pass 1 → billing 0.95 · technical 0.03 · other 0.02",
+       "at": "never writes"
+      }
+     ],
+     "at": "never writes"
+    },
+    "vs": "vs"
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "The core trick",
+   "narration": "Here's the core trick, adapted from a popular post called Jev in twenty five lines of Python. Put the options in the prompt with letters. Run a small open model once. Then, instead of letting it write, read the probability it gives each letter as the next token, and normalize.",
+   "params": {
+    "file": "tiny_decider.py",
+    "lang": "py",
+    "badge": "runs locally",
+    "lines": [
+     "labels  = [\"A\", \"B\", \"C\"]",
+     "choices = [\"Legitimate\", \"Spam\", \"Phishing\"]",
+     "email   = \"Payroll asks for your password on a fake page.\"",
+     "prompt  = f\"Choose one.\\nEmail: {email}\\nA. Legitimate\\nB. Spam\\nC. Phishing\"",
+     "model.eval(model.tokenize(prompt))",
+     "logits = model.scores[-1]",
+     "x = [logits[token_id(l)] for l in labels]",
+     "p = softmax(x)"
+    ],
+    "hl": [
+     {
+      "from": 1,
+      "to": 4,
+      "label": "options in the prompt",
+      "tone": "agent",
+      "at": "with letters"
+     },
+     {
+      "from": 5,
+      "to": 5,
+      "label": "run once",
+      "tone": "s2",
+      "at": "once"
+     },
+     {
+      "from": 6,
+      "to": 8,
+      "label": "read, don't write",
+      "tone": "good",
+      "at": "instead of letting it write"
+     }
+    ]
+   }
+  },
+  {
+   "template": "dist",
+   "chapter": "The core trick",
+   "narration": "On a tiny model, that phishing email comes out about eighty nine percent phishing, eight percent spam, and three percent legitimate. A distribution over exactly your options. Nothing to parse, and no way to answer outside the list.",
+   "params": {
+    "state": "Payroll asks for your password on a non-company sign-in page.",
+    "question": "Which option is this email?",
+    "options": [
+     {
+      "label": "Phishing",
+      "p": 0.885
+     },
+     {
+      "label": "Spam",
+      "p": 0.084
+     },
+     {
+      "label": "Legitimate",
+      "p": 0.031
+     }
+    ],
+    "at": "eighty nine percent",
+    "gauge": false,
+    "more": "Qwen3-0.6B, one forward pass (NobodyWho's example)",
+    "hnote": {
+     "text": "only your options exist",
+     "at": "outside the list",
+     "p": [
+      74,
+      40
+     ],
+     "pp": [
+      62,
+      66
+     ]
+    }
+   }
+  },
+  {
+   "template": "stack",
+   "chapter": "What real models add",
+   "narration": "Real decision models start from that idea and add three layers. A trained readout head, instead of guessing letter tokens. A shared state, read once, so many questions cost almost nothing extra. And training aimed at one thing: probabilities you can trust.",
+   "params": {
+    "title": "What production models add",
+    "sub": "On top of a pretrained language model torso.",
+    "layers": [
+     {
+      "label": "A pretrained model torso",
+      "sub": "Qwen, Gemma or your own; the language head is removed",
+      "tone": "paper",
+      "icon": "brain",
+      "at": "that idea"
+     },
+     {
+      "label": "A trained readout head",
+      "sub": "scores each allowed option; no text generation",
+      "tone": "ink",
+      "icon": "bolt",
+      "at": "readout head"
+     },
+     {
+      "label": "Shared state, many questions",
+      "sub": "the state is read once; each question adds only its own tokens",
+      "tone": "s2",
+      "icon": "layers",
+      "at": "shared state"
+     },
+     {
+      "label": "Calibration training",
+      "sub": "Brier loss, RLCD-style rewards, distillation",
+      "tone": "agent",
+      "icon": "target",
+      "at": "probabilities you can trust"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "What real models add",
+   "narration": "AWS's open Strands Decider is a good look inside. They take a two billion parameter model, throw away the part that generates words, and add a tiny pointer head of about a million parameters that compares each option to the question. One forward pass, no generation, no decoding loop.",
+   "params": {
+    "text": "One forward pass, *no generation, no decoding loop*.",
+    "who": "Strands Decider README",
+    "role": "AWS Strands Labs",
+    "src": "github.com/strands-labs/strands-decider"
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "Three training goals",
+   "narration": "The training goal is where these models differ most from chatbots. Reinforcement learning from human feedback, which made ChatGPT, rewards answers people prefer. Verifiable rewards made reasoning models good at math and code. TypeSafe calls its third path reinforcement learning for calibrated decisions: reward probabilities that match how often the answer turns out right.",
+   "params": {
+    "title": "Three post-training goals",
+    "cols": [
+     "Method",
+     "Rewards",
+     "Gave us"
+    ],
+    "rows": [
+     {
+      "cells": [
+       "RLHF",
+       "answers people prefer",
+       "chat assistants"
+      ],
+      "at": "human feedback"
+     },
+     {
+      "cells": [
+       "RLVR",
+       "answers a checker can verify",
+       "reasoning models"
+      ],
+      "at": "Verifiable rewards"
+     },
+     {
+      "cells": [
+       "RLCD",
+       "*probabilities that match outcomes*",
+       "decision models"
+      ],
+      "hl": true,
+      "at": "calibrated decisions"
+     }
+    ],
+    "note": "TypeSafe has not published how RLCD works. Cloudflare trains Clef with cross-entropy plus a Brier loss."
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Typed is not correct",
+   "narration": "Now, the big claim at launch was that Jev can't hallucinate. Hacker News pushed back fast. As one commenter put it, it can still forward a billing query to the dev department. Even TypeSafe's founder agreed in the thread: these models are probabilistic, so they can be confidently wrong.",
+   "params": {
+    "eyebrow": "Hacker News, launch day",
+    "text": "It can still forward a billing query *to the dev department*.",
+    "sub": "Typed output guarantees the shape of the answer, not that it's right.",
+    "sub_at": "confidently wrong",
+    "art": "snap",
+    "mood": "unsure",
+    "react": {
+     "at": "confidently wrong",
+     "mood": "unsure"
+    }
+   }
+  },
+  {
+   "template": "noul",
+   "chapter": "Typed is not correct",
+   "narration": "So what you get is a probability, and the real promise is that the probability is honest. When a decision model says point nine, it should be right about nine times out of ten. Whether that holds on your data is something you'll learn to measure in module three.",
+   "params": {
+    "question": "What a well calibrated 0.9 means",
+    "rows": [
+     {
+      "text": "Says 0.9 on 1,000 answers",
+      "p": 0.9,
+      "at": "point nine"
+     },
+     {
+      "text": "About 900 should be right",
+      "p": 0.9,
+      "at": "nine times out of ten"
+     },
+     {
+      "text": "And about 100 will be wrong",
+      "p": 0.1,
+      "at": "right about"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. Why can a decision model never return an answer outside your list?",
+   "params": {
+    "q": "Why can't a decision model return an answer **outside your list**?",
+    "options": [
+     "It was fine-tuned on your categories",
+     "It only scores the options you supplied and returns a distribution over them",
+     "It regenerates until the output validates",
+     "A regex filters its output"
+    ],
+    "answer": 1,
+    "explain": "The model never writes text. It assigns probability only to the answers you defined, so anything else simply doesn't exist for it. It can still pick the wrong one."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Ask your coding agent to build the tiny decider from this lesson with any small open model, and compare it with a hosted decision model on twenty of your own examples.",
+   "params": {
+    "title": "Build a tiny decider",
+    "intro": "Paste this into your coding agent (needs Python):",
+    "prompt": "Build tiny_decider.py: given a text and a list of options, put the\noptions in a prompt with letters A, B, C..., run a small open GGUF model\n(e.g. Qwen3-0.6B via llama-cpp-python) once, and return a probability\nfor each option from the next-token logits (softmax over the letters).\nThen run it on 20 real examples from this project and print the\nprobabilities next to the labels we expect."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: decision models read once and score every allowed answer in one pass. The trick is reading probabilities instead of writing text. Real models add a trained head, shared state, and calibration training. And typed doesn't mean correct. Next: the four decision models you can use today.",
+   "params": {
+    "items": [
+     "One pass that scores every allowed answer, no token-by-token writing.",
+     "Read the probability of each option instead of generating text.",
+     "Real models add a readout head, shared state, calibration training.",
+     "Typed isn't correct: it can still be confidently wrong."
+    ],
+    "next": "Jev, Decisions, Clef, Strands: the landscape",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

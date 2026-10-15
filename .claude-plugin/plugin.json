@@ -1,0 +1,20 @@
+{
+  "name": "system-one",
+  "description": "The System One course as skills: practices for building with decision models (Jev, OpenAI Decisions, Clef, Strands), an interactive tutor for the 22-lesson course, and an audit of LLM decisions in your codebase.",
+  "version": "1.0.0",
+  "author": {
+    "name": "System One course",
+    "url": "https://github.com/Haple/system-one"
+  },
+  "homepage": "https://learn-system-one.pages.dev",
+  "repository": "https://github.com/Haple/system-one",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "decision-models",
+    "system-one",
+    "jev",
+    "classification",
+    "skills",
+    "course"
+  ]
+}

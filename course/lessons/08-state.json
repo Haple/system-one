@@ -1,0 +1,101 @@
+{
+ "id": "08-state",
+ "number": 8,
+ "slug": "designing-state",
+ "module": "Asking good questions",
+ "title": "State: give it what it needs",
+ "short": "State",
+ "summary": "The state is everything the model sees besides your questions. Here is how to shape it (named fields, paths the questions point at, the record next to the policy), what we measured when we buried the one thing that mattered, and the limits on length, language and context you should design around.",
+ "takeaways": [
+  "State is the material you would hand an expert panel before asking: the message, the record, the policy.",
+  "Use a JSON object with named fields, and point each question at the field it is about with a backticked path.",
+  "Unrelated text in its own named field barely hurt in our test; asking about one item buried by index among 40 similar ones dropped accuracy from 98% to 72%.",
+  "Name the thing you are asking about: one item per request, or put the record in the question itself.",
+  "Filter in code before you send; long context exists but is slower and less accurate, and English is still the strongest language."
+ ],
+ "practices": [
+  "Send state as a JSON object with descriptive field names; reference fields in questions with backticked paths like `ticket.messages[0].text`.",
+  "Put the decision's evidence (policy, record, history) in the state, and only what the questions need.",
+  "Never make the model find one item by index in a long list of similar items; send that item on its own or inside the question.",
+  "Write the complete question in instructions; question IDs are not sent to the model."
+ ],
+ "sources": [
+  {"id": "ts-docs-concepts-state"},
+  {"id": "ts-docs-primitives"},
+  {"id": "ts-docs-concepts-how-to-build-with-system-one"},
+  {"id": "ts-docs-model-jaggedness-jev-1.13"},
+  {"id": "ts-docs-models"},
+  {"id": "ts-docs-primitives-noul"},
+  {"id": "ts-agent-skill"},
+  {"id": "latent-space-jev"},
+  {"id": "RW_0PqUFq3w", "t": 389}
+ ],
+ "scenes": [
+  {"template": "title", "chapter": "Intro",
+   "narration": "Every request has two halves: your questions, and the state they're asked about. Most failures we'll see in this course start on the state side. So let's shape it well.",
+   "params": {"kicker": "Lesson 8", "module": "Module 2 · Asking good questions", "title": "State: give it *what it needs*", "subtitle": "Named fields, pointed questions, nothing extra.", "cast": ["curly", "snap"]}},
+  {"template": "statement", "chapter": "What state is",
+   "narration": "The TypeSafe docs have a good image for it. Think of the state as the material you'd present to a panel of experts before asking them to make a judgment. The customer's message. Their order. The policy that applies. Everything an expert would need, and nothing they wouldn't.",
+   "params": {"eyebrow": "TypeSafe docs", "text": "Think of state as the material you'd hand *a panel of experts* before asking them to judge.", "art": "users", "tone": "s2", "punch": "panel of experts"}},
+  {"template": "table", "chapter": "Shapes of state",
+   "narration": "State can be a plain string, which is fine for one message. An array works for a sequence, like a conversation. But for most real decisions, use an object, so every part has a name and the relationships stay clear.",
+   "params": {"title": "Three shapes, one default", "cols": ["Shape", "Good for", "Example"], "widths": "0.8fr 1.2fr 2fr", "rows": [
+     {"cells": ["string", "one message", "\"My card was charged twice.\""], "at": "plain string"},
+     {"cells": ["array", "a sequence", "[\"Hi\", \"My customer number is TS1337.\", …]"], "at": "array"},
+     {"cells": ["*object*", "*most real decisions*", "{ticket: …, order: …, refund_policy: …}"], "hl": true, "at": "use an object"}
+   ]}},
+  {"template": "request", "chapter": "Point at the field",
+   "narration": "Then point each question at the field it's about, with a path in backticks. Does the policy support the refund requested in the ticket, given the order's charges? The model knows exactly which parts to compare.",
+   "params": {"model": "jev-1.13.0", "latency": 0.25,
+    "state": {"ticket": {"text": "I was charged twice for order A-104. Please refund the duplicate."}, "order": {"id": "A-104", "charges_usd": [49, 49]}, "refund_policy": "Duplicate charges are always refunded in full."},
+    "questions": [
+     {"id": "asks", "type": "noul", "text": "Does `ticket.text` request a refund?", "ans": {"v": 0.99}},
+     {"id": "policy", "type": "noul", "text": "Does `refund_policy` support the refund requested in `ticket.text`, given `order.charges_usd`?", "ans": {"v": 0.98}, "at": "Does the policy support"}
+    ], "send_at": "The model knows", "ans_at": "exactly which parts", "hl": "policy", "hl_at": "compare"}},
+  {"template": "chart", "chapter": "Bury it, lose it",
+   "narration": "How much does extra material hurt? We tested sixty banking messages, half of them about refunds, with one Noul: does the ticket ask about a refund? Alone, ninety eight percent right. With six thousand tokens of unrelated handbook in its own field: still ninety eight. But bury the same ticket among forty similar tickets and ask about ticket number seventeen, and it drops to seventy two, missing seventeen of the thirty refund requests.",
+   "params": {"title": "“Does the ticket ask about a refund?” (60 messages)", "kind": "bar", "ymax": 1.12, "data": [
+     {"x": "ticket alone", "y": 0.983, "label": "98.3%", "at": "Alone"},
+     {"x": "+ 6k tokens unrelated, own field", "y": 0.983, "label": "98.3%", "at": "still ninety eight"},
+     {"x": "buried among 40, by index", "y": 0.717, "label": "71.7%", "tone": "bad", "hl": true, "at": "drops to seventy two"}
+   ], "src": "BANKING77 messages, jev-1.13.0, measured 2026-10-15. All 17 errors were missed refunds."}},
+  {"template": "statement", "chapter": "Bury it, lose it",
+   "narration": "So the lesson isn't just keep the state short. It's name the thing you're asking about. Don't make the model hunt for item seventeen in a list of lookalikes. Send that item on its own, or put it right in the question.",
+   "params": {"eyebrow": "The lesson", "text": "Name the thing you're asking about. *Don't make it hunt.*", "art": "snap", "mood": "unsure", "react": {"at": "Send that item", "mood": "sure"}, "punch": "name the thing"}},
+  {"template": "code", "chapter": "Data in the question",
+   "narration": "Questions can carry data too. To check a new resume against candidate records, put each record inside its own question's instructions, next to the same question text. Twenty records, twenty Nouls, one request, and each answer is about exactly one record.",
+   "params": {"file": "duplicates.py", "lang": "py", "lines": [
+     "SAME = \"Is the resume for the same person as `potential_duplicate`?\"",
+     "",
+     "questions = {",
+     "    f\"same_as_{c['id']}\": Noul(instructions={",
+     "        \"potential_duplicate\": {\"name\": c[\"name\"],",
+     "                                \"location\": c[\"location\"]},",
+     "        \"question\": SAME,",
+     "    })",
+     "    for c in candidates          # one question per record",
+     "}",
+     "client.system_one(state={\"resume\": resume}, questions=questions)"
+   ], "hl": [{"from": 4, "to": 8, "label": "the record rides with its question", "tone": "agent", "at": "inside its own question"}, {"from": 11, "to": 11, "label": "one request", "tone": "good", "at": "one request"}]}},
+  {"template": "list", "chapter": "Limits to design around",
+   "narration": "A few limits to design around. Question IDs aren't sent to the model, so write the full question in the instructions. Jev reads up to sixty four thousand tokens per request, and thirty two thousand for the state plus any one question. Long context can be turned on, but TypeSafe warns it's slower and less accurate. And English is still the strongest language, so test others before you rely on them.",
+   "params": {"title": "Design around these", "style": "warn", "items": [
+     {"text": "**IDs aren't sent.** Write the whole question in `instructions`.", "at": "IDs"},
+     {"text": "**64k tokens** per request, **32k** for state + one question.", "at": "sixty four thousand"},
+     {"text": "**Long context** exists, but it's slower and less accurate.", "at": "Long context"},
+     {"text": "**English first.** Test other languages before relying on them.", "at": "English"}
+   ]}},
+  {"template": "statement", "chapter": "Facts vs judgments",
+   "narration": "One last habit, from TypeSafe's own guide for coding agents. When you store answers and feed them into later requests, keep what you observed separate from what the model inferred. A field that says refund requested, point nine nine, is a judgment, not a fact. Label it, and check it's still fresh before you act on it.",
+   "params": {"eyebrow": "TypeSafe agent skill", "text": "Keep *inferred* state distinct from *observed* facts.", "sub": "A stored “refund_requested: 0.99” is a judgment. Label it, and re-check it if the situation changed.", "sub_at": "is a judgment", "art": "curly", "punch": "observed"}},
+  {"template": "quiz", "chapter": "Quick check",
+   "narration": "Quick check. You need to know whether ticket seventeen, in a batch of forty, asks for a refund. What's the best state?",
+   "params": {"q": "Is **ticket 17 of 40** asking for a refund? Best state?", "options": ["All 40 tickets in an array; ask about `tickets[17]`", "All 40 tickets plus the refund policy, for context", "Ticket 17 alone, as a named field; ask about that field", "A summary of all 40 tickets"], "answer": 2, "explain": "In our test, asking about one ticket by index among 40 lookalikes missed 17 of 30 refunds. Send the item you're asking about on its own, under a clear name."}},
+  {"template": "exercise", "chapter": "Try it",
+   "narration": "Try it. Have your agent design the state for one decision in your code, and test what happens when you bury it.",
+   "params": {"title": "Design a state, then bury it", "intro": "Paste this into your coding agent:", "prompt": "Pick one decision we make with a model. Design its state as a JSON\nobject with named fields: only what an expert would need (the message,\nthe record, the relevant policy). Rewrite each question to point at its\nfield with a backticked path. Then run 20 labeled examples three ways:\nthe clean state, the state plus a large unrelated document in its own\nfield, and the item hidden in a list of 20 similar items. Report the\naccuracy of each."}},
+  {"template": "recap", "chapter": "Recap",
+   "narration": "So: state is what you'd hand an expert panel. Use named fields and point questions at them. Name the thing you're asking about, and never make the model hunt for it. Design around the limits, and keep judgments separate from facts. That's module two. Next: probabilities you can act on, starting with calibration.",
+   "params": {"items": ["State = what you'd hand an expert panel. Use a named object.", "Point questions at fields with backticked paths.", "Name the thing you're asking about; never make it hunt.", "IDs aren't sent; long context is slower; English is strongest."], "next": "Calibration: does 0.9 mean 90%?", "next_at": "Next"}}
+ ]
+}

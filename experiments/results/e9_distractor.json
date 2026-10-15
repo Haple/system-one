@@ -1,0 +1,422 @@
+[
+ {
+  "text": "I should have received a refund however it is not showing on my statement",
+  "y": true,
+  "a": 0.98,
+  "b": 0.99,
+  "c": 0.99
+ },
+ {
+  "text": "I am chatting about an order from a long while back.  I never got it to this day and am deeply upset by this!  I want all of my money back!  I just can not accept paying for something I never got.",
+  "y": true,
+  "a": 0.97,
+  "b": 0.97,
+  "c": 0.98
+ },
+ {
+  "text": "I need help. I asked for a refund from a merchant a while ago, but I have not gotten my money back. I keep checking my account, but nothing is showing up. What should I do now?",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.99
+ },
+ {
+  "text": "My refund doesn't seem to be showing on my statement.",
+  "y": true,
+  "a": 0.98,
+  "b": 0.99,
+  "c": 0.99
+ },
+ {
+  "text": "Would I be able to get a refund for something I bought?",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.99
+ },
+ {
+  "text": "i was supposed to get a refund but my balance hasn't changed, why not?",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.99
+ },
+ {
+  "text": "I want to reverse a purchase. Can I cancel it?",
+  "y": true,
+  "a": 0.87,
+  "b": 0.85,
+  "c": 0.85
+ },
+ {
+  "text": "I would like a refund for something I bought",
+  "y": true,
+  "a": 0.98,
+  "b": 0.99,
+  "c": 0.99
+ },
+ {
+  "text": "How do I get refunded?",
+  "y": true,
+  "a": 0.99,
+  "b": 1.0,
+  "c": 0.99
+ },
+ {
+  "text": "Can I have an item refunded?",
+  "y": true,
+  "a": 0.99,
+  "b": 1.0,
+  "c": 0.02
+ },
+ {
+  "text": "How long does it take for a refund?",
+  "y": true,
+  "a": 0.99,
+  "b": 1.0,
+  "c": 0.98
+ },
+ {
+  "text": "I requested a refund from a merchant days ago but I do not see it in my account.",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.02
+ },
+ {
+  "text": "My refund is missing",
+  "y": true,
+  "a": 0.96,
+  "b": 0.99,
+  "c": 0.02
+ },
+ {
+  "text": "Help! I keep checking my account, but my refund is not showing. I requested that a seller refund my money a while back, but there is no money showing in my account. What can you do for me?",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.04
+ },
+ {
+  "text": "How do I apply for a refund?",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.16
+ },
+ {
+  "text": "I am waiting patiently for a week now for the seller to get back to me and there has been no response, could you please help me further with getting my money back.  Thank you.",
+  "y": true,
+  "a": 0.97,
+  "b": 0.96,
+  "c": 0.06
+ },
+ {
+  "text": "Can I receive a refund for my item?",
+  "y": true,
+  "a": 0.99,
+  "b": 1.0,
+  "c": 0.66
+ },
+ {
+  "text": "I am awaiting my refund",
+  "y": true,
+  "a": 0.64,
+  "b": 0.94,
+  "c": 0.06
+ },
+ {
+  "text": "I still haven't seen a refund on my account",
+  "y": true,
+  "a": 0.95,
+  "b": 0.99,
+  "c": 0.23
+ },
+ {
+  "text": "Hello I changed my mind and really need a refund on one of things I bought recently. Can you please cancel the transaction and get my money back. Please it's urgent.",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.19
+ },
+ {
+  "text": "I need a refund?",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.16
+ },
+ {
+  "text": "Please stop my purchase.",
+  "y": true,
+  "a": 0.1,
+  "b": 0.13,
+  "c": 0.05
+ },
+ {
+  "text": "I bought something and returned it and the money from the return isn't in my account.",
+  "y": true,
+  "a": 0.97,
+  "b": 0.98,
+  "c": 0.34
+ },
+ {
+  "text": "Can you tell me why my refund is not showing in my statement?",
+  "y": true,
+  "a": 0.99,
+  "b": 1.0,
+  "c": 0.66
+ },
+ {
+  "text": "How do I claim a refund?",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.05
+ },
+ {
+  "text": "Hi there! I need to cancel an order I recently made and start processing a refund. Can you please help me with this and set up the refund as soon as possible? It's very urgent.",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.09
+ },
+ {
+  "text": "I am missing a refund.",
+  "y": true,
+  "a": 0.91,
+  "b": 0.98,
+  "c": 0.22
+ },
+ {
+  "text": "Why is my refund missing from my  statement?",
+  "y": true,
+  "a": 0.99,
+  "b": 0.99,
+  "c": 0.2
+ },
+ {
+  "text": "I need to do a refund",
+  "y": true,
+  "a": 0.92,
+  "b": 0.99,
+  "c": 0.56
+ },
+ {
+  "text": "Can I have a refund?",
+  "y": true,
+  "a": 0.99,
+  "b": 1.0,
+  "c": 0.21
+ },
+ {
+  "text": "How long does a UK transfer take?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.03,
+  "c": 0.09
+ },
+ {
+  "text": "I just completed a bank transfer and the balance didn't update",
+  "y": false,
+  "a": 0.02,
+  "b": 0.04,
+  "c": 0.03
+ },
+ {
+  "text": "I can't pull my card out of the ATM. Help me.",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.04
+ },
+ {
+  "text": "What is the youngest someone can be to open an account?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.04
+ },
+ {
+  "text": "Help! I forgot my PIN and have been locked out of using my card.",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.05
+ },
+ {
+  "text": "i have not received my card",
+  "y": false,
+  "a": 0.02,
+  "b": 0.02,
+  "c": 0.06
+ },
+ {
+  "text": "Status of the card I ordered.",
+  "y": false,
+  "a": 0.01,
+  "b": 0.02,
+  "c": 0.08
+ },
+ {
+  "text": "What cards and currencies do you support?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.02,
+  "c": 0.07
+ },
+ {
+  "text": "Where can I find a virtual card?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.03
+ },
+ {
+  "text": "I tried topping up but my funds seem to be pending. I want to buy something right now, what do I do?",
+  "y": false,
+  "a": 0.02,
+  "b": 0.03,
+  "c": 0.06
+ },
+ {
+  "text": "Am I free to top-up as much as I want?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.02,
+  "c": 0.01
+ },
+ {
+  "text": "What's with not verifying my Id?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.01
+ },
+ {
+  "text": "How do I top up my card using your app? I'm new to this.",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.01
+ },
+ {
+  "text": "I completed a money transaction but the recipient hasn't received it",
+  "y": false,
+  "a": 0.07,
+  "b": 0.06,
+  "c": 0.01
+ },
+ {
+  "text": "reason i need to verify top up",
+  "y": false,
+  "a": 0.02,
+  "b": 0.09,
+  "c": 0.03
+ },
+ {
+  "text": "It appears my card expires next month, can I order a new one?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.01
+ },
+ {
+  "text": "I just lost my wallet and I see that they are already withdrawing money from my account. How can I stop this?",
+  "y": false,
+  "a": 0.06,
+  "b": 0.09,
+  "c": 0.03
+ },
+ {
+  "text": "I am still awaiting the completion of the transaction.",
+  "y": false,
+  "a": 0.02,
+  "b": 0.03,
+  "c": 0.02
+ },
+ {
+  "text": "Something went wrong with my withdrawal. The amount of money isn't right.",
+  "y": false,
+  "a": 0.13,
+  "b": 0.2,
+  "c": 0.01
+ },
+ {
+  "text": "I got my American Express in Apple Bay but top up is not working",
+  "y": false,
+  "a": 0.02,
+  "b": 0.03,
+  "c": 0.03
+ },
+ {
+  "text": "How can the recipient see my money transaction?",
+  "y": false,
+  "a": 0.02,
+  "b": 0.05,
+  "c": 0.03
+ },
+ {
+  "text": "When will my card payment be done pending?",
+  "y": false,
+  "a": 0.02,
+  "b": 0.03,
+  "c": 0.03
+ },
+ {
+  "text": "Is my PIN located on my account somewhere?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.01
+ },
+ {
+  "text": "How are exchange rates calculated?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.05
+ },
+ {
+  "text": "Why was my account deducted from a seller when I didn't approve of it?",
+  "y": false,
+  "a": 0.21,
+  "b": 0.45,
+  "c": 0.11
+ },
+ {
+  "text": "Why are you declining my payment? Everything was fine.",
+  "y": false,
+  "a": 0.04,
+  "b": 0.11,
+  "c": 0.05
+ },
+ {
+  "text": "How do I enable contactless pay?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.01
+ },
+ {
+  "text": "I no longer live at my address on file, how do I change it?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.03
+ },
+ {
+  "text": "Which fiat currencies do you support?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.01,
+  "c": 0.1
+ },
+ {
+  "text": "How many times can I use the disposable virtual card I have?",
+  "y": false,
+  "a": 0.01,
+  "b": 0.02,
+  "c": 0.02
+ }
+]

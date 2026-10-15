@@ -1,0 +1,455 @@
+{
+ "id": "01-decisions-not-essays",
+ "number": 1,
+ "slug": "software-needs-decisions",
+ "module": "The idea",
+ "title": "Software needs decisions, not essays",
+ "short": "Decisions, not essays",
+ "summary": "Language models write beautifully, but most software needs a decision it can branch on. Here is the prompt-and-parse problem, the new shape of a decision model (state and typed questions in, typed answers and probabilities out), and how a whole category of these models appeared in three weeks.",
+ "takeaways": [
+  "Most AI calls inside software are really decisions: which team, is it urgent, is this allowed.",
+  "Prompt-and-parse (ask an LLM for JSON, then parse and retry) works, but it is slow, fragile and gives you no trustworthy confidence.",
+  "A decision model takes state plus typed questions and returns typed answers with probabilities. It cannot return a value you did not offer.",
+  "Code keeps control of the workflow; the decision model answers narrow questions; hard cases go to a reasoning model or a person.",
+  "In three weeks of September and October 2026, TypeSafe, OpenAI, Cloudflare and AWS all shipped models of this kind."
+ ],
+ "practices": [
+  "When an LLM call exists only to produce a label, a yes/no or a rating that code branches on, consider replacing it with a typed question to a decision model.",
+  "Keep control flow, rules and side effects in code; use the model only for the judgment code cannot express.",
+  "Never parse free text to recover a decision when a typed answer with probabilities is available."
+ ],
+ "sources": [
+  {
+   "id": "ts-blog-introducing-system-one-models-and-jev"
+  },
+  {
+   "id": "LE3bGTaAgOE",
+   "t": 56
+  },
+  {
+   "id": "Ut3LOjKNJaE",
+   "t": 2399
+  },
+  {
+   "id": "QbYBRjOaGOo",
+   "t": 231
+  },
+  {
+   "id": "devto-model-doesnt-talk"
+  },
+  {
+   "id": "ts-docs-introduction"
+  },
+  {
+   "id": "ts-docs-concepts-how-to-build-with-system-one"
+  },
+  {
+   "id": "openai-decisions-guide"
+  },
+  {
+   "id": "cf-clef-changelog"
+  },
+  {
+   "id": "strands-blog"
+  },
+  {
+   "id": "flaviocopes-jev"
+  },
+  {
+   "id": "simonw-jev"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Language models can write an essay about anything. But most software doesn't need an essay. It needs a decision it can act on. This course is about a new kind of model built for exactly that.",
+   "params": {
+    "kicker": "Lesson 1",
+    "module": "Module 1 · The idea",
+    "title": "Software needs *decisions*, not essays",
+    "subtitle": "Why a new kind of model appeared in September 2026.",
+    "cast": [
+     "snap",
+     {
+      "who": "mull",
+      "mood": "think"
+     }
+    ],
+    "bubble": "Yes. 0.99.",
+    "bubble_at": "decision"
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "The gap",
+   "narration": "Diogo Almeida helped build the methods behind ChatGPT at OpenAI. When he launched his company, TypeSafe, he opened with one question. Models have been superhuman at chat for years, so where is all the automation?",
+   "params": {
+    "eyebrow": "Diogo Almeida · TypeSafe AI, September 2026",
+    "text": "Models have been superhuman at chat for years. *So where is all the automation?*",
+    "art": "mull",
+    "mood": "tired",
+    "punch": "where is all the automation"
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Prompt and parse",
+   "narration": "Here's how most apps ask a language model for a decision today. Ask for JSON in the prompt. Parse the reply. Then wrap everything in retries, because sometimes the answer gets cut off, or invents a field, or a team you never offered. And the confidence it writes is just more text.",
+   "params": {
+    "file": "triage.py",
+    "lang": "py",
+    "lines": [
+     "reply = llm(f\"Classify this ticket. Answer as JSON:\"",
+     "            f\" team, refund_requested, confidence.\\n{ticket}\")",
+     "try:",
+     "    data = json.loads(reply)",
+     "except json.JSONDecodeError:",
+     "    data = retry()",
+     "if data[\"team\"] not in TEAMS:",
+     "    data = retry()",
+     "confidence = float(data[\"confidence\"])"
+    ],
+    "hl": [
+     {
+      "from": 3,
+      "to": 6,
+      "label": "parse, then retry",
+      "tone": "bad",
+      "at": "Parse the reply"
+     },
+     {
+      "from": 7,
+      "to": 8,
+      "label": "values you never offered",
+      "tone": "bad",
+      "at": "invents a field"
+     },
+     {
+      "from": 9,
+      "to": 9,
+      "label": "confidence is text",
+      "tone": "agent",
+      "at": "more text"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Prompt and parse",
+   "narration": "Developer Daniel Sam put the mismatch in two sentences. Software doesn't want sentences. It wants values it can branch on.",
+   "params": {
+    "text": "Software doesn't want sentences. It wants *values it can branch on*.",
+    "who": "Daniel Sam",
+    "role": "developer",
+    "src": "The Model That Doesn't Talk"
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "The new shape",
+   "narration": "A decision model flips the interface. You send state, which is just your data, and a few typed questions: a yes or no, a choice from your options, a score on your scale. Back comes one typed answer per question, each with probabilities. All of them together, in a quarter of a second. Nothing to parse.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.25,
+    "state": {
+     "ticket": "Hi, I was charged twice for order A-104 last Thursday. Please refund the duplicate.",
+     "order": {
+      "id": "A-104",
+      "charges_usd": [
+       49,
+       49
+      ]
+     }
+    },
+    "questions": [
+     {
+      "id": "refund",
+      "type": "noul",
+      "text": "Does `ticket` explicitly ask for a refund?",
+      "ans": {
+       "v": 0.99
+      },
+      "at": "yes or no"
+     },
+     {
+      "id": "dup",
+      "type": "noul",
+      "text": "Do `ticket` and `order` show a duplicate charge?",
+      "ans": {
+       "v": 0.98
+      }
+     },
+     {
+      "id": "team",
+      "type": "choice",
+      "text": "Which team should handle `ticket`?",
+      "ans": {
+       "choice": "billing",
+       "p": 1.0
+      },
+      "at": "a choice"
+     },
+     {
+      "id": "urgency",
+      "type": "score",
+      "text": "How time-sensitive is `ticket`?",
+      "ans": {
+       "score": 0.75,
+       "max": 2,
+       "label": "between no rush and soon"
+      },
+      "at": "a score"
+     }
+    ],
+    "send_at": "Back comes",
+    "ans_at": "All of them together",
+    "footer": "Real answers from jev-1.13.0, measured for this course."
+   }
+  },
+  {
+   "template": "race",
+   "chapter": "The new shape",
+   "narration": "Why so fast? A language model writes its answer one token at a time. A decision model reads your data once and scores every allowed answer in parallel. On the same support messages, a small, fast LLM took about one point two seconds per answer. Jev took about a quarter of a second.",
+   "params": {
+    "left": {
+     "label": "LLM, prompt and parse",
+     "sub": "Claude Haiku 5.5 writes JSON",
+     "who": "mull",
+     "text": "{\n  \"intent\": \"atm_support\",\n  \"confidence\": 92\n}",
+     "secs": 1.13
+    },
+    "right": {
+     "label": "Decision model",
+     "sub": "Jev 1.13 scores 77 options at once",
+     "who": "snap",
+     "items": [
+      {
+       "k": "intent",
+       "v": "atm_support"
+      },
+      {
+       "k": "probability",
+       "v": "0.98"
+      }
+     ],
+     "secs": 0.26
+    },
+    "at": "one token at a time",
+    "scale": 1
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "Cheap enough to ask a lot",
+   "narration": "It's also cheap enough to ask a lot. For this course, we sent all 3,080 messages from a public banking support dataset through Jev. It took about a hundred seconds, and the whole run cost twenty two cents.",
+   "params": {
+    "items": [
+     {
+      "value": 3080,
+      "label": "real support messages classified",
+      "tone": "agent",
+      "at": "3,080"
+     },
+     {
+      "value": 100,
+      "suffix": " s",
+      "label": "wall clock, 8 requests at a time",
+      "tone": "s2",
+      "at": "hundred seconds"
+     },
+     {
+      "value": 0.22,
+      "prefix": "$",
+      "decimals": 2,
+      "label": "for the whole run",
+      "tone": "agent",
+      "at": "twenty two cents",
+      "hero": true
+     }
+    ],
+    "src": "BANKING77 test set, jev-1.13.0, measured 2026-10-15"
+   }
+  },
+  {
+   "template": "timeline",
+   "chapter": "A category in three weeks",
+   "narration": "TypeSafe launched Jev on September fifteenth and called it the first System One model. Two weeks later, OpenAI previewed a Decisions API. Cloudflare released Clef with open weights, and AWS released Strands Decider, small enough to run on a laptop. By the time Jev 1.14 shipped on October fourteenth, decision models were a category.",
+   "params": {
+    "title": "Three weeks, four decision models",
+    "events": [
+     {
+      "when": "Sep 15",
+      "label": "Jev",
+      "sub": "TypeSafe AI",
+      "at": "September fifteenth"
+     },
+     {
+      "when": "Sep 29",
+      "label": "Decisions API",
+      "sub": "OpenAI, preview",
+      "at": "OpenAI"
+     },
+     {
+      "when": "Oct 1",
+      "label": "Clef",
+      "sub": "Cloudflare, open weights",
+      "at": "Cloudflare"
+     },
+     {
+      "when": "Oct 1",
+      "label": "Strands Decider",
+      "sub": "AWS, runs locally",
+      "at": "AWS"
+     },
+     {
+      "when": "Oct 14",
+      "label": "Jev 1.14",
+      "sub": "plus images, in preview",
+      "now": true,
+      "at": "Jev 1.14"
+     }
+    ]
+   }
+  },
+  {
+   "template": "systems",
+   "chapter": "Who does what",
+   "narration": "This isn't about replacing language models. Your code keeps control of the workflow: the rules, the math, the side effects. The decision model answers narrow questions fast. And when a case is genuinely hard, a reasoning model or a person takes it.",
+   "params": {
+    "cols": [
+     {
+      "who": "curly",
+      "title": "Your code",
+      "sub": "owns the workflow",
+      "items": [
+       "Rules, math, dates",
+       "Thresholds and routing",
+       "Side effects"
+      ]
+     },
+     {
+      "who": "snap",
+      "title": "System One",
+      "sub": "decision model",
+      "items": [
+       "Narrow, fast judgments",
+       "Typed answers + probabilities",
+       "About 0.25 s per request"
+      ],
+      "react": {
+       "at": "narrow questions fast",
+       "mood": "sure"
+      }
+     },
+     {
+      "who": "mull",
+      "title": "System Two",
+      "sub": "reasoning model or a person",
+      "items": [
+       "Hard, open-ended cases",
+       "Writing and planning",
+       "Seconds, and more cost"
+      ],
+      "react": {
+       "at": "genuinely hard",
+       "mood": "think"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "Who does what",
+   "narration": "A simple test. If the output is one of a known set of answers that code will act on, it's a decision: route this, is it urgent, does this break a rule, which of these candidates matches. If the output is new text, like a reply, a summary or code, you still want a language model.",
+   "params": {
+    "left": {
+     "title": "A decision model",
+     "who": "snap",
+     "tone": "good",
+     "items": [
+      {
+       "text": "Route a ticket to a team",
+       "at": "route this"
+      },
+      {
+       "text": "Is this urgent?"
+      },
+      {
+       "text": "Does this break a policy?"
+      },
+      {
+       "text": "Which candidate matches?"
+      }
+     ],
+     "at": "it's a decision"
+    },
+    "right": {
+     "title": "A language model",
+     "who": "mull",
+     "tone": "s2",
+     "items": [
+      {
+       "text": "Write the reply",
+       "at": "a reply"
+      },
+      {
+       "text": "Summarize the thread"
+      },
+      {
+       "text": "Generate code"
+      },
+      {
+       "text": "Plan an open-ended task"
+      }
+     ],
+     "at": "new text"
+    },
+    "vs": "or"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. Which of these jobs is the best fit for a decision model?",
+   "params": {
+    "q": "Which job is the best fit for a **decision model**?",
+    "options": [
+     "Draft a polite reply to an angry customer",
+     "Decide which team should handle a ticket",
+     "Summarize a 40-page contract",
+     "Write a SQL query from a question"
+    ],
+    "answer": 1,
+    "explain": "Routing has a known set of answers that code acts on. The others produce new text, which is a language model's job."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try this with your coding agent. Have it find every place your code asks a language model for a decision and parses the answer. That list is your shortlist for the rest of this course.",
+   "params": {
+    "title": "Find the hidden decisions",
+    "intro": "Paste this into your coding agent in a project that calls an LLM:",
+    "prompt": "Find every place in this codebase where we call an LLM and then parse its\noutput into a decision: a label, a yes/no, a score, or one item from a list.\nFor each one, give file:line, the decision it makes, the allowed answers,\nand whether it could be a typed question (yes/no, choice or score) to a\ndecision model. Don't change any code yet."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: software needs decisions, not essays. Prompt and parse is slow and fragile. Decision models take state and typed questions and return typed answers with probabilities. Next, where that idea comes from: System One and System Two.",
+   "params": {
+    "items": [
+     "Most AI calls in software are decisions code will branch on.",
+     "Prompt-and-parse is slow, fragile, and its confidence is just text.",
+     "Decision models: state + typed questions in, typed answers + probabilities out.",
+     "Code owns the workflow; hard cases go to a reasoning model or a person."
+    ],
+    "next": "System One and System Two",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

@@ -1,0 +1,1830 @@
+{
+ "ts-docs-agent-skill": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Agent skill",
+  "url": "https://docs.typesafe.ai/agent-skill",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-agent-skill"
+ },
+ "ts-docs-api": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "API reference",
+  "url": "https://docs.typesafe.ai/api",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-api"
+ },
+ "ts-docs-concepts-how-to-build-with-system-one": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "How to build with TypeSafe",
+  "url": "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-concepts-how-to-build-with-system-one"
+ },
+ "ts-docs-concepts-state": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "State",
+  "url": "https://docs.typesafe.ai/concepts/state",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-concepts-state"
+ },
+ "ts-docs-concepts-system-one": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "System One",
+  "url": "https://docs.typesafe.ai/concepts/system-one",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-concepts-system-one"
+ },
+ "ts-docs-concepts-use-case-map": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Example use cases",
+  "url": "https://docs.typesafe.ai/concepts/use-case-map",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-concepts-use-case-map"
+ },
+ "ts-docs-confidence": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Confidence",
+  "url": "https://docs.typesafe.ai/confidence",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-confidence"
+ },
+ "ts-docs-cookbooks": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Cookbooks",
+  "url": "https://docs.typesafe.ai/cookbooks",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks"
+ },
+ "ts-docs-cookbooks-autoformat": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Structure recovery",
+  "url": "https://docs.typesafe.ai/cookbooks/autoformat",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-autoformat"
+ },
+ "ts-docs-cookbooks-autoresearch_feature_discovery": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Autoresearch feature discovery",
+  "url": "https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-autoresearch_feature_discovery"
+ },
+ "ts-docs-cookbooks-basic_memory": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Simple memory system",
+  "url": "https://docs.typesafe.ai/cookbooks/basic_memory",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-basic_memory"
+ },
+ "ts-docs-cookbooks-citation_check": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Double-checking citations",
+  "url": "https://docs.typesafe.ai/cookbooks/citation_check",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-citation_check"
+ },
+ "ts-docs-cookbooks-classification_using_confidence": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Classification using confidence",
+  "url": "https://docs.typesafe.ai/cookbooks/classification_using_confidence",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-classification_using_confidence"
+ },
+ "ts-docs-cookbooks-classifying_rag_passages": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Classifying RAG passages",
+  "url": "https://docs.typesafe.ai/cookbooks/classifying_rag_passages",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-classifying_rag_passages"
+ },
+ "ts-docs-cookbooks-consistency_choice_cookbook": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Self-consistency: choices",
+  "url": "https://docs.typesafe.ai/cookbooks/consistency_choice_cookbook",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-consistency_choice_cookbook"
+ },
+ "ts-docs-cookbooks-consistency_noul_cookbook": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Self-consistency: nouls",
+  "url": "https://docs.typesafe.ai/cookbooks/consistency_noul_cookbook",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-consistency_noul_cookbook"
+ },
+ "ts-docs-cookbooks-date_extraction_cookbook": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Date extraction",
+  "url": "https://docs.typesafe.ai/cookbooks/date_extraction_cookbook",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-date_extraction_cookbook"
+ },
+ "ts-docs-cookbooks-entity_alignment": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Knowledge graph entity alignment",
+  "url": "https://docs.typesafe.ai/cookbooks/entity_alignment",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-entity_alignment"
+ },
+ "ts-docs-cookbooks-function_calling": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Function calling",
+  "url": "https://docs.typesafe.ai/cookbooks/function_calling",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-function_calling"
+ },
+ "ts-docs-cookbooks-hierarchical_classification": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Hierarchical classification",
+  "url": "https://docs.typesafe.ai/cookbooks/hierarchical_classification",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-hierarchical_classification"
+ },
+ "ts-docs-cookbooks-llm_guardrails": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Guardrails for LLMs",
+  "url": "https://docs.typesafe.ai/cookbooks/llm_guardrails",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-llm_guardrails"
+ },
+ "ts-docs-cookbooks-parallel_questions": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Parallel questions",
+  "url": "https://docs.typesafe.ai/cookbooks/parallel_questions",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-parallel_questions"
+ },
+ "ts-docs-cookbooks-pre_parsed_value_extraction_cookbook": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Pre-parsed value extraction",
+  "url": "https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-pre_parsed_value_extraction_cookbook"
+ },
+ "ts-docs-cookbooks-rerank_typesafe": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Re-ranking",
+  "url": "https://docs.typesafe.ai/cookbooks/rerank_typesafe",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-rerank_typesafe"
+ },
+ "ts-docs-cookbooks-sde_cascade": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "SDE cascade",
+  "url": "https://docs.typesafe.ai/cookbooks/sde_cascade",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-sde_cascade"
+ },
+ "ts-docs-cookbooks-semantic_find": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Line-by-line search",
+  "url": "https://docs.typesafe.ai/cookbooks/semantic_find",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-semantic_find"
+ },
+ "ts-docs-cookbooks-skill_suggestion": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Skill suggestion",
+  "url": "https://docs.typesafe.ai/cookbooks/skill_suggestion",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-skill_suggestion"
+ },
+ "ts-docs-cookbooks-twitch_chat_filter": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Twitch chat filter",
+  "url": "https://docs.typesafe.ai/cookbooks/twitch_chat_filter",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-cookbooks-twitch_chat_filter"
+ },
+ "ts-docs-demos": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Demos",
+  "url": "https://docs.typesafe.ai/demos",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-demos"
+ },
+ "ts-docs-demos-smart-home": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Smart home assistant demo",
+  "url": "https://docs.typesafe.ai/demos/smart-home",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-demos-smart-home"
+ },
+ "ts-docs-images": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Images",
+  "url": "https://docs.typesafe.ai/images",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-images"
+ },
+ "ts-docs-introduction": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Introduction",
+  "url": "https://docs.typesafe.ai/introduction",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-introduction"
+ },
+ "ts-docs-introduction-coding-agents": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Jev with coding agents",
+  "url": "https://docs.typesafe.ai/introduction/coding-agents",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-introduction-coding-agents"
+ },
+ "ts-docs-introduction-machine-learning-primer": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "AI primer",
+  "url": "https://docs.typesafe.ai/introduction/machine-learning-primer",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-introduction-machine-learning-primer"
+ },
+ "ts-docs-introduction-quickstart": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Quick start",
+  "url": "https://docs.typesafe.ai/introduction/quickstart",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-introduction-quickstart"
+ },
+ "ts-docs-legal": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Legal",
+  "url": "https://docs.typesafe.ai/legal",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-legal"
+ },
+ "ts-docs-model-jaggedness-jev-1.13": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Jev 1.13 jaggedness",
+  "url": "https://docs.typesafe.ai/model-jaggedness/jev-1.13",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-model-jaggedness-jev-1.13"
+ },
+ "ts-docs-models": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Models",
+  "url": "https://docs.typesafe.ai/models",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-models"
+ },
+ "ts-docs-patterns": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Patterns",
+  "url": "https://docs.typesafe.ai/patterns",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-patterns"
+ },
+ "ts-docs-patterns-composite-scoring": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Composite scoring",
+  "url": "https://docs.typesafe.ai/patterns/composite-scoring",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-patterns-composite-scoring"
+ },
+ "ts-docs-patterns-confidence-routing": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Confidence-gated routing",
+  "url": "https://docs.typesafe.ai/patterns/confidence-routing",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-patterns-confidence-routing"
+ },
+ "ts-docs-patterns-fan-out": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Speculative fan-out",
+  "url": "https://docs.typesafe.ai/patterns/fan-out",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-patterns-fan-out"
+ },
+ "ts-docs-patterns-intent-routing": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Intent routing",
+  "url": "https://docs.typesafe.ai/patterns/intent-routing",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-patterns-intent-routing"
+ },
+ "ts-docs-primitives": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Primitives (Questions)",
+  "url": "https://docs.typesafe.ai/primitives",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-primitives"
+ },
+ "ts-docs-primitives-advanced": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Advanced: structure",
+  "url": "https://docs.typesafe.ai/primitives/advanced",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-primitives-advanced"
+ },
+ "ts-docs-primitives-box": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Box",
+  "url": "https://docs.typesafe.ai/primitives/box",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-primitives-box"
+ },
+ "ts-docs-primitives-choice": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Choice",
+  "url": "https://docs.typesafe.ai/primitives/choice",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-primitives-choice"
+ },
+ "ts-docs-primitives-noul": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Noul",
+  "url": "https://docs.typesafe.ai/primitives/noul",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-primitives-noul"
+ },
+ "ts-docs-primitives-score": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Score",
+  "url": "https://docs.typesafe.ai/primitives/score",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-primitives-score"
+ },
+ "ts-docs-sdk": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Client SDKs",
+  "url": "https://docs.typesafe.ai/sdk",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk"
+ },
+ "ts-docs-sdk-javascript": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "JavaScript SDK",
+  "url": "https://docs.typesafe.ai/sdk/javascript",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk-javascript"
+ },
+ "ts-docs-sdk-javascript-api": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "API reference",
+  "url": "https://docs.typesafe.ai/sdk/javascript/api",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk-javascript-api"
+ },
+ "ts-docs-sdk-javascript-changelog": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Changelog",
+  "url": "https://docs.typesafe.ai/sdk/javascript/changelog",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk-javascript-changelog"
+ },
+ "ts-docs-sdk-python": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "TypeSafe Python SDK",
+  "url": "https://docs.typesafe.ai/sdk/python",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk-python"
+ },
+ "ts-docs-sdk-python-api": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "API reference",
+  "url": "https://docs.typesafe.ai/sdk/python/api",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk-python-api"
+ },
+ "ts-docs-sdk-python-changelog": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Changelog",
+  "url": "https://docs.typesafe.ai/sdk/python/changelog",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk-python-changelog"
+ },
+ "ts-docs-sdk-python-usage-advanced": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Advanced usage",
+  "url": "https://docs.typesafe.ai/sdk/python/usage/advanced",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk-python-usage-advanced"
+ },
+ "ts-docs-sdk-python-usage-basic": {
+  "kind": "doc",
+  "org": "TypeSafe AI",
+  "title": "Basic usage",
+  "url": "https://docs.typesafe.ai/sdk/python/usage/basic",
+  "who": "TypeSafe AI docs",
+  "date": "2026-10",
+  "id": "ts-docs-sdk-python-usage-basic"
+ },
+ "ts-blog-introducing-system-one-models-and-jev": {
+  "kind": "article",
+  "org": "TypeSafe AI",
+  "title": "Introducing System One Models & Jev",
+  "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+  "who": "Diogo Almeida",
+  "date": "2026-09-15",
+  "id": "ts-blog-introducing-system-one-models-and-jev"
+ },
+ "ts-blog-antibenchmaxxing": {
+  "kind": "article",
+  "org": "TypeSafe AI",
+  "title": "Lies, Damned Lies, and Benchmarks",
+  "url": "https://typesafe.ai/blog/antibenchmaxxing",
+  "who": "TypeSafe AI",
+  "date": "2026-09-11",
+  "id": "ts-blog-antibenchmaxxing"
+ },
+ "ts-blog-bitterest-lesson": {
+  "kind": "article",
+  "org": "TypeSafe AI",
+  "title": "The Bitterest Lesson",
+  "url": "https://typesafe.ai/blog/bitterest-lesson",
+  "who": "Diogo Almeida",
+  "date": "2026-09-10",
+  "id": "ts-blog-bitterest-lesson"
+ },
+ "ts-blog-jev-1-14": {
+  "kind": "article",
+  "org": "TypeSafe AI",
+  "title": "Jev: For the builders AND dreamers",
+  "url": "https://typesafe.ai/blog/jev-1-14",
+  "who": "TypeSafe AI",
+  "date": "2026-10-14",
+  "id": "ts-blog-jev-1-14"
+ },
+ "ts-blog-series-ai": {
+  "kind": "article",
+  "org": "TypeSafe AI",
+  "title": "TypeSafe A raises Series AI",
+  "url": "https://typesafe.ai/blog/series-ai",
+  "who": "TypeSafe AI",
+  "date": "2026-10-09",
+  "id": "ts-blog-series-ai"
+ },
+ "ts-manifesto": {
+  "kind": "article",
+  "org": "TypeSafe AI",
+  "title": "Composable AI: Build Prod, Not God (manifesto)",
+  "url": "https://typesafe.ai/manifesto",
+  "who": "TypeSafe AI",
+  "date": "2026-09",
+  "id": "ts-manifesto"
+ },
+ "latent-space-jev": {
+  "kind": "podcast",
+  "title": "Jev: System One models for Prod, not God (Latent Space podcast)",
+  "url": "https://www.latent.space/p/jev",
+  "who": "Diogo Almeida with swyx",
+  "date": "2026-09-21",
+  "id": "latent-space-jev",
+  "youtube": "https://www.youtube.com/watch?v=cFx9Z3ZXca0"
+ },
+ "latent-space-devday": {
+  "kind": "article",
+  "title": "Why Dwarkesh is Wrong about Computer Use + How OpenAI shipped its Jev competitor in 1 Week",
+  "url": "https://www.latent.space/p/devday-2026",
+  "who": "Latent Space",
+  "date": "2026-09-30",
+  "id": "latent-space-devday"
+ },
+ "newstack-typesafe": {
+  "kind": "article",
+  "title": "TypeSafe launched Jev because sequential LLMs are \"totally useless for computers\"",
+  "url": "https://thenewstack.io/typesafe-jev-system-one/",
+  "who": "The New Stack",
+  "date": "2026-09-21",
+  "id": "newstack-typesafe"
+ },
+ "infoq-jev": {
+  "kind": "article",
+  "title": "TypeSafe AI Releases Jev: a Decision-Only Model That Returns Typed Probabilities",
+  "url": "https://www.infoq.com/news/2026/10/typesafe-ai-jev-released/",
+  "who": "InfoQ",
+  "date": "2026-10-01",
+  "id": "infoq-jev"
+ },
+ "openai-decisions-guide": {
+  "kind": "doc",
+  "title": "Decisions (OpenAI API guide)",
+  "url": "https://developers.openai.com/api/docs/guides/decisions",
+  "who": "OpenAI docs",
+  "date": "2026-10",
+  "id": "openai-decisions-guide"
+ },
+ "cf-clef-blog": {
+  "kind": "article",
+  "title": "Introducing Clef: our open-source decision models, and new RL fine-tuning platform",
+  "url": "https://blog.cloudflare.com/clef-decision-models/",
+  "who": "Cloudflare",
+  "date": "2026-10-01",
+  "id": "cf-clef-blog"
+ },
+ "cf-clef-changelog": {
+  "kind": "doc",
+  "title": "Introducing Clef: Cloudflare's first open-source decision models, now on Workers AI",
+  "url": "https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/",
+  "who": "Cloudflare docs",
+  "date": "2026-10-01",
+  "id": "cf-clef-changelog"
+ },
+ "hf-clef-card": {
+  "kind": "doc",
+  "title": "cloudflare/clef model card",
+  "url": "https://huggingface.co/cloudflare/clef",
+  "who": "Cloudflare",
+  "date": "2026-10-05",
+  "id": "hf-clef-card"
+ },
+ "strands-readme": {
+  "kind": "repo",
+  "title": "strands-decider (README)",
+  "url": "https://github.com/strands-labs/strands-decider",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "strands-readme"
+ },
+ "hf-strands-card": {
+  "kind": "doc",
+  "title": "strands-decider-2B model card",
+  "url": "https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "hf-strands-card"
+ },
+ "newstack-aws-strands": {
+  "kind": "article",
+  "title": "AWS launches a local answer to TypeSafe's Jev decision model",
+  "url": "https://thenewstack.io/aws-strands-decider-model/",
+  "who": "The New Stack",
+  "date": "2026-10-01",
+  "id": "newstack-aws-strands"
+ },
+ "jevbench-heaven-v1": {
+  "kind": "article",
+  "title": "Jev-class models — JevBench v1.0",
+  "url": "https://benchmarkheaven.com/jev-models/v1",
+  "who": "Benchmark Heaven",
+  "date": "2026-09-19",
+  "id": "jevbench-heaven-v1"
+ },
+ "devto-model-doesnt-talk": {
+  "kind": "article",
+  "title": "The Model That Doesn't Talk",
+  "url": "https://dev.to/danielsamfdo/the-model-that-doesnt-talk-5adm",
+  "who": "Daniel Sam",
+  "date": "2026-10-07",
+  "id": "devto-model-doesnt-talk"
+ },
+ "arxiv-crash-abs": {
+  "kind": "paper",
+  "title": "Calibrated Decisions at Scale: police crash narratives with a System One model (abstract)",
+  "url": "https://arxiv.org/abs/2609.24052",
+  "who": "arXiv",
+  "date": "2026-09-21",
+  "id": "arxiv-crash-abs"
+ },
+ "strands-docs-architecture": {
+  "kind": "repo",
+  "title": "strands-decider: architecture",
+  "url": "https://github.com/strands-labs/strands-decider/blob/main/docs/architecture.md",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "strands-docs-architecture"
+ },
+ "strands-docs-inference": {
+  "kind": "repo",
+  "title": "strands-decider: inference",
+  "url": "https://github.com/strands-labs/strands-decider/blob/main/docs/inference.md",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "strands-docs-inference"
+ },
+ "strands-docs-vision": {
+  "kind": "repo",
+  "title": "strands-decider: vision",
+  "url": "https://github.com/strands-labs/strands-decider/blob/main/docs/vision.md",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "strands-docs-vision"
+ },
+ "strands-evaluation-readme": {
+  "kind": "repo",
+  "title": "strands-decider: evaluation",
+  "url": "https://github.com/strands-labs/strands-decider/blob/main/evaluation/README.md",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "strands-evaluation-readme"
+ },
+ "strands-evaluation-results": {
+  "kind": "repo",
+  "title": "strands-decider: results",
+  "url": "https://github.com/strands-labs/strands-decider/blob/main/evaluation/results.md",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "strands-evaluation-results"
+ },
+ "strands-evaluation-jevbench": {
+  "kind": "repo",
+  "title": "strands-decider: JevBench notes",
+  "url": "https://github.com/strands-labs/strands-decider/blob/main/evaluation/jevbench.md",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "strands-evaluation-jevbench"
+ },
+ "strands-examples-strands-readme": {
+  "kind": "repo",
+  "title": "strands-decider: agent example",
+  "url": "https://github.com/strands-labs/strands-decider/blob/main/examples/strands_README.md",
+  "who": "AWS Strands Labs",
+  "date": "2026-10",
+  "id": "strands-examples-strands-readme"
+ },
+ "jevbench-repo": {
+  "kind": "repo",
+  "title": "JevBench v1 (benchmark for Jev-class typed decision models)",
+  "url": "https://github.com/doxanocap/jevbench",
+  "who": "JevBench authors",
+  "date": "2026-09",
+  "id": "jevbench-repo"
+ },
+ "jevbench-heaven-repo": {
+  "kind": "repo",
+  "title": "JevBench by Benchmark Heaven",
+  "url": "https://github.com/fstandhartinger/jevbench",
+  "who": "Benchmark Heaven",
+  "date": "2026-10",
+  "id": "jevbench-heaven-repo"
+ },
+ "strands-blog": {
+  "kind": "article",
+  "title": "Introducing Strands Decider 2B: a small, open source, decision model",
+  "url": "https://strandsagents.com/blog/introducing-strands-decider/",
+  "who": "Marc Brooker; Mike Chambers; Fabio Nonato de Paula",
+  "date": "2026-10-01",
+  "id": "strands-blog"
+ },
+ "newstack-openai-decisions": {
+  "kind": "article",
+  "title": "OpenAI answers TypeSafe's Jev with a Decision API built on Luna",
+  "url": "https://thenewstack.io/openai-decision-api-luna/",
+  "who": "Frederic Lardinois",
+  "date": "2026-09-29",
+  "id": "newstack-openai-decisions"
+ },
+ "simonw-jev": {
+  "kind": "article",
+  "title": "Jev introduces a new shape of LLM—System One, aka Decision Models",
+  "url": "https://simonwillison.net/2026/Sep/21/jev/",
+  "who": "Simon Willison",
+  "date": "2026-09-21",
+  "id": "simonw-jev"
+ },
+ "simonw-llm-typesafe": {
+  "kind": "article",
+  "title": "Release: llm-typesafe 0.1a0",
+  "url": "https://simonwillison.net/2026/Sep/22/llm-typesafe/",
+  "who": "Simon Willison",
+  "date": "2026-09-22",
+  "id": "simonw-llm-typesafe"
+ },
+ "nobodywho-jev-25-lines": {
+  "kind": "article",
+  "title": "Jev in 25 lines of Python - NobodyWho",
+  "url": "https://www.nobodywho.ai/posts/jev-in-25-lines/",
+  "who": "Duarte O Carmo",
+  "date": "2026-09-22",
+  "id": "nobodywho-jev-25-lines"
+ },
+ "nishtahir-build-decision-model": {
+  "kind": "article",
+  "title": "Build your own decision model",
+  "url": "https://nishtahir.com/build-your-own-decision-model/",
+  "who": "Nish Tahir",
+  "date": "2026-10-10",
+  "id": "nishtahir-build-decision-model"
+ },
+ "arcturus-openai-fast-follow": {
+  "kind": "article",
+  "title": "Will OpenAI Eat Jev's Lunch?",
+  "url": "https://arcturus-labs.com/blog/2026/09/21/will-openai-eat-jevs-lunch/",
+  "who": "arcturus-labs.com",
+  "date": "2026-09-21",
+  "id": "arcturus-openai-fast-follow"
+ },
+ "brooker-why-not-encoder": {
+  "kind": "article",
+  "title": "Strands Decider: Why Not an Encoder?",
+  "url": "https://brooker.co.za/blog/2026/10/04/encoders.html",
+  "who": "Marc Brooker",
+  "date": "2026-07-19",
+  "id": "brooker-why-not-encoder"
+ },
+ "laya": {
+  "kind": "article",
+  "title": "Laya — 33ms Multilingual System 1 Decision Engine",
+  "url": "https://laya.convaiinnovations.com/",
+  "who": "",
+  "date": "2026-01-01",
+  "id": "laya"
+ },
+ "posthog-jeeves": {
+  "kind": "repo",
+  "title": "GitHub - PostHog/jeeves: Jeeves – Reasoning improves Jev-like decision models",
+  "url": "https://github.com/PostHog/jeeves",
+  "who": "GitHub",
+  "date": "2026-09-29",
+  "id": "posthog-jeeves"
+ },
+ "anthus-decisions-confidence": {
+  "kind": "article",
+  "title": "The OpenAI Decisions API Needs a Confidence You Can Trust | Anthus",
+  "url": "https://anth.us/blog/openai-decisions-api-preview/",
+  "who": "Ryan Porter",
+  "date": "2026-10-01",
+  "id": "anthus-decisions-confidence"
+ },
+ "vals-jev-eval": {
+  "kind": "article",
+  "title": "An Independent Evaluation of TypeSafe's Jev | Vals AI",
+  "url": "https://www.vals.ai/blogs/independent-evaluation-of-jev",
+  "who": "Connor Frank",
+  "date": "2026-10-06",
+  "id": "vals-jev-eval"
+ },
+ "lindfors-first-look": {
+  "kind": "article",
+  "title": "An early-access test of TypeSafe's Jev: calibrated judgments for half a cent",
+  "url": "https://lindfors.no/blog/a-first-look-at-typesafes-jev/",
+  "who": "Emil Lindfors",
+  "date": "2026-09-18",
+  "id": "lindfors-first-look"
+ },
+ "backnotprop-poker": {
+  "kind": "article",
+  "title": "Jev is the 🐠 at the poker table",
+  "url": "https://backnotprop.com/blog/jev-poker/",
+  "who": "Mike Ramos",
+  "date": "2026-09-17",
+  "id": "backnotprop-poker"
+ },
+ "flaviocopes-jev": {
+  "kind": "article",
+  "title": "How to build typed decisions with Jev",
+  "url": "https://flaviocopes.com/jev/",
+  "who": "Flavio Copes",
+  "date": "2026-09-17",
+  "id": "flaviocopes-jev"
+ },
+ "unsiloed-doc-review": {
+  "kind": "article",
+  "title": "Document Review With Unsiloed and TypeSafe Jev",
+  "url": "https://www.unsiloed.ai/blog/document-review-unsiloed-typesafe-jev",
+  "who": "Unsiloed AI",
+  "date": "2026-10-01",
+  "id": "unsiloed-doc-review"
+ },
+ "dsebastien-semantic-if": {
+  "kind": "article",
+  "title": "Jev and System One models - a semantic if statement for your code",
+  "url": "https://www.dsebastien.net/jev-and-system-one-models-a-semantic-if-statement-for-your-code/",
+  "who": "Sebastien Dubois",
+  "date": "2026-09-22",
+  "id": "dsebastien-semantic-if"
+ },
+ "kev-repo": {
+  "kind": "repo",
+  "title": "GitHub - jaredpalmer/kev: Jev-like family of decision models built on top of Qwen3.5/3.8 you can train and run on your own",
+  "url": "https://github.com/jaredpalmer/kev",
+  "who": "GitHub",
+  "date": "2026-09-17",
+  "id": "kev-repo"
+ },
+ "jeff-repo": {
+  "kind": "repo",
+  "title": "GitHub - firelex/jeff: Millisecond decisions, any domain: a 0.8B open \"System 1\" model that picks between your options with calibrated probabilities. One base, swappable LoRA adapters, on your own hardware.",
+  "url": "https://github.com/firelex/jeff",
+  "who": "GitHub",
+  "date": "2026-09-28",
+  "id": "jeff-repo"
+ },
+ "ollaya": {
+  "kind": "article",
+  "title": "Ollaya · Run decision models locally.",
+  "url": "https://ollaya.dev/",
+  "who": "Ollaya",
+  "date": "2026-01-01",
+  "id": "ollaya"
+ },
+ "jevman": {
+  "kind": "article",
+  "title": "JevMan: a Pac-Man benchmark for decision models | Opper AI",
+  "url": "https://opper.ai/jevman-benchmark/",
+  "who": "Opper AI",
+  "date": "2026-01-01",
+  "id": "jevman"
+ },
+ "mikulski-guess-drawing": {
+  "kind": "article",
+  "title": "TypeSafe's Jev Can't See. I Made It Guess What I Drew Anyway – Bartosz Mikulski | AI & MLOps Engineer",
+  "url": "https://mikulskibartosz.name/typesafe-jev-guess-what-i-drew",
+  "who": "Bartosz Mikulski",
+  "date": "2026-09-19",
+  "id": "mikulski-guess-drawing"
+ },
+ "arxiv-crash-narratives": {
+  "kind": "paper",
+  "title": "Calibrated Decisions at Scale: Converting Police Crash Narratives into Probabilistic Crash Variables with a System One Model (Jev)",
+  "url": "https://arxiv.org/html/2609.24052",
+  "who": "Amir Rafe amir rafe edu",
+  "date": "2003-10-15",
+  "id": "arxiv-crash-narratives"
+ },
+ "arxiv-pinocchio": {
+  "kind": "paper",
+  "title": "Pinocchio: Fast Uncertainty Estimates for Black-Box Language Models",
+  "url": "https://arxiv.org/html/2609.24881",
+  "who": "Kevin David Hayes",
+  "date": "2026-01-31",
+  "id": "arxiv-pinocchio"
+ },
+ "kahneman-nobel": {
+  "kind": "paper",
+  "title": "kahneman-nobel",
+  "url": "https://www.nobelprize.org/uploads/2018/06/kahnemann-lecture.pdf",
+  "who": "",
+  "date": "",
+  "id": "kahneman-nobel"
+ },
+ "guo-calibration": {
+  "kind": "paper",
+  "title": "On Calibration of Modern Neural Networks",
+  "url": "https://arxiv.org/abs/1706.04599",
+  "who": "Guo; Chuan; Pleiss; Geoff; Sun; Yu; Weinberger; Kilian Q",
+  "date": "2017-06-14",
+  "id": "guo-calibration"
+ },
+ "kadavath-know": {
+  "kind": "paper",
+  "title": "Language Models (Mostly) Know What They Know",
+  "url": "https://arxiv.org/abs/2207.05221",
+  "who": "Kadavath; Saurav; Conerly; Tom; Askell; Amanda; Henighan; Drain; Dawn; Perez; Ethan; Schiefer; Nicholas; Hatfield-Dodds; Zac; DasSarma; Nova; Tran-Johnson; Eli; Johnston; Scott; El-Showk; Sheer; Jones; Andy; Elhage; Nelson; Hume; Tristan; Chen; Anna; Bai; Yuntao; Bowman; Sam; Fort; Stanislav; Ganguli; Deep; Hernandez; Danny; Jacobson; Josh; Kernion; Jackson; Kravec; Shauna; Lovitt; Liane; Ndousse; Kamal; Olsson; Catherine; Ringer; Amodei; Dario; Brown; Clark; Joseph; Mann; Ben; McCandlish; Olah; Chris; Kaplan; Jared",
+  "date": "2022-07-11",
+  "id": "kadavath-know"
+ },
+ "gpt4-report": {
+  "kind": "paper",
+  "title": "GPT-4 Technical Report",
+  "url": "https://arxiv.org/abs/2303.08774",
+  "who": "OpenAI; Achiam; Adler; Steven; Agarwal; Sandhini; Ahmad; Lama; Akkaya; Ilge; Aleman; Florencia Leoni; Almeida; Diogo; Altenschmidt; Janko; Altman; Anadkat; Shyamal; Red; Babuschkin; Igor; Balaji; Suchir; Balcom; Valerie; Baltescu; Paul; Bao; Haiming; Bavarian; Mohammad; Belgum; Jeff; Bello; Irwan; Berdine; Jake; Bernadett-Shapiro; Gabriel; Berner; Christopher; Bogdonoff; Lenny; Boiko; Oleg; Boyd; Madelaine; Brakman; Anna-Luisa; Brockman; Greg; Brooks; Tim; Brundage; Miles; Button; Kevin; Cai; Trevor; Campbell; Rosie; Cann; Andrew; Carey; Brittany; Carlson; Chelsea; Carmichael; Rory; Brooke; Chang; Chantzis; Fotis; Chen; Derek; Sully; Ruby; Jason; Chess; Chester; Casey; Chung; Hyung Won; Cummings; Dave; Currier; Jeremiah; Dai; Yunxing; Decareaux; Cory; Degry; Thomas; Deutsch; Noah; Deville; Damien; Dhar; Arka; Dohan; David; Dowling; Dunning; Sheila; Ecoffet; Adrien; Eleti; Atty; Eloundou; Tyna; Farhi; Fedus; Liam; Felix; Fishman; Simón Posada; Forte; Juston; Fulford; Isabella; Gao; Georges; Elie; Gibson; Christian; Goel; Vik; Gogineni; Tarun; Goh; Gontijo-Lopes; Rapha; Gordon; Jonathan; Grafstein; Morgan; Gray; Greene; Ryan; Gross; Joshua; Shixiang Shane; Guo; Yufei; Hallacy; Jesse; Harris; Yuchen; Heaton; Mike; Heidecke; Johannes; Hesse; Hickey; Alan; Wade; Hoeschele; Peter; Houghton; Brandon; Hsu; Kenny; Shengli; Xin; Huizinga; Joost; Jain; Shantanu; Shawn; Jang; Joanne; Jiang; Angela; Roger; Jin; Haozhun; Denny; Jomoto; Shino; Jonn; Billie; Heewoo; Kaftan; Tomer; Kaiser; Łukasz; Kamali; Ali; Kanitscheider; Ingmar; Keskar; Nitish Shirish; Khan; Tabarak; Kilpatrick; Logan; Kim; Jong Wook; Christina; Yongjik; Kirchner; Jan Hendrik; Kiros; Jamie; Knight; Matt; Kokotajlo; Daniel; Kondraciuk; Kondrich; Konstantinidis; Aris; Kosic; Kyle; Krueger; Gretchen; Kuo; Vishal; Lampe; Michael; Lan; Ikai; Lee; Teddy; Leike; Leung; Jade; Levy; Chak Ming; Lim; Rachel; Lin; Molly; Stephanie; Litwin; Mateusz; Lopez; Theresa; Lowe; Lue; Patricia; Makanju; Malfacini; Manning; Todor; Markovski; Yaniv; Martin; Bianca; Katie; Mayne; McGrew; Bob; McKinney; Scott Mayer; McLeavey; Christine; McMillan; McNeil; Medina; Mehta; Aalok; Menick; Jacob; Metz; Luke; Mishchenko; Andrey; Mishkin; Pamela; Monaco; Vinnie; Morikawa; Evan; Mossing; Tong; Murati; Mira; Murk; Mély; Nair; Ashvin; Nakano; Reiichiro; Nayak; Rajeev; Neelakantan; Arvind; Ngo; Richard; Noh; Hyeonwoo; Ouyang; Long; O'Keefe; Cullen; Pachocki; Jakub; Paino; Alex; Palermo; Pantuliano; Ashley; Parascandolo; Giambattista; Parish; Joel; Parparita; Emy; Passos; Pavlov; Mikhail; Peng; Perelman; Adam; Peres; Filipe de Avila Belbute; Petrov; Pinto; Henrique Ponde de Oliveira; Pokorny; Pokrass; Michelle; Pong; Vitchyr H; Powell; Tolly; Power; Alethea; Boris; Proehl; Elizabeth; Puri; Raul; Radford; Alec; Rae; Jack; Ramesh; Aditya; Raymond; Cameron; Real; Francis; Rimbach; Kendra; Ross; Rotsted; Roussez; Ryder; Nick; Saltarelli; Mario; Sanders; Santurkar; Shibani; Sastry; Girish; Schmidt; Heather; Schnurr; Schulman; John; Selsam; Sheppard; Kyla; Sherbakov; Toki; Shieh; Jessica; Shoker; Sarah; Pranav; Sidor; Szymon; Sigler; Eric; Simens; Maddie; Sitkin; Jordan; Slama; Katarina; Sohl; Ian; Sokolowsky; Benjamin; Song; Yang; Staudacher; Natalie; Felipe Petroski; Summers; Sutskever; Ilya; Tang; Jie; Tezak; Nikolas; Thompson; Madeleine B; Tillet; Phil; Tootoonchian; Amin; Tseng; Tuggle; Preston; Turley; Tworek; Jerry; Uribe; Juan Felipe Cerón; Vallone; Andrea; Vijayvergiya; Arun; Voss; Wainwright; Carroll; Wang; Justin Jay; Alvin; Ward; Weinmann; CJ; Welihinda; Akila; Welinder; Weng; Jiayi; Lilian; Wiethoff; Willner; Winter; Clemens; Wolrich; Samuel; Wong; Hannah; Workman; Lauren; Wu; Sherwin; Xiao; Xu; Tao; Yoo; Yuan; Qiming; Zaremba; Wojciech; Zellers; Rowan; Zhang; Chong; Marvin; Zhao; Shengjia; Zheng; Tianhao; Zhuang; Juntang; Zhuk; William; Zoph; Barret",
+  "date": "2023-03-15",
+  "id": "gpt4-report"
+ },
+ "tian-just-ask": {
+  "kind": "paper",
+  "title": "Just Ask for Calibration: Strategies for Eliciting Calibrated Confidence Scores from Language Models Fine-Tuned with Human Feedback",
+  "url": "https://arxiv.org/abs/2305.14975",
+  "who": "Tian; Katherine; Mitchell; Eric; Zhou; Allan; Sharma; Archit; Rafailov; Rafael; Yao; Huaxiu; Finn; Chelsea; Manning; Christopher D",
+  "date": "2023-05-24",
+  "id": "tian-just-ask"
+ },
+ "xiong-uncertainty": {
+  "kind": "paper",
+  "title": "Can LLMs Express Their Uncertainty? An Empirical Evaluation of Confidence Elicitation in LLMs",
+  "url": "https://arxiv.org/abs/2306.13063",
+  "who": "Xiong; Miao; Hu; Zhiyuan; Lu; Xinyang; Li; Yifei; Fu; Jie; He; Junxian; Hooi; Bryan",
+  "date": "2023-06-22",
+  "id": "xiong-uncertainty"
+ },
+ "zhao-calibrate-before-use": {
+  "kind": "paper",
+  "title": "Calibrate Before Use: Improving Few-Shot Performance of Language Models",
+  "url": "https://arxiv.org/abs/2102.09690",
+  "who": "Zhao; Tony Z; Wallace; Eric; Feng; Shi; Klein; Dan; Singh; Sameer",
+  "date": "2021-02-19",
+  "id": "zhao-calibrate-before-use"
+ },
+ "pezeshkpour-option-order": {
+  "kind": "paper",
+  "title": "Large Language Models Sensitivity to The Order of Options in Multiple-Choice Questions",
+  "url": "https://arxiv.org/abs/2308.11483",
+  "who": "Pezeshkpour; Pouya; Hruschka; Estevam",
+  "date": "2023-08-22",
+  "id": "pezeshkpour-option-order"
+ },
+ "zheng-llm-judge": {
+  "kind": "paper",
+  "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+  "url": "https://arxiv.org/abs/2306.05685",
+  "who": "Zheng; Lianmin; Chiang; Wei-Lin; Sheng; Ying; Zhuang; Siyuan; Wu; Zhanghao; Yonghao; Zi; Zhuohan; Dacheng; Xing; Eric P; Hao; Gonzalez; Joseph E; Stoica; Ion",
+  "date": "2023-06-09",
+  "id": "zheng-llm-judge"
+ },
+ "geifman-selective": {
+  "kind": "paper",
+  "title": "Selective Classification for Deep Neural Networks",
+  "url": "https://arxiv.org/abs/1705.08500",
+  "who": "Geifman; Yonatan; El-Yaniv; Ran",
+  "date": "2017-05-23",
+  "id": "geifman-selective"
+ },
+ "angelopoulos-conformal": {
+  "kind": "paper",
+  "title": "A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification",
+  "url": "https://arxiv.org/abs/2107.07511",
+  "who": "Angelopoulos; Anastasios N; Bates; Stephen",
+  "date": "2021-07-15",
+  "id": "angelopoulos-conformal"
+ },
+ "frugalgpt": {
+  "kind": "paper",
+  "title": "FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance",
+  "url": "https://arxiv.org/abs/2305.05176",
+  "who": "Chen; Lingjiao; Zaharia; Matei; Zou; James",
+  "date": "2023-05-09",
+  "id": "frugalgpt"
+ },
+ "routellm": {
+  "kind": "paper",
+  "title": "RouteLLM: Learning to Route LLMs with Preference Data",
+  "url": "https://arxiv.org/abs/2406.18665",
+  "who": "Ong; Isaac; Almahairi; Amjad; Wu; Vincent; Chiang; Wei-Lin; Tianhao; Gonzalez; Joseph E; Kadous; M Waleed; Stoica; Ion",
+  "date": "2024-06-26",
+  "id": "routellm"
+ },
+ "booch-fast-slow-ai": {
+  "kind": "paper",
+  "title": "Thinking Fast and Slow in AI",
+  "url": "https://arxiv.org/abs/2010.06002",
+  "who": "Booch; Grady; Fabiano; Francesco; Horesh; Lior; Kate; Kiran; Lenchner; Jon; Linck; Nick; Loreggia; Andrea; Murugesan; Keerthiram; Mattei; Nicholas; Rossi; Francesca; Srivastava; Biplav",
+  "date": "2020-10-12",
+  "id": "booch-fast-slow-ai"
+ },
+ "elkan-cost-sensitive": {
+  "kind": "paper",
+  "title": "elkan-cost-sensitive",
+  "url": "https://cseweb.ucsd.edu/~elkan/rescale.pdf",
+  "who": "",
+  "date": "",
+  "id": "elkan-cost-sensitive"
+ },
+ "sutton-bitter-lesson": {
+  "kind": "article",
+  "title": "The Bitter Lesson",
+  "url": "http://www.incompleteideas.net/IncIdeas/BitterLesson.html",
+  "who": "",
+  "date": "2019-03-13",
+  "id": "sutton-bitter-lesson"
+ },
+ "anthropic-effective-agents": {
+  "kind": "article",
+  "title": "Building Effective AI Agents",
+  "url": "https://www.anthropic.com/engineering/building-effective-agents",
+  "who": "AnthropicAI",
+  "date": "2024-12-19",
+  "id": "anthropic-effective-agents"
+ },
+ "openai-logprobs-cookbook": {
+  "kind": "article",
+  "title": "Using logprobs",
+  "url": "https://cookbook.openai.com/examples/using_logprobs",
+  "who": "OpenAI Developers",
+  "date": "2023-12-20",
+  "id": "openai-logprobs-cookbook"
+ },
+ "hamel-llm-judge": {
+  "kind": "article",
+  "title": "Using LLM-as-a-Judge For Evaluation: A Complete Guide – Hamel’s Blog",
+  "url": "https://hamel.dev/blog/posts/llm-judge/",
+  "who": "Hamel Husain",
+  "date": "2024-10-29",
+  "id": "hamel-llm-judge"
+ },
+ "eugeneyan-llm-patterns": {
+  "kind": "article",
+  "title": "Patterns for Building LLM-based Systems & Products",
+  "url": "https://eugeneyan.com/writing/llm-patterns/",
+  "who": "Eugene Yan",
+  "date": "2023-07-30",
+  "id": "eugeneyan-llm-patterns"
+ },
+ "simonw-lethal-trifecta": {
+  "kind": "article",
+  "title": "The lethal trifecta for AI agents: private data, untrusted content, and external communication",
+  "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+  "who": "Simon Willison",
+  "date": "2025-06-16",
+  "id": "simonw-lethal-trifecta"
+ },
+ "jevons-paradox": {
+  "kind": "article",
+  "title": "Jevons paradox - Wikipedia",
+  "url": "https://en.wikipedia.org/wiki/Jevons_paradox",
+  "who": "Wikimedia Foundation, Inc.",
+  "date": "2004-09-15",
+  "id": "jevons-paradox"
+ },
+ "apgar-score": {
+  "kind": "article",
+  "title": "Apgar score - Wikipedia",
+  "url": "https://en.wikipedia.org/wiki/Apgar_score",
+  "who": "Authority control databases International GND FAST National United States Israel Other Yale LUX",
+  "date": "2003-12-17",
+  "id": "apgar-score"
+ },
+ "brier-score": {
+  "kind": "article",
+  "title": "Brier score - Wikipedia",
+  "url": "https://en.wikipedia.org/wiki/Brier_score",
+  "who": "Wikimedia Foundation, Inc.",
+  "date": "2005-08-25",
+  "id": "brier-score"
+ },
+ "dual-process": {
+  "kind": "article",
+  "title": "Dual process theory - Wikipedia",
+  "url": "https://en.wikipedia.org/wiki/Dual_process_theory",
+  "who": "Wikimedia Foundation, Inc.",
+  "date": "2006-08-03",
+  "id": "dual-process"
+ },
+ "0AR1NvFcP_o": {
+  "id": "0AR1NvFcP_o",
+  "kind": "talk",
+  "title": "Jev Sucks, Actually",
+  "url": "https://www.youtube.com/watch?v=0AR1NvFcP_o",
+  "who": "Duncan Rogoff | Learn Claude Code",
+  "channel": "Duncan Rogoff | Learn Claude Code",
+  "duration": 607,
+  "views": 65758,
+  "date": ""
+ },
+ "2z-7pIj57f8": {
+  "id": "2z-7pIj57f8",
+  "kind": "talk",
+  "title": "We need to talk about Jev...",
+  "url": "https://www.youtube.com/watch?v=2z-7pIj57f8",
+  "who": "Matthew Berman",
+  "channel": "Matthew Berman",
+  "duration": 751,
+  "views": 401449,
+  "date": ""
+ },
+ "35PSMmDDKP8": {
+  "id": "35PSMmDDKP8",
+  "kind": "talk",
+  "title": "Jev Explained: The Fast AI Model We Tried to Break on Purpose",
+  "url": "https://www.youtube.com/watch?v=35PSMmDDKP8",
+  "who": "Boundary and HumanLayer",
+  "channel": "Boundary and HumanLayer",
+  "duration": 2557,
+  "views": 14788,
+  "date": ""
+ },
+ "7IgUcZBq1ec": {
+  "id": "7IgUcZBq1ec",
+  "kind": "talk",
+  "title": "Statistical Prediction Rules (SPRs) vs. Clinical experts",
+  "url": "https://www.youtube.com/watch?v=7IgUcZBq1ec",
+  "who": "DailyData",
+  "channel": "DailyData",
+  "duration": 277,
+  "views": 1346,
+  "date": ""
+ },
+ "9Aato-NfjoU": {
+  "id": "9Aato-NfjoU",
+  "kind": "talk",
+  "title": "Asking JEV's Creator the Hard Questions About This Hot New AI Model",
+  "url": "https://www.youtube.com/watch?v=9Aato-NfjoU",
+  "who": "The TWIML AI Podcast with Sam Charrington",
+  "channel": "The TWIML AI Podcast with Sam Charrington",
+  "duration": 5380,
+  "views": 9790,
+  "date": ""
+ },
+ "AunotauS5yI": {
+  "id": "AunotauS5yI",
+  "kind": "talk",
+  "title": "Probability Calibration : Data Science Concepts",
+  "url": "https://www.youtube.com/watch?v=AunotauS5yI",
+  "who": "ritvikmath",
+  "channel": "ritvikmath",
+  "duration": 623,
+  "views": 52272,
+  "date": ""
+ },
+ "BsWxPI9UM4c": {
+  "id": "BsWxPI9UM4c",
+  "kind": "talk",
+  "title": "Why AI evals are the hottest new skill for product builders | Hamel Husain & Shreya Shankar",
+  "url": "https://www.youtube.com/watch?v=BsWxPI9UM4c",
+  "who": "Lenny's Podcast",
+  "channel": "Lenny's Podcast",
+  "duration": 6393,
+  "views": 159748,
+  "date": ""
+ },
+ "CjVQJdIrDJ0": {
+  "id": "CjVQJdIrDJ0",
+  "kind": "talk",
+  "title": "Thinking, Fast and Slow | Daniel Kahneman | Talks at Google",
+  "url": "https://www.youtube.com/watch?v=CjVQJdIrDJ0",
+  "who": "Talks at Google",
+  "channel": "Talks at Google",
+  "duration": 3747,
+  "views": 2205949,
+  "date": ""
+ },
+ "D7_ipDqhtwk": {
+  "id": "D7_ipDqhtwk",
+  "kind": "talk",
+  "title": "How We Build Effective Agents: Barry Zhang, Anthropic",
+  "url": "https://www.youtube.com/watch?v=D7_ipDqhtwk",
+  "who": "AI Engineer",
+  "channel": "AI Engineer",
+  "duration": 909,
+  "views": 562323,
+  "date": ""
+ },
+ "F3YXg7AaKWE": {
+  "id": "F3YXg7AaKWE",
+  "kind": "talk",
+  "title": "Jev is incredible",
+  "url": "https://www.youtube.com/watch?v=F3YXg7AaKWE",
+  "who": "Theo - t3․gg",
+  "channel": "Theo - t3․gg",
+  "duration": 1830,
+  "views": 495086,
+  "date": ""
+ },
+ "FB6oCmrIj-Y": {
+  "id": "FB6oCmrIj-Y",
+  "kind": "talk",
+  "title": "Introducing the Decisions API",
+  "url": "https://www.youtube.com/watch?v=FB6oCmrIj-Y",
+  "who": "OpenAI",
+  "channel": "OpenAI",
+  "duration": 334,
+  "views": 384798,
+  "date": ""
+ },
+ "FN7oaLcIlvk": {
+  "id": "FN7oaLcIlvk",
+  "kind": "talk",
+  "title": "Supercharging LLM Classifications with Logprobs",
+  "url": "https://www.youtube.com/watch?v=FN7oaLcIlvk",
+  "who": "Arcturus Labs",
+  "channel": "Arcturus Labs",
+  "duration": 566,
+  "views": 98,
+  "date": ""
+ },
+ "FWFjLF_VoVI": {
+  "id": "FWFjLF_VoVI",
+  "kind": "talk",
+  "title": "How to Cut Your LLM Classification Costs by 90%",
+  "url": "https://www.youtube.com/watch?v=FWFjLF_VoVI",
+  "who": "Hamel Husain",
+  "channel": "Hamel Husain",
+  "duration": 1542,
+  "views": 1758,
+  "date": ""
+ },
+ "Fls_onRviPM": {
+  "id": "Fls_onRviPM",
+  "kind": "talk",
+  "title": "OpenAI DevDay 2026 Keynote (FULL)",
+  "url": "https://www.youtube.com/watch?v=Fls_onRviPM",
+  "who": "OpenAI",
+  "channel": "OpenAI",
+  "duration": 3215,
+  "views": 675188,
+  "date": ""
+ },
+ "FtUbMG3rlFs": {
+  "id": "FtUbMG3rlFs",
+  "kind": "talk",
+  "title": "Yoshua Bengio | From System 1 Deep Learning to System 2 Deep Learning | NeurIPS 2019",
+  "url": "https://www.youtube.com/watch?v=FtUbMG3rlFs",
+  "who": "Preserve Knowledge",
+  "channel": "Preserve Knowledge",
+  "duration": 3396,
+  "views": 40291,
+  "date": ""
+ },
+ "GL0XhAj5LPE": {
+  "id": "GL0XhAj5LPE",
+  "kind": "talk",
+  "title": "LLM Evals: Common Mistakes",
+  "url": "https://www.youtube.com/watch?v=GL0XhAj5LPE",
+  "who": "Hamel Husain",
+  "channel": "Hamel Husain",
+  "duration": 1696,
+  "views": 60703,
+  "date": ""
+ },
+ "Kvgy36vIv-0": {
+  "id": "Kvgy36vIv-0",
+  "kind": "talk",
+  "title": "Dr. Desi Ivanova | Estimating and Calibrating Uncertainty in LLMs",
+  "url": "https://www.youtube.com/watch?v=Kvgy36vIv-0",
+  "who": "INI Seminar Room 1",
+  "channel": "INI Seminar Room 1",
+  "duration": 1854,
+  "views": 144,
+  "date": ""
+ },
+ "LE3bGTaAgOE": {
+  "id": "LE3bGTaAgOE",
+  "kind": "talk",
+  "title": "Diogo Almeida - TypeSafe AI",
+  "url": "https://www.youtube.com/watch?v=LE3bGTaAgOE",
+  "who": "Founders You Should Know",
+  "channel": "Founders You Should Know",
+  "duration": 295,
+  "views": 13553,
+  "date": ""
+ },
+ "QbYBRjOaGOo": {
+  "id": "QbYBRjOaGOo",
+  "kind": "talk",
+  "title": "Jev Explained: Demos and Use Cases",
+  "url": "https://www.youtube.com/watch?v=QbYBRjOaGOo",
+  "who": "Syntax",
+  "channel": "Syntax",
+  "duration": 1071,
+  "views": 275300,
+  "date": ""
+ },
+ "RW_0PqUFq3w": {
+  "id": "RW_0PqUFq3w",
+  "kind": "talk",
+  "title": "Why We Made Jev — Diogo Almeida, TypeSafe Co-founder & CEO",
+  "url": "https://www.youtube.com/watch?v=RW_0PqUFq3w",
+  "who": "Ki-jung Kim (akaslany)",
+  "channel": "Ki-jung Kim (akaslany)",
+  "duration": 514,
+  "views": 202,
+  "date": ""
+ },
+ "STh6CGEMyPw": {
+  "id": "STh6CGEMyPw",
+  "kind": "talk",
+  "title": "Stop Asking LLMs for Confidence Scores (Do this instead)",
+  "url": "https://www.youtube.com/watch?v=STh6CGEMyPw",
+  "who": "Coding Crash Courses",
+  "channel": "Coding Crash Courses",
+  "duration": 409,
+  "views": 1332,
+  "date": ""
+ },
+ "Spn-F83ZHH0": {
+  "id": "Spn-F83ZHH0",
+  "kind": "talk",
+  "title": "Fake Jev demos are taking over the internet",
+  "url": "https://www.youtube.com/watch?v=Spn-F83ZHH0",
+  "who": "Steve (Builder.io)",
+  "channel": "Steve (Builder.io)",
+  "duration": 571,
+  "views": 92280,
+  "date": ""
+ },
+ "THsGizLHrTs": {
+  "id": "THsGizLHrTs",
+  "kind": "talk",
+  "title": "How to Measure LLM Confidence: Logprobs & Structured Output",
+  "url": "https://www.youtube.com/watch?v=THsGizLHrTs",
+  "who": "NeuralNine",
+  "channel": "NeuralNine",
+  "duration": 1334,
+  "views": 6540,
+  "date": ""
+ },
+ "Uihz1NkhFM0": {
+  "id": "Uihz1NkhFM0",
+  "kind": "talk",
+  "title": "Cloudflare Just Challenged Jev, So I Tested Their New Model (Clef)",
+  "url": "https://www.youtube.com/watch?v=Uihz1NkhFM0",
+  "who": "Better Stack",
+  "channel": "Better Stack",
+  "duration": 479,
+  "views": 77197,
+  "date": ""
+ },
+ "Ut3LOjKNJaE": {
+  "id": "Ut3LOjKNJaE",
+  "kind": "talk",
+  "title": "How Jev Turns AI Into Software That Gets Things Done",
+  "url": "https://www.youtube.com/watch?v=Ut3LOjKNJaE",
+  "who": "a16z",
+  "channel": "a16z",
+  "duration": 2544,
+  "views": 65548,
+  "date": ""
+ },
+ "UwwBG-MbniY": {
+  "id": "UwwBG-MbniY",
+  "kind": "talk",
+  "title": "Daniel Kahneman: Thinking Fast and Slow, Deep Learning, and AI | Lex Fridman Podcast #65",
+  "url": "https://www.youtube.com/watch?v=UwwBG-MbniY",
+  "who": "Lex Fridman",
+  "channel": "Lex Fridman",
+  "duration": 4721,
+  "views": 558358,
+  "date": ""
+ },
+ "VE5dsWll06M": {
+  "id": "VE5dsWll06M",
+  "kind": "talk",
+  "title": "Building a Harness with Jev",
+  "url": "https://www.youtube.com/watch?v=VE5dsWll06M",
+  "who": "LangChain",
+  "channel": "LangChain",
+  "duration": 555,
+  "views": 272062,
+  "date": ""
+ },
+ "X117w2Rark8": {
+  "id": "X117w2Rark8",
+  "kind": "talk",
+  "title": "Jev - The Ultimate Classification Model?",
+  "url": "https://www.youtube.com/watch?v=X117w2Rark8",
+  "who": "Sam Witteveen",
+  "channel": "Sam Witteveen",
+  "duration": 979,
+  "views": 451444,
+  "date": ""
+ },
+ "YGgNBcIgI4s": {
+  "id": "YGgNBcIgI4s",
+  "kind": "talk",
+  "title": "What Is Jev? The AI Model That Doesn't Generate Text",
+  "url": "https://www.youtube.com/watch?v=YGgNBcIgI4s",
+  "who": "IBM Technology",
+  "channel": "IBM Technology",
+  "duration": 903,
+  "views": 1172538,
+  "date": ""
+ },
+ "YZHPEkfy2kc": {
+  "id": "YZHPEkfy2kc",
+  "kind": "talk",
+  "title": "$1 AI Guardrails: The Unreasonable Effectiveness of Finetuned ModernBERTs – Diego Carpintero",
+  "url": "https://www.youtube.com/watch?v=YZHPEkfy2kc",
+  "who": "AI Engineer",
+  "channel": "AI Engineer",
+  "duration": 2633,
+  "views": 7471,
+  "date": ""
+ },
+ "_U-O5lYhJ7Q": {
+  "id": "_U-O5lYhJ7Q",
+  "kind": "talk",
+  "title": "10 Levels of Jev For Agentic Engineers",
+  "url": "https://www.youtube.com/watch?v=_U-O5lYhJ7Q",
+  "who": "IndyDevDan",
+  "channel": "IndyDevDan",
+  "duration": 2118,
+  "views": 188520,
+  "date": ""
+ },
+ "_nmlHbSB8kM": {
+  "id": "_nmlHbSB8kM",
+  "kind": "talk",
+  "title": "Stop Overpaying for Intelligence | DevDay 2026",
+  "url": "https://www.youtube.com/watch?v=_nmlHbSB8kM",
+  "who": "OpenAI",
+  "channel": "OpenAI",
+  "duration": 1384,
+  "views": 6249,
+  "date": ""
+ },
+ "cJ0EOzey--o": {
+  "id": "cJ0EOzey--o",
+  "kind": "talk",
+  "title": "Jev CEO: I made ChatGPT, now I'm building what's next",
+  "url": "https://www.youtube.com/watch?v=cJ0EOzey--o",
+  "who": "AI Engineer",
+  "channel": "AI Engineer",
+  "duration": 1085,
+  "views": 654880,
+  "date": ""
+ },
+ "ctYmZxwFJu4": {
+  "id": "ctYmZxwFJu4",
+  "kind": "talk",
+  "title": "Jev vs. Clef: Which decision model works better in practice?",
+  "url": "https://www.youtube.com/watch?v=ctYmZxwFJu4",
+  "who": "Rafael Quintanilha – QuantBrasil",
+  "channel": "Rafael Quintanilha – QuantBrasil",
+  "duration": 1656,
+  "views": 7091,
+  "date": ""
+ },
+ "ip7Qej0ONoE": {
+  "id": "ip7Qej0ONoE",
+  "kind": "talk",
+  "title": "jev: on | Diogo Almeida founder of Typesafe AI, Runtime 2026",
+  "url": "https://www.youtube.com/watch?v=ip7Qej0ONoE",
+  "who": "Modal",
+  "channel": "Modal",
+  "duration": 790,
+  "views": 3478,
+  "date": ""
+ },
+ "mRkJTXDromw": {
+  "id": "mRkJTXDromw",
+  "kind": "talk",
+  "title": "Building Decision Agents with LLMs & Machine Learning Models",
+  "url": "https://www.youtube.com/watch?v=mRkJTXDromw",
+  "who": "IBM Technology",
+  "channel": "IBM Technology",
+  "duration": 1483,
+  "views": 58413,
+  "date": ""
+ },
+ "no9G3N8PSIk": {
+  "id": "no9G3N8PSIk",
+  "kind": "talk",
+  "title": "TypeSafe Jev Fact-Check: The 200x AI Hype vs What's Proven",
+  "url": "https://www.youtube.com/watch?v=no9G3N8PSIk",
+  "who": "Prism Labs",
+  "channel": "Prism Labs",
+  "duration": 486,
+  "views": 2529,
+  "date": ""
+ },
+ "nql000Lu_iE": {
+  "id": "nql000Lu_iE",
+  "kind": "talk",
+  "title": "A Tutorial on Conformal Prediction",
+  "url": "https://www.youtube.com/watch?v=nql000Lu_iE",
+  "who": "Anastasios Nikolas Angelopoulos",
+  "channel": "Anastasios Nikolas Angelopoulos",
+  "duration": 2288,
+  "views": 68320,
+  "date": ""
+ },
+ "nyl9IQbk5Zk": {
+  "id": "nyl9IQbk5Zk",
+  "kind": "talk",
+  "title": "We tested JevBench's top three against Jev on 3,080 bank messages",
+  "url": "https://www.youtube.com/watch?v=nyl9IQbk5Zk",
+  "who": "Model Fatigue",
+  "channel": "Model Fatigue",
+  "duration": 680,
+  "views": 78,
+  "date": ""
+ },
+ "o-y1HJ6buGQ": {
+  "id": "o-y1HJ6buGQ",
+  "kind": "talk",
+  "title": "Jev: ChatGPT Co-Creator’s Answer to RLHF",
+  "url": "https://www.youtube.com/watch?v=o-y1HJ6buGQ",
+  "who": "AI Council",
+  "channel": "AI Council",
+  "duration": 2199,
+  "views": 17997,
+  "date": ""
+ },
+ "oOZr4kRJgFE": {
+  "id": "oOZr4kRJgFE",
+  "kind": "talk",
+  "title": "When calibration beats metrics",
+  "url": "https://www.youtube.com/watch?v=oOZr4kRJgFE",
+  "who": "Probabl",
+  "channel": "Probabl",
+  "duration": 730,
+  "views": 21484,
+  "date": ""
+ },
+ "olIve0D8pJQ": {
+  "id": "olIve0D8pJQ",
+  "kind": "talk",
+  "title": "Why I switched my RAG decisions to Jev...",
+  "url": "https://www.youtube.com/watch?v=olIve0D8pJQ",
+  "who": "The AI Automators",
+  "channel": "The AI Automators",
+  "duration": 966,
+  "views": 29843,
+  "date": ""
+ },
+ "oy9FhisFTmI": {
+  "id": "oy9FhisFTmI",
+  "kind": "talk",
+  "title": "Daniel Kahneman and Yann LeCun: How To Get AI To Think Like Humans (Full Episode)",
+  "url": "https://www.youtube.com/watch?v=oy9FhisFTmI",
+  "who": "Alex Kantrowitz",
+  "channel": "Alex Kantrowitz",
+  "duration": 4072,
+  "views": 8116,
+  "date": ""
+ },
+ "pH7I32-VrZ0": {
+  "id": "pH7I32-VrZ0",
+  "kind": "talk",
+  "title": "FrugalGPT: Reduce Cost and Improve Performance of Large Language Models (James Zou, PhD)",
+  "url": "https://www.youtube.com/watch?v=pH7I32-VrZ0",
+  "who": "Synthetic Intelligence Forum",
+  "channel": "Synthetic Intelligence Forum",
+  "duration": 2294,
+  "views": 9969,
+  "date": ""
+ },
+ "qkCHiEFEZQg": {
+  "id": "qkCHiEFEZQg",
+  "kind": "talk",
+  "title": "I Collected 562 Jev Demos So You Don’t Have To",
+  "url": "https://www.youtube.com/watch?v=qkCHiEFEZQg",
+  "who": "Web Dev Cody",
+  "channel": "Web Dev Cody",
+  "duration": 1110,
+  "views": 34647,
+  "date": ""
+ },
+ "sF3CNPbWA8o": {
+  "id": "sF3CNPbWA8o",
+  "kind": "talk",
+  "title": "How to train INSANELY fast JEV Decision Models from scratch (architecture deep-dive)",
+  "url": "https://www.youtube.com/watch?v=sF3CNPbWA8o",
+  "who": "Neural Breakdown with AVB",
+  "channel": "Neural Breakdown with AVB",
+  "duration": 6539,
+  "views": 38962,
+  "date": ""
+ },
+ "ty622HPl600": {
+  "id": "ty622HPl600",
+  "kind": "talk",
+  "title": "What is Jev? (and is laya better?)",
+  "url": "https://www.youtube.com/watch?v=ty622HPl600",
+  "who": "GitButler",
+  "channel": "GitButler",
+  "duration": 787,
+  "views": 39152,
+  "date": ""
+ },
+ "uTU5Ihgl_7Q": {
+  "id": "uTU5Ihgl_7Q",
+  "kind": "talk",
+  "title": "OpenAI's Decisions API just dropped. Here's how it compares to Jev.",
+  "url": "https://www.youtube.com/watch?v=uTU5Ihgl_7Q",
+  "who": "Mark Kashef",
+  "channel": "Mark Kashef",
+  "duration": 578,
+  "views": 34477,
+  "date": ""
+ },
+ "vj7hysh0mOI": {
+  "id": "vj7hysh0mOI",
+  "kind": "talk",
+  "title": "Jev explained in 7min..",
+  "url": "https://www.youtube.com/watch?v=vj7hysh0mOI",
+  "who": "Caleb Writes Code",
+  "channel": "Caleb Writes Code",
+  "duration": 432,
+  "views": 807048,
+  "date": ""
+ },
+ "wiYaXOGE_e4": {
+  "id": "wiYaXOGE_e4",
+  "kind": "talk",
+  "title": "Olivier Sibony: How can you overcome noise and bias in decision making?",
+  "url": "https://www.youtube.com/watch?v=wiYaXOGE_e4",
+  "who": "CFA Institute",
+  "channel": "CFA Institute",
+  "duration": 1644,
+  "views": 630,
+  "date": ""
+ },
+ "xMb0HSms8vI": {
+  "id": "xMb0HSms8vI",
+  "kind": "talk",
+  "title": "I Tested Jev (TypeSafe AI) in Production: An Honest Review",
+  "url": "https://www.youtube.com/watch?v=xMb0HSms8vI",
+  "who": "Nico Manzaneque",
+  "channel": "Nico Manzaneque",
+  "duration": 1106,
+  "views": 682,
+  "date": ""
+ },
+ "yj-wSRJwrrc": {
+  "id": "yj-wSRJwrrc",
+  "kind": "talk",
+  "title": "Pydantic is all you need: Jason Liu",
+  "url": "https://www.youtube.com/watch?v=yj-wSRJwrrc",
+  "who": "AI Engineer",
+  "channel": "AI Engineer",
+  "duration": 1075,
+  "views": 230837,
+  "date": ""
+ },
+ "zBw5BMrlZLo": {
+  "id": "zBw5BMrlZLo",
+  "kind": "talk",
+  "title": "I Tested Jev vs 12 Local Decision Models. Here's What I’d Use...",
+  "url": "https://www.youtube.com/watch?v=zBw5BMrlZLo",
+  "who": "The AI Automators",
+  "channel": "The AI Automators",
+  "duration": 738,
+  "views": 51185,
+  "date": ""
+ },
+ "zaLQ0AnY9dI": {
+  "id": "zaLQ0AnY9dI",
+  "kind": "talk",
+  "title": "Using Jev In Your Agent Harness",
+  "url": "https://www.youtube.com/watch?v=zaLQ0AnY9dI",
+  "who": "Sam Witteveen",
+  "channel": "Sam Witteveen",
+  "duration": 1225,
+  "views": 52808,
+  "date": ""
+ },
+ "zb4TCFrfHoU": {
+  "id": "zb4TCFrfHoU",
+  "kind": "talk",
+  "title": "Jev vs OpenAI Decisions API: I Ran 505 Real Tests (Use This One)",
+  "url": "https://www.youtube.com/watch?v=zb4TCFrfHoU",
+  "who": "Hyperautomation Labs",
+  "channel": "Hyperautomation Labs",
+  "duration": 621,
+  "views": 4313,
+  "date": ""
+ },
+ "zjkBMFhNj_g": {
+  "id": "zjkBMFhNj_g",
+  "kind": "talk",
+  "title": "[1hr Talk] Intro to Large Language Models",
+  "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g",
+  "who": "Andrej Karpathy",
+  "channel": "Andrej Karpathy",
+  "duration": 3588,
+  "views": 4223985,
+  "date": ""
+ },
+ "zt2cFBC8hdw": {
+  "id": "zt2cFBC8hdw",
+  "kind": "talk",
+  "title": "Decision Hygiene for Reducing Bias and Noise in Judgment | Daniel Kahneman & Robinson Erhardt",
+  "url": "https://www.youtube.com/watch?v=zt2cFBC8hdw",
+  "who": "Robinson's Podcast Clips",
+  "channel": "Robinson's Podcast Clips",
+  "duration": 684,
+  "views": 284,
+  "date": ""
+ },
+ "hn-jev-launch": {
+  "id": "hn-jev-launch",
+  "kind": "discussion",
+  "title": "Hacker News: Introducing System One Models and Jev",
+  "url": "https://news.ycombinator.com/item?id=49717558",
+  "who": "Hacker News commenters",
+  "date": "2026-09-15"
+ },
+ "hn-openai-decisions": {
+  "id": "hn-openai-decisions",
+  "kind": "discussion",
+  "title": "Hacker News: Decisions API is in public beta",
+  "url": "https://news.ycombinator.com/item?id=49984025",
+  "who": "Hacker News commenters",
+  "date": "2026-10-06"
+ },
+ "hn-clef": {
+  "id": "hn-clef",
+  "kind": "discussion",
+  "title": "Hacker News: Clef: Open-weight decision models, and new RL fine-tuning platform",
+  "url": "https://news.ycombinator.com/item?id=49923692",
+  "who": "Hacker News commenters",
+  "date": "2026-10-01"
+ },
+ "hn-strands-decider": {
+  "id": "hn-strands-decider",
+  "kind": "discussion",
+  "title": "Hacker News: Strands Decider 2B: a small, open-source, decision model",
+  "url": "https://news.ycombinator.com/item?id=49987076",
+  "who": "Hacker News commenters",
+  "date": "2026-10-07"
+ },
+ "hn-jev-25-lines": {
+  "id": "hn-jev-25-lines",
+  "kind": "discussion",
+  "title": "Hacker News: Jev in 25 Lines of Python",
+  "url": "https://news.ycombinator.com/item?id=49812769",
+  "who": "Hacker News commenters",
+  "date": "2026-09-23"
+ },
+ "ts-agent-skill": {
+  "id": "ts-agent-skill",
+  "kind": "repo",
+  "title": "TypeSafe agent skill (SKILL.md)",
+  "url": "https://github.com/typesafe-ai/skills/blob/main/skills/typesafe-ai/SKILL.md",
+  "who": "TypeSafe AI",
+  "date": "2026-10"
+ }
+}

@@ -1,0 +1,470 @@
+{
+ "id": "22-capstone",
+ "number": 22,
+ "slug": "capstone-support-triage",
+ "module": "Shipping it",
+ "title": "Capstone: a support triage pipeline",
+ "short": "Capstone",
+ "summary": "The whole course in one pipeline you can run: code prepares the state, one request asks fifteen questions, and code routes every ticket to a refund, a reset link, an LLM, a log, a person or a block. Here is how we built it, the three bad questions our first run exposed, what held-out tickets showed, and why twelve out of twelve still proves less than it sounds.",
+ "takeaways": [
+  "The pipeline: code prepares (redacts cards, lists candidate orders), one request asks 15 questions, code decides and logs.",
+  "The model judges meaning; code checks facts: a refund needs the model to hear a duplicate charge and the records to show one, under the $100 limit.",
+  "Our first run routed 14 of 24 tickets right; three badly written questions caused every miss.",
+  "After fixing them, 24 of 24, and 12 of 12 on tickets written before the fix; 16 of 36 needed no person.",
+  "Twelve out of twelve still allows a true error rate up to about 25%: evaluate on hundreds of real tickets before trusting it."
+ ],
+ "practices": [
+  "Split compound questions and describe the company or domain in the state so the model can judge scope.",
+  "Write contrastive criteria for any question that a normal request could trip, such as injection checks.",
+  "Write held-out test cases before fixing questions, and score fixes only on those.",
+  "Require both the model's judgment and an exact code check before any automated action that moves money."
+ ],
+ "sources": [
+  {
+   "id": "ts-docs-patterns-fan-out"
+  },
+  {
+   "id": "ts-docs-patterns-intent-routing"
+  },
+  {
+   "id": "ts-docs-cookbooks-llm_guardrails"
+  },
+  {
+   "id": "ts-docs-model-jaggedness-jev-1.13"
+  },
+  {
+   "id": "ts-docs-cookbooks-pre_parsed_value_extraction_cookbook"
+  },
+  {
+   "id": "ts-agent-skill"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Time to put it all together. One pipeline, built from everything in this course, that triages a support inbox. The code is in the course repository, and you can run it yourself.",
+   "params": {
+    "kicker": "Lesson 22",
+    "module": "Module 6 · Shipping it",
+    "title": "Capstone: a *support triage* pipeline",
+    "subtitle": "Everything in this course, in one pipeline you can run.",
+    "cast": [
+     "snap",
+     "curly"
+    ]
+   }
+  },
+  {
+   "template": "flow",
+   "chapter": "The design",
+   "narration": "Here's the design. First, code prepares the state. It redacts card numbers, so no model ever sees one, and lists the customer's orders as candidates. Then one request asks fifteen questions at once, in a quarter of a second. Then code decides: thresholds, policy checks, and a log of every answer.",
+   "params": {
+    "title": "Code prepares, the model judges, code decides",
+    "nodes": [
+     {
+      "label": "Code prepares",
+      "sub": "redact cards · candidate orders · company info",
+      "kind": "curly",
+      "edge": "state",
+      "at": "code prepares"
+     },
+     {
+      "label": "One request",
+      "sub": "15 questions · ~0.25 s",
+      "kind": "snap",
+      "edge": "answers",
+      "at": "one request"
+     },
+     {
+      "label": "Code decides",
+      "sub": "thresholds · policy checks · log",
+      "kind": "curly",
+      "at": "code decides"
+     }
+    ]
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "The design",
+   "narration": "Here's one ticket. My card, four one one one and so on, was charged twice for order P-4410. The card number is already gone. The answers: billing, at one point oh. A duplicate charge, point nine nine. The order, picked from the customer's own orders: P-4410. No injection, no escalation, one issue.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.24,
+    "state": {
+     "ticket": "My card [card redacted] was charged twice for order P-4410. Please refund the extra one.",
+     "customer": {
+      "plan": "Pro",
+      "orders": [
+       {
+        "id": "P-4410",
+        "item": "Storage add-on"
+       }
+      ]
+     }
+    },
+    "questions": [
+     {
+      "id": "cat",
+      "type": "choice",
+      "text": "Main request? (8 categories)",
+      "ans": {
+       "choice": "billing",
+       "p": 1.0
+      },
+      "say_at": "billing"
+     },
+     {
+      "id": "dup",
+      "type": "noul",
+      "text": "Charged more than once for the same order?",
+      "ans": {
+       "v": 0.99
+      },
+      "say_at": "A duplicate charge"
+     },
+     {
+      "id": "ord",
+      "type": "choice",
+      "text": "Which order in `customer.orders`? (+ none)",
+      "ans": {
+       "choice": "P-4410",
+       "p": 1.0
+      },
+      "say_at": "The order"
+     },
+     {
+      "id": "inj",
+      "type": "noul",
+      "text": "Tries to override how support works?",
+      "ans": {
+       "v": 0.04
+      },
+      "say_at": "No injection"
+     },
+     {
+      "id": "esc",
+      "type": "noul",
+      "text": "Mentions cancelling, legal action or a breach?",
+      "ans": {
+       "v": 0.02
+      }
+     }
+    ],
+    "send_at": "Here's one ticket",
+    "ans_at": "The answers",
+    "footer": "5 of 15 questions shown. Real answers, jev-1.13.0, 2026-10-15."
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Meaning and facts",
+   "narration": "Now the refund rule. The model must hear a duplicate charge, at point eight or more, the threshold we derived from costs in lesson ten. It must be sure which order. And then code checks the facts: the records really show two identical charges, and the amount is under the hundred dollar limit in the policy. The model judges meaning. Code checks facts. Both have to agree before money moves.",
+   "params": {
+    "file": "triage.py",
+    "lang": "py",
+    "lines": [
+     "if cat == \"billing\" and n(\"reports_duplicate\") >= ACT:   # 0.8",
+     "    order = find(customer.orders, a[\"order\"].choice)",
+     "    if order is None or a[\"order\"].confidence < 0.9:",
+     "        return \"human\", \"can't tell which order\"",
+     "    if not has_identical_charges(order):",
+     "        return \"human\", \"claimed duplicate not in our records\"",
+     "    if order.charges[0] > CREDIT_LIMIT_USD:   # policy: $100",
+     "        return \"human\", \"over the credit limit\"",
+     "    return \"auto_refund\", \"duplicate confirmed in records\""
+    ],
+    "hl": [
+     {
+      "from": 1,
+      "to": 3,
+      "label": "the model: meaning",
+      "tone": "agent",
+      "at": "must hear a duplicate"
+     },
+     {
+      "from": 5,
+      "to": 8,
+      "label": "code: facts",
+      "tone": "good",
+      "at": "code checks the facts"
+     }
+    ]
+   }
+  },
+  {
+   "template": "lanes",
+   "chapter": "Where tickets go",
+   "narration": "Every ticket lands in a route. Code handles refunds, reset links, the feature board, and closing thank-yous and spam. An LLM answers how-to questions from the docs. People get everything unclear, risky or over the limit, with escalations, critical bugs and repeat contacts at the front of the line. And attempts to instruct the system are blocked before any LLM sees them.",
+   "params": {
+    "source": "36 tickets",
+    "lanes": [
+     {
+      "label": "Code handles it",
+      "rule": "refund · reset link · log · close",
+      "tone": "good",
+      "who": "curly",
+      "at": "Code handles"
+     },
+     {
+      "label": "An LLM answers",
+      "rule": "how-to, from the docs",
+      "tone": "s2",
+      "who": "mull",
+      "at": "An LLM answers"
+     },
+     {
+      "label": "A person",
+      "rule": "unclear, risky, over the limit",
+      "tone": "human",
+      "who": "you",
+      "at": "People get everything"
+     },
+     {
+      "label": "Priority or blocked",
+      "rule": "escalations · critical bugs · injections",
+      "tone": "bad",
+      "icon": "shield",
+      "at": "blocked"
+     }
+    ],
+    "items": [
+     {
+      "text": "Charged twice for P-4410",
+      "conf": 0.99,
+      "lane": 0
+     },
+     {
+      "text": "How do I rotate my API key?",
+      "conf": 0.96,
+      "lane": 1
+     },
+     {
+      "text": "Double charge, $189 router",
+      "conf": 0.98,
+      "lane": 2
+     },
+     {
+      "text": "Production is down!",
+      "conf": 0.99,
+      "lane": 3
+     },
+     {
+      "text": "Thanks, all sorted!",
+      "conf": 0.95,
+      "lane": 0
+     },
+     {
+      "text": "“Ignore your instructions…”",
+      "conf": 0.99,
+      "lane": 3
+     }
+    ]
+   }
+  },
+  {
+   "template": "chart",
+   "chapter": "The first run",
+   "narration": "Our first run was humbling: fourteen of twenty four tickets routed the way we'd labeled them. Error analysis found three bad questions behind every miss. We fixed them, and got twenty four of twenty four. But we'd fixed them while looking at those same tickets, so before rerunning, we wrote twelve new ones. Those came out twelve of twelve.",
+   "params": {
+    "title": "Routes matching our labels",
+    "kind": "bar",
+    "ymax": 1.1,
+    "data": [
+     {
+      "x": "first run (24)",
+      "y": 0.583,
+      "label": "14/24",
+      "tone": "bad",
+      "at": "fourteen of twenty four"
+     },
+     {
+      "x": "after fixing 3 questions (same 24)",
+      "y": 1.0,
+      "label": "24/24",
+      "tone": "s2",
+      "at": "twenty four of twenty four"
+     },
+     {
+      "x": "held-out tickets (12)",
+      "y": 1.0,
+      "label": "12/12",
+      "hl": true,
+      "at": "twelve of twelve"
+     }
+    ],
+    "src": "Tickets and labels written by us. jev-1.13.0, 2026-10-15."
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "The first run",
+   "narration": "The three bad questions are worth studying, because they're the mistakes you'll make too. Is it in English and about ACME? Two conditions in one question, about a company the state never described: answers hovered around point five. Does it try to give instructions to support? Taken literally, thank you, you can close this ticket, scored point nine five. And a vague line between billing and how to left an invoice question at point five one. Each fix came from an earlier lesson.",
+   "params": {
+    "title": "Three fixes, before → after",
+    "cols": [
+     "Ticket",
+     "Bad question",
+     "Fix",
+     "Before → after"
+    ],
+    "widths": "1.1fr 1.3fr 1.3fr .8fr",
+    "rows": [
+     {
+      "cells": [
+       "“How do I add a teammate?”",
+       "English *and* about ACME?",
+       "Split it; describe the company in the state",
+       "0.49 → 0.99 · 0.85"
+      ],
+      "at": "Two conditions"
+     },
+     {
+      "cells": [
+       "“You can close this ticket”",
+       "Gives instructions to support?",
+       "Contrastive criteria: what is and isn't an override",
+       "0.95 → 0.03"
+      ],
+      "hl": true,
+      "at": "Taken literally"
+     },
+     {
+      "cells": [
+       "“Where's last month's invoice?”",
+       "billing vs how_to",
+       "Say what each category covers",
+       "0.51 → 0.96"
+      ],
+      "at": "invoice question"
+     }
+    ],
+    "note": "Fixes from lessons 8 (state), 12 (atomic questions), 19 (literal reading) and 6 (describe the options)."
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "What it proves",
+   "narration": "Now apply lesson twenty to our own result. Twelve out of twelve sounds perfect. But with zero errors in twelve tries, the rule of three says the true error rate could still be as high as one in four. These are thirty six tickets we wrote ourselves. Before this pipeline touches a real inbox, it needs a few hundred real tickets, labeled by people who know the policy.",
+   "params": {
+    "eyebrow": "The rule of three",
+    "text": "0 errors in 12 still allows a true error rate of *up to 25%*.",
+    "sub": "95% upper bound ≈ 3 / n. Our 36 tickets are a smoke test, not an eval.",
+    "sub_at": "thirty six tickets",
+    "art": "gauge",
+    "tone": "s2",
+    "punch": "one in four"
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "What it costs",
+   "narration": "And what does it cost? Fifteen questions per ticket, about a thousand input tokens, a quarter of a second. That's about four cents per thousand tickets on Jev. Sixteen of our thirty six tickets needed no person at all, and every decision left a complete record behind.",
+   "params": {
+    "items": [
+     {
+      "value": 0.25,
+      "decimals": 2,
+      "suffix": " s",
+      "label": "per ticket, 15 questions",
+      "tone": "agent",
+      "at": "a quarter of a second"
+     },
+     {
+      "value": 0.04,
+      "decimals": 2,
+      "prefix": "$",
+      "label": "per 1,000 tickets (≈1,050 tokens each)",
+      "tone": "good",
+      "at": "four cents",
+      "hero": true
+     },
+     {
+      "value": 16,
+      "suffix": " of 36",
+      "label": "handled without a person",
+      "tone": "s2",
+      "at": "Sixteen of our thirty six"
+     }
+    ],
+    "src": "jev-1.13.0 at $0.042 per million input tokens; median latency from Brazil, 2026-10-15.",
+    "punch": false
+   }
+  },
+  {
+   "template": "list",
+   "chapter": "The whole course",
+   "narration": "Look at what went into it. A state with only what the questions need. Typed questions, each about one thing. Fifteen of them in one request. Candidates selected, never generated. Thresholds from costs. Guards in code and in questions. Routes to code, an LLM or a person. A log of every judgment. And an honest eval, held out before the fix.",
+   "params": {
+    "title": "The course, in one pipeline",
+    "style": "num",
+    "items": [
+     {
+      "text": "**State** with only what the questions need",
+      "at": "A state"
+     },
+     {
+      "text": "**Typed, atomic questions**, all in one request",
+      "at": "Typed questions"
+     },
+     {
+      "text": "**Select** candidates; never generate values",
+      "at": "Candidates selected"
+     },
+     {
+      "text": "**Thresholds** from costs; facts checked in code",
+      "at": "Thresholds from costs"
+     },
+     {
+      "text": "**Route** to code, an LLM, or a person; **log** it all",
+      "at": "Routes to code"
+     },
+     {
+      "text": "**Evaluate** on held-out cases, then real ones",
+      "at": "honest eval"
+     }
+    ]
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Build yours",
+   "narration": "Now build yours. Point your coding agent at the capstone in the course repository, and have it adapt the pipeline to your own inbox, with your own policy and your own labeled tickets.",
+   "params": {
+    "title": "Build your own triage",
+    "intro": "Paste this into your coding agent, with the course repo's capstone/ folder available:",
+    "prompt": "Using capstone/triage.py as a template, build a triage pipeline for our\nsupport inbox. Put our real policy rules in code where they are exact\n(limits, windows, plans) and in question criteria where they are about\nmeaning. Keep one request per ticket, card and secret redaction in\ncode, and a JSONL log of every answer. Export 300 recent real tickets\nfor labeling, hold out 100 before tuning any question, and report\nroute accuracy with its margin of error, coverage and cost."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: code prepares, the model judges, code decides. Facts are checked in code before money moves. Bad questions show up in error analysis, and fixes are scored on held-out cases. And twelve for twelve is a smoke test, not proof. That's the capstone.",
+   "params": {
+    "items": [
+     "Code prepares, the model judges, code decides.",
+     "Meaning from the model, facts from code, both before money moves.",
+     "Error analysis found 3 bad questions; held-out cases scored the fix.",
+     "12/12 is a smoke test: evaluate on hundreds of real tickets."
+    ]
+   }
+  },
+  {
+   "template": "outro",
+   "chapter": "The end",
+   "narration": "That's the course. Software has always needed decisions, and now it can make the judgments that used to need a person, in a fraction of a second, for a fraction of a cent, with honest probabilities. Use them where they're strong, check them where they're weak, and keep a person close to the decisions that matter. Thanks for watching.",
+   "params": {
+    "text": "Now go build software that *decides*.",
+    "sub": "Fast judgments, honest probabilities, and code that knows what to do with them.",
+    "sub_at": "Use them where they're strong",
+    "cast": [
+     "snap",
+     "mull",
+     "curly",
+     "you"
+    ]
+   }
+  }
+ ]
+}

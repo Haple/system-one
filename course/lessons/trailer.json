@@ -1,0 +1,247 @@
+{
+ "id": "trailer",
+ "number": null,
+ "slug": "trailer",
+ "module": "Trailer",
+ "title": "System One: the trailer",
+ "short": "Trailer",
+ "summary": "A one-minute tour of the free System One course on decision models.",
+ "takeaways": [],
+ "practices": [],
+ "sources": [],
+ "scenes": [
+  {
+   "template": "race",
+   "chapter": "System One",
+   "narration": "Ask a language model a simple question in your code, and it writes an answer one token at a time, which you then parse, and hope. A decision model reads your data once and scores every allowed answer. Same question, a quarter of a second.",
+   "params": {
+    "left": {
+     "label": "LLM, prompt and parse",
+     "sub": "Claude Haiku 5.5 writes JSON",
+     "who": "mull",
+     "text": "{\n  \"intent\": \"atm_support\",\n  \"confidence\": 92\n}",
+     "secs": 1.13
+    },
+    "right": {
+     "label": "Decision model",
+     "sub": "Jev 1.13 scores 77 options at once",
+     "who": "snap",
+     "items": [
+      {
+       "k": "intent",
+       "v": "atm_support"
+      },
+      {
+       "k": "probability",
+       "v": "0.98"
+      }
+     ],
+     "secs": 0.26
+    },
+    "at": "one token at a time",
+    "scale": 1
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "System One",
+   "narration": "You send your data and typed questions: a yes or no, a choice from your options, a score on your scale. Back comes a typed answer for each one, with a probability, all at once.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.25,
+    "state": {
+     "ticket": "Hi, I was charged twice for order A-104 last Thursday. Please refund the duplicate.",
+     "order": {
+      "id": "A-104",
+      "charges_usd": [
+       49,
+       49
+      ]
+     }
+    },
+    "questions": [
+     {
+      "id": "refund",
+      "type": "noul",
+      "text": "Does `ticket` explicitly ask for a refund?",
+      "ans": {
+       "v": 0.99
+      },
+      "at": "a yes or no"
+     },
+     {
+      "id": "dup",
+      "type": "noul",
+      "text": "Do `ticket` and `order` show a duplicate charge?",
+      "ans": {
+       "v": 0.98
+      }
+     },
+     {
+      "id": "team",
+      "type": "choice",
+      "text": "Which team should handle `ticket`?",
+      "ans": {
+       "choice": "billing",
+       "p": 1.0
+      },
+      "at": "a choice"
+     },
+     {
+      "id": "urgency",
+      "type": "score",
+      "text": "How time-sensitive is `ticket`?",
+      "ans": {
+       "score": 0.75,
+       "max": 2,
+       "label": "between no rush and soon"
+      },
+      "at": "a score"
+     }
+    ],
+    "send_at": "Back comes",
+    "ans_at": "typed answer",
+    "footer": "Real answers from jev-1.13.0, measured for this course."
+   }
+  },
+  {
+   "template": "coverage",
+   "chapter": "System One",
+   "narration": "And the probabilities mean something. On real banking messages, Jev was eighty percent right overall, but ninety six percent right on the half it was surest about. Automate those, and send the rest to a person.",
+   "params": {
+    "title": "How much can we automate?",
+    "curve": [
+     {
+      "t": 0,
+      "coverage": 1,
+      "acc": 0.801
+     },
+     {
+      "t": 0.5,
+      "coverage": 0.964,
+      "acc": 0.817
+     },
+     {
+      "t": 0.7,
+      "coverage": 0.842,
+      "acc": 0.862
+     },
+     {
+      "t": 0.8,
+      "coverage": 0.778,
+      "acc": 0.892
+     },
+     {
+      "t": 0.9,
+      "coverage": 0.687,
+      "acc": 0.92
+     },
+     {
+      "t": 0.95,
+      "coverage": 0.621,
+      "acc": 0.939
+     },
+     {
+      "t": 0.99,
+      "coverage": 0.503,
+      "acc": 0.963
+     },
+     {
+      "t": 1.0,
+      "coverage": 0.425,
+      "acc": 0.973
+     }
+    ],
+    "stops": [
+     {
+      "t": 0,
+      "coverage": 1,
+      "acc": 0.801,
+      "at": "eighty percent"
+     },
+     {
+      "t": 0.99,
+      "coverage": 0.503,
+      "acc": 0.963,
+      "at": "ninety six percent"
+     }
+    ],
+    "target": {
+     "acc": 0.95,
+     "label": "95% target",
+     "at": "Automate those"
+    },
+    "ymin": 0.78,
+    "curve_at": "real banking messages"
+   }
+  },
+  {
+   "template": "jagged",
+   "chapter": "System One",
+   "narration": "They're not magic. Ask one to count the fruits in a list of twelve words, and it says five. There are six. The course shows you where they break, and how to keep that work in code.",
+   "params": {
+    "kicker": "Counting",
+    "state": "[apple, typesafe, california, banana, likes, calibration, orange, vertex, mango, kiwi, router, plum]",
+    "type": "choice",
+    "question": "How many entries in `items` are names of fruits?",
+    "answer": {
+     "text": "5",
+     "p": 0.52
+    },
+    "truth": "6",
+    "answer_at": "it says five",
+    "truth_at": "There are six",
+    "fix": {
+     "label": "one Noul per item, sum in code: 6",
+     "lang": "py",
+     "code": "count = sum(a[f\"item_{i}\"].noul > 0.5 for i in range(len(items)))"
+    },
+    "fix_at": "keep that work in code"
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "System One",
+   "narration": "And it's cheap enough to ask everything. Thirteen questions in one request took a quarter of a second. Three thousand messages cost twenty two cents.",
+   "params": {
+    "items": [
+     {
+      "value": 0.27,
+      "decimals": 2,
+      "suffix": " s",
+      "label": "13 questions, one request",
+      "tone": "agent",
+      "at": "Thirteen questions"
+     },
+     {
+      "value": 0.22,
+      "prefix": "$",
+      "decimals": 2,
+      "label": "3,080 messages classified",
+      "tone": "good",
+      "at": "twenty two cents",
+      "hero": true
+     }
+    ],
+    "src": "jev-1.13.0, measured for this course, 2026-10-15",
+    "punch": false
+   }
+  },
+  {
+   "template": "outro",
+   "chapter": "System One",
+   "narration": "System One. A free course on decision models, built from a hundred ninety nine sources and fourteen thousand API calls of our own. And your coding agent can take it too.",
+   "params": {
+    "text": "System One: a free course on software that *decides*",
+    "sub": "learn-system-one.pages.dev · your agent can take it too",
+    "sub_at": "built from",
+    "cast": [
+     "snap",
+     "mull",
+     "curly",
+     "you"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,101 @@
+{
+ "id": "10-thresholds",
+ "number": 10,
+ "slug": "confidence-thresholds",
+ "module": "Probabilities you can act on",
+ "title": "Confidence and thresholds",
+ "short": "Thresholds",
+ "summary": "The answer tells you what; the probability tells you whether to act. Here is the three-path pattern (act, confirm, escalate), why thresholds should differ by action, a one-line formula that turns the cost of mistakes into a threshold, and the one thing thresholds cannot protect you from.",
+ "takeaways": [
+  "Use probability as a second axis: the answer says what to do, the probability says whether to do it now.",
+  "Three paths: act automatically, ask to confirm, or escalate to a person or a slower model.",
+  "Thresholds belong to actions, not to the model: a read-only action can go at 0.6, a money transfer may need 0.85 and a confirmation.",
+  "With calibrated probabilities, act when p exceeds cost of a false action ÷ (cost of a false action + cost of a missed one).",
+  "Confidence can't flag inputs the model doesn't understand at all; check that inputs are in scope before you trust the number."
+ ],
+ "practices": [
+  "Gate every automated action on its own threshold, set by the cost of acting wrongly versus missing a true case.",
+  "Keep thresholds as named constants in code with a comment explaining their cost reasoning, and log the probability with each action.",
+  "Send the middle band to confirmation or human review instead of guessing.",
+  "Detect out-of-scope inputs (wrong language, unknown domain) before the decision, because confidence will not catch them."
+ ],
+ "sources": [
+  {"id": "ts-docs-patterns-confidence-routing"},
+  {"id": "ts-docs-confidence"},
+  {"id": "elkan-cost-sensitive"},
+  {"id": "devto-model-doesnt-talk"},
+  {"id": "flaviocopes-jev"},
+  {"id": "9Aato-NfjoU", "t": 3055},
+  {"id": "YGgNBcIgI4s", "t": 736},
+  {"id": "infoq-jev"},
+  {"id": "laya"},
+  {"id": "mRkJTXDromw", "t": 635},
+  {"id": "anthus-decisions-confidence"}
+ ],
+ "scenes": [
+  {"template": "title", "chapter": "Intro",
+   "narration": "A probability on its own doesn't do anything. Your code turns it into behavior with thresholds. This lesson is about where to put them, and why.",
+   "params": {"kicker": "Lesson 10", "module": "Module 3 · Probabilities you can act on", "title": "Confidence and *thresholds*", "subtitle": "The answer says what. The probability says whether to act.", "cast": ["curly", "snap"]}},
+  {"template": "statement", "chapter": "A second axis",
+   "narration": "Here's the idea in one line, from the TypeSafe docs. Use confidence as a second axis. The answer tells you what. Confidence tells you whether to act.",
+   "params": {"eyebrow": "Confidence-gated routing", "text": "The answer tells you *what*. Confidence tells you *whether to act*.", "art": "gate", "tone": "agent", "punch": "whether to act"}},
+  {"template": "lanes", "chapter": "Three paths",
+   "narration": "That gives you three paths. When the model is sure, act automatically. When it's fairly sure, ask the user to confirm, or gather more information. And when it isn't, hand the case to a person, or to a slower, smarter model. Watch where each request goes.",
+   "params": {"thresholds": [0.85, 0.6], "lanes": [
+     {"label": "Act automatically", "rule": "≥ 0.85", "tone": "good", "icon": "bolt", "at": "act automatically"},
+     {"label": "Ask to confirm", "rule": "0.60 – 0.85", "tone": "warn", "icon": "question", "at": "confirm"},
+     {"label": "Escalate", "rule": "< 0.60 · person or slower model", "tone": "human", "who": "you", "at": "hand the case"}
+   ], "items": [
+     {"text": "“What's my balance?”", "conf": 0.98},
+     {"text": "“Approve the transfer”", "conf": 0.91},
+     {"text": "“Approve it, I think?”", "conf": 0.72},
+     {"text": "“Hmm, the thing from yesterday”", "conf": 0.41},
+     {"text": "“Move the money, the usual”", "conf": 0.66}
+   ]}},
+  {"template": "code", "chapter": "Thresholds per action",
+   "narration": "But one threshold for everything is a mistake. Thresholds belong to actions. In this voice banking example, checking a balance is harmless if it's wrong, so point six is enough. Approving a transfer is not, so it needs point eight five to go through, and anything less gets a spoken confirmation. And below point six, nothing happens without a person.",
+   "params": {"file": "voice_banking.py", "lang": "py", "lines": [
+     "intent = answers[\"intent\"]",
+     "if intent.confidence < 0.6:",
+     "    route_to_support_agent(account)        # genuinely unsure",
+     "elif intent.choice == \"check_balance\":",
+     "    show_balance(account)                  # low stakes: 0.6 is fine",
+     "elif intent.choice == \"approve_transfer\":",
+     "    if intent.confidence > 0.85:",
+     "        approve_transfer(account)          # high stakes, high confidence",
+     "    else:",
+     "        ask_user_to_confirm(account)       # high stakes, moderate"
+   ], "hl": [{"from": 4, "to": 5, "label": "cheap mistake", "tone": "good", "at": "harmless"}, {"from": 7, "to": 10, "label": "expensive mistake", "tone": "bad", "at": "Approving a transfer"}]}},
+  {"template": "formula", "chapter": "A threshold from costs",
+   "narration": "Where should a threshold sit? There's a formula, from decision theory. If acting on a false yes costs C false, and missing a true yes costs C miss, act when the probability is above C false divided by C false plus C miss. It assumes the probability is calibrated, which is why lesson nine came first.",
+   "params": {"title": "Act when p is above:", "parts": [
+     {"text": "C_false", "sub": "cost of acting when it's actually no", "tone": "bad", "at": "acting on a false yes"},
+     {"op": "÷"},
+     {"text": "C_false + C_miss", "sub": "C_miss: cost of missing a real yes", "tone": "paper", "at": "missing a true yes"}
+   ], "caption": "Charles Elkan, The Foundations of Cost-Sensitive Learning (2001). Requires calibrated probabilities.", "caption_at": "decision theory"}},
+  {"template": "stat", "chapter": "A threshold from costs",
+   "narration": "Two examples. Auto-approving a refund that wasn't owed costs you forty dollars, and making a real refund wait for review costs about ten. Forty over fifty: act above point eight. Now a safety report. A false alarm costs a minute of someone's time, a missed one could cost a hundred times more. One over a hundred and one: flag anything above about point oh one.",
+   "params": {"items": [
+     {"value": 0.8, "decimals": 2, "label": "auto-refund: $40 / ($40 + $10)", "tone": "agent", "at": "point eight"},
+     {"value": 0.01, "decimals": 2, "label": "safety flag: 1 / (1 + 100)", "tone": "bad", "at": "point oh one", "hero": true}
+   ], "src": "Illustrative costs. Put your own in, and write them next to the constant."}},
+  {"template": "quote", "chapter": "A threshold from costs",
+   "narration": "Developer Daniel Sam put the attitude well. Fifty percent is a coin toss you ignore. Ninety five percent is a bet you take. Thresholds should scale with the cost of being wrong.",
+   "params": {"text": "50% is a coin toss you ignore, 95% is a bet you take. *Thresholds should scale with the cost of being wrong.*", "who": "Daniel Sam", "role": "developer", "src": "The Model That Doesn't Talk"}},
+  {"template": "statement", "chapter": "Who owns the threshold",
+   "narration": "Some see this as a catch. Armin Ronacher put it as delegating the hallucination problem a little bit to the user. He's right, and that's the deal. The threshold is a business decision, and now it's yours: written in code, readable, and changeable in one line.",
+   "params": {"eyebrow": "Armin Ronacher, via TechCrunch", "text": "It “delegates the hallucination problem a little bit to the user.” *Yes. That's the deal.*", "sub": "Thresholds are business decisions. Now they live in code you can read and change.", "sub_at": "business decision", "art": "curly", "punch": "that's the deal"}},
+  {"template": "statement", "chapter": "What thresholds can't catch",
+   "narration": "One thing thresholds can't do. The author of Laya, an open decision model, fed its English model text in other languages. Accuracy collapsed, all the way to zero on some, but its average confidence never dropped below point eight eight five. A model can be confidently lost. Check that inputs are in scope before you trust the number.",
+   "params": {"eyebrow": "Laya, on out-of-domain inputs", "text": "Confidence stayed above *0.885* even where accuracy was *0%*.", "sub": "Out-of-scope inputs (another language, an unknown domain) need a check before the decision.", "sub_at": "Check that inputs are in scope", "art": "warn", "tone": "bad", "punch": "confidently lost"}},
+  {"template": "quiz", "chapter": "Quick check",
+   "narration": "Quick check. Wrongly auto-closing a ticket costs nine times more than sending a closable ticket to review. With calibrated probabilities, where should the auto-close threshold be?",
+   "params": {"q": "A wrong auto-close costs **9×** a needless review. Threshold?", "options": ["0.5", "0.75", "0.9", "0.99"], "answer": 2, "explain": "C_false ÷ (C_false + C_miss) = 9 ÷ (9 + 1) = 0.9. Auto-close above 0.9; review the rest."}},
+  {"template": "exercise", "chapter": "Try it",
+   "narration": "Try it. Have your agent write the threshold policy for one decision, with the cost reasoning in the code.",
+   "params": {"title": "Write a threshold policy", "intro": "Paste this into your coding agent:", "prompt": "For one automated decision in this codebase, write a threshold policy:\n- list each action it can trigger and estimate the cost of a wrong\n  action vs a missed one (ask me if you can't infer them)\n- compute each threshold as C_false / (C_false + C_miss)\n- add a review band that goes to a person or a slower model\n- add a check that rejects out-of-scope inputs before the decision\nPut thresholds in named constants with the cost reasoning in comments,\nand log probability, threshold and action for every decision."}},
+  {"template": "recap", "chapter": "Recap",
+   "narration": "So: the answer says what, the probability says whether. Act, confirm, or escalate. Give every action its own threshold, set by what mistakes cost. And check that inputs are in scope, because a model can be confidently lost. Next: how much can you automate, and how to pick thresholds from data.",
+   "params": {"items": ["The answer says what; the probability says whether.", "Three paths: act, confirm, escalate.", "Threshold per action: C_false ÷ (C_false + C_miss).", "Confidence can't catch out-of-scope inputs: check them first."], "next": "Automate the sure ones", "next_at": "Next"}}
+ ]
+}

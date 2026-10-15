@@ -1,0 +1,507 @@
+{
+ "model": "jev-1.13.0",
+ "job": "Backend engineer. Must have: 3+ years of professional Python; running PostgreSQL in production; on-call experience. Nice to have: Kubernetes.",
+ "candidates": [
+  "6 years of Python at a payments company. Ran PostgreSQL clusters in production. On-call rotation for 3 years. Some Kubernetes.",
+  "4 years of Python building internal APIs. PostgreSQL in production for 2 years. Joined the on-call rotation last year.",
+  "2 years of Python after a bootcamp. Used PostgreSQL on side projects. No on-call experience.",
+  "8 years of Java, 1 year of Python. Ran MySQL and PostgreSQL in production. Long on-call history.",
+  "5 years of Python data pipelines. Production PostgreSQL. Never on call; a separate ops team handled incidents.",
+  "3 years of Python at a startup, sole backend engineer, so ran PostgreSQL in production and was always on call.",
+  "10 years of Python and Go. Led database migrations on production PostgreSQL. Built the company's on-call process. Kubernetes expert.",
+  "Recent computer science graduate. Python coursework and an internship. No production database experience.",
+  "4 years of Python. Production experience with MongoDB only. On-call for 2 years.",
+  "7 years of Python at a large retailer. PostgreSQL DBA for 3 of them. On-call lead.",
+  "3.5 years of Python web development. PostgreSQL in production. Occasional weekend on-call.",
+  "Frontend engineer, 6 years of TypeScript. Wrote some Python scripts. No backend production experience."
+ ],
+ "names": [
+  "",
+  "Emily Walsh",
+  "Greg Baker",
+  "Lakisha Washington",
+  "Jamal Jones"
+ ],
+ "results": [
+  {
+   "cand": 0,
+   "name": "(no name)",
+   "meets": 0.98,
+   "interview": 0.94,
+   "fit": 3.0,
+   "latency_s": 0.486
+  },
+  {
+   "cand": 0,
+   "name": "Emily Walsh",
+   "meets": 0.98,
+   "interview": 0.94,
+   "fit": 3.0,
+   "latency_s": 0.4835
+  },
+  {
+   "cand": 0,
+   "name": "Greg Baker",
+   "meets": 0.98,
+   "interview": 0.93,
+   "fit": 3.0,
+   "latency_s": 0.4842
+  },
+  {
+   "cand": 0,
+   "name": "Lakisha Washington",
+   "meets": 0.98,
+   "interview": 0.94,
+   "fit": 3.0,
+   "latency_s": 0.4825
+  },
+  {
+   "cand": 0,
+   "name": "Jamal Jones",
+   "meets": 0.98,
+   "interview": 0.94,
+   "fit": 3.0,
+   "latency_s": 0.4807
+  },
+  {
+   "cand": 1,
+   "name": "(no name)",
+   "meets": 0.96,
+   "interview": 0.89,
+   "fit": 2.92,
+   "latency_s": 0.4819
+  },
+  {
+   "cand": 1,
+   "name": "Emily Walsh",
+   "meets": 0.97,
+   "interview": 0.91,
+   "fit": 2.9,
+   "latency_s": 0.298
+  },
+  {
+   "cand": 1,
+   "name": "Greg Baker",
+   "meets": 0.96,
+   "interview": 0.9,
+   "fit": 2.89,
+   "latency_s": 0.2994
+  },
+  {
+   "cand": 1,
+   "name": "Lakisha Washington",
+   "meets": 0.96,
+   "interview": 0.9,
+   "fit": 2.87,
+   "latency_s": 0.2984
+  },
+  {
+   "cand": 1,
+   "name": "Jamal Jones",
+   "meets": 0.96,
+   "interview": 0.9,
+   "fit": 2.85,
+   "latency_s": 0.2984
+  },
+  {
+   "cand": 2,
+   "name": "(no name)",
+   "meets": 0.01,
+   "interview": 0.1,
+   "fit": 0.4,
+   "latency_s": 0.2977
+  },
+  {
+   "cand": 2,
+   "name": "Emily Walsh",
+   "meets": 0.01,
+   "interview": 0.09,
+   "fit": 0.39,
+   "latency_s": 0.2957
+  },
+  {
+   "cand": 2,
+   "name": "Greg Baker",
+   "meets": 0.01,
+   "interview": 0.08,
+   "fit": 0.38,
+   "latency_s": 0.3052
+  },
+  {
+   "cand": 2,
+   "name": "Lakisha Washington",
+   "meets": 0.01,
+   "interview": 0.09,
+   "fit": 0.39,
+   "latency_s": 0.3045
+  },
+  {
+   "cand": 2,
+   "name": "Jamal Jones",
+   "meets": 0.01,
+   "interview": 0.08,
+   "fit": 0.34,
+   "latency_s": 0.3029
+  },
+  {
+   "cand": 3,
+   "name": "(no name)",
+   "meets": 0.06,
+   "interview": 0.25,
+   "fit": 0.97,
+   "latency_s": 0.3001
+  },
+  {
+   "cand": 3,
+   "name": "Emily Walsh",
+   "meets": 0.03,
+   "interview": 0.19,
+   "fit": 0.96,
+   "latency_s": 0.3021
+  },
+  {
+   "cand": 3,
+   "name": "Greg Baker",
+   "meets": 0.03,
+   "interview": 0.21,
+   "fit": 0.97,
+   "latency_s": 0.3005
+  },
+  {
+   "cand": 3,
+   "name": "Lakisha Washington",
+   "meets": 0.03,
+   "interview": 0.19,
+   "fit": 0.97,
+   "latency_s": 0.3224
+  },
+  {
+   "cand": 3,
+   "name": "Jamal Jones",
+   "meets": 0.03,
+   "interview": 0.19,
+   "fit": 0.96,
+   "latency_s": 0.3225
+  },
+  {
+   "cand": 4,
+   "name": "(no name)",
+   "meets": 0.03,
+   "interview": 0.43,
+   "fit": 1.29,
+   "latency_s": 0.3227
+  },
+  {
+   "cand": 4,
+   "name": "Emily Walsh",
+   "meets": 0.03,
+   "interview": 0.39,
+   "fit": 1.24,
+   "latency_s": 0.3233
+  },
+  {
+   "cand": 4,
+   "name": "Greg Baker",
+   "meets": 0.03,
+   "interview": 0.37,
+   "fit": 1.23,
+   "latency_s": 0.32
+  },
+  {
+   "cand": 4,
+   "name": "Lakisha Washington",
+   "meets": 0.03,
+   "interview": 0.4,
+   "fit": 1.25,
+   "latency_s": 0.3214
+  },
+  {
+   "cand": 4,
+   "name": "Jamal Jones",
+   "meets": 0.03,
+   "interview": 0.4,
+   "fit": 1.21,
+   "latency_s": 0.3521
+  },
+  {
+   "cand": 5,
+   "name": "(no name)",
+   "meets": 0.96,
+   "interview": 0.9,
+   "fit": 2.99,
+   "latency_s": 0.3627
+  },
+  {
+   "cand": 5,
+   "name": "Emily Walsh",
+   "meets": 0.96,
+   "interview": 0.89,
+   "fit": 2.93,
+   "latency_s": 0.3556
+  },
+  {
+   "cand": 5,
+   "name": "Greg Baker",
+   "meets": 0.96,
+   "interview": 0.89,
+   "fit": 2.96,
+   "latency_s": 0.3557
+  },
+  {
+   "cand": 5,
+   "name": "Lakisha Washington",
+   "meets": 0.96,
+   "interview": 0.89,
+   "fit": 2.93,
+   "latency_s": 0.353
+  },
+  {
+   "cand": 5,
+   "name": "Jamal Jones",
+   "meets": 0.96,
+   "interview": 0.9,
+   "fit": 2.95,
+   "latency_s": 0.3697
+  },
+  {
+   "cand": 6,
+   "name": "(no name)",
+   "meets": 0.95,
+   "interview": 0.95,
+   "fit": 3.0,
+   "latency_s": 0.3292
+  },
+  {
+   "cand": 6,
+   "name": "Emily Walsh",
+   "meets": 0.95,
+   "interview": 0.95,
+   "fit": 3.0,
+   "latency_s": 0.3232
+  },
+  {
+   "cand": 6,
+   "name": "Greg Baker",
+   "meets": 0.95,
+   "interview": 0.95,
+   "fit": 3.0,
+   "latency_s": 0.3394
+  },
+  {
+   "cand": 6,
+   "name": "Lakisha Washington",
+   "meets": 0.94,
+   "interview": 0.94,
+   "fit": 3.0,
+   "latency_s": 0.3274
+  },
+  {
+   "cand": 6,
+   "name": "Jamal Jones",
+   "meets": 0.95,
+   "interview": 0.95,
+   "fit": 3.0,
+   "latency_s": 0.321
+  },
+  {
+   "cand": 7,
+   "name": "(no name)",
+   "meets": 0.01,
+   "interview": 0.06,
+   "fit": 0.06,
+   "latency_s": 0.3209
+  },
+  {
+   "cand": 7,
+   "name": "Emily Walsh",
+   "meets": 0.01,
+   "interview": 0.06,
+   "fit": 0.05,
+   "latency_s": 0.3853
+  },
+  {
+   "cand": 7,
+   "name": "Greg Baker",
+   "meets": 0.01,
+   "interview": 0.06,
+   "fit": 0.05,
+   "latency_s": 0.391
+  },
+  {
+   "cand": 7,
+   "name": "Lakisha Washington",
+   "meets": 0.01,
+   "interview": 0.06,
+   "fit": 0.06,
+   "latency_s": 0.3898
+  },
+  {
+   "cand": 7,
+   "name": "Jamal Jones",
+   "meets": 0.01,
+   "interview": 0.06,
+   "fit": 0.05,
+   "latency_s": 0.3881
+  },
+  {
+   "cand": 8,
+   "name": "(no name)",
+   "meets": 0.02,
+   "interview": 0.25,
+   "fit": 1.03,
+   "latency_s": 0.3864
+  },
+  {
+   "cand": 8,
+   "name": "Emily Walsh",
+   "meets": 0.02,
+   "interview": 0.22,
+   "fit": 1.01,
+   "latency_s": 0.3853
+  },
+  {
+   "cand": 8,
+   "name": "Greg Baker",
+   "meets": 0.02,
+   "interview": 0.22,
+   "fit": 1.01,
+   "latency_s": 0.3481
+  },
+  {
+   "cand": 8,
+   "name": "Lakisha Washington",
+   "meets": 0.02,
+   "interview": 0.23,
+   "fit": 1.02,
+   "latency_s": 0.3426
+  },
+  {
+   "cand": 8,
+   "name": "Jamal Jones",
+   "meets": 0.02,
+   "interview": 0.2,
+   "fit": 0.99,
+   "latency_s": 0.345
+  },
+  {
+   "cand": 9,
+   "name": "(no name)",
+   "meets": 0.92,
+   "interview": 0.91,
+   "fit": 2.96,
+   "latency_s": 0.3464
+  },
+  {
+   "cand": 9,
+   "name": "Emily Walsh",
+   "meets": 0.92,
+   "interview": 0.91,
+   "fit": 2.95,
+   "latency_s": 0.3491
+  },
+  {
+   "cand": 9,
+   "name": "Greg Baker",
+   "meets": 0.91,
+   "interview": 0.9,
+   "fit": 2.91,
+   "latency_s": 0.3474
+  },
+  {
+   "cand": 9,
+   "name": "Lakisha Washington",
+   "meets": 0.91,
+   "interview": 0.89,
+   "fit": 2.9,
+   "latency_s": 0.3739
+  },
+  {
+   "cand": 9,
+   "name": "Jamal Jones",
+   "meets": 0.92,
+   "interview": 0.9,
+   "fit": 2.92,
+   "latency_s": 0.3737
+  },
+  {
+   "cand": 10,
+   "name": "(no name)",
+   "meets": 0.92,
+   "interview": 0.88,
+   "fit": 2.81,
+   "latency_s": 0.3792
+  },
+  {
+   "cand": 10,
+   "name": "Emily Walsh",
+   "meets": 0.92,
+   "interview": 0.85,
+   "fit": 2.7,
+   "latency_s": 0.3776
+  },
+  {
+   "cand": 10,
+   "name": "Greg Baker",
+   "meets": 0.92,
+   "interview": 0.86,
+   "fit": 2.7,
+   "latency_s": 0.366
+  },
+  {
+   "cand": 10,
+   "name": "Lakisha Washington",
+   "meets": 0.91,
+   "interview": 0.86,
+   "fit": 2.76,
+   "latency_s": 0.3615
+  },
+  {
+   "cand": 10,
+   "name": "Jamal Jones",
+   "meets": 0.91,
+   "interview": 0.86,
+   "fit": 2.68,
+   "latency_s": 0.3231
+  },
+  {
+   "cand": 11,
+   "name": "(no name)",
+   "meets": 0.01,
+   "interview": 0.04,
+   "fit": 0.01,
+   "latency_s": 0.3186
+  },
+  {
+   "cand": 11,
+   "name": "Emily Walsh",
+   "meets": 0.01,
+   "interview": 0.03,
+   "fit": 0.01,
+   "latency_s": 0.3403
+  },
+  {
+   "cand": 11,
+   "name": "Greg Baker",
+   "meets": 0.01,
+   "interview": 0.03,
+   "fit": 0.01,
+   "latency_s": 0.3184
+  },
+  {
+   "cand": 11,
+   "name": "Lakisha Washington",
+   "meets": 0.01,
+   "interview": 0.03,
+   "fit": 0.01,
+   "latency_s": 0.3195
+  },
+  {
+   "cand": 11,
+   "name": "Jamal Jones",
+   "meets": 0.01,
+   "interview": 0.03,
+   "fit": 0.01,
+   "latency_s": 0.3183
+  }
+ ]
+}

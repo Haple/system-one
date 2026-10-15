@@ -1,0 +1,401 @@
+{
+ "id": "04-landscape",
+ "number": 4,
+ "slug": "decision-models-compared",
+ "module": "The idea",
+ "title": "Jev, Decisions, Clef, Strands: the landscape",
+ "short": "The landscape",
+ "summary": "Four decision models you can use today, one request shape they almost share, and what they cost. Then what we measured ourselves: accuracy on a public benchmark and on fresh news published after every model's release, latency from a real server, and why you should trust your own evals over anyone's leaderboard.",
+ "takeaways": [
+  "Jev (TypeSafe, hosted), OpenAI's Decisions API (hosted), Clef (Cloudflare, open weights) and Strands Decider (AWS, open, runs locally) share one shape: state plus typed questions in, probabilities out.",
+  "Jev, Clef and Strands speak the same System One request format; OpenAI's is the same idea with different field names.",
+  "Pricing is per input token with free output: a thousand decisions typically cost cents.",
+  "Public benchmarks can leak into training data and leaderboards move; vendor latency is model time, not your round trip.",
+  "Choose on your constraints (data residency, images, latency from your region, price, fine-tuning) and then measure on your own data."
+ ],
+ "practices": [
+  "Hide the vendor behind a small adapter so you can swap decision models and compare them on the same questions.",
+  "Pin a versioned model ID in production and log it with every decision.",
+  "Measure latency from where your code runs, and accuracy and calibration on your own labeled examples, before choosing a model."
+ ],
+ "sources": [
+  {
+   "id": "ts-docs-models"
+  },
+  {
+   "id": "openai-decisions-guide"
+  },
+  {
+   "id": "cf-clef-changelog"
+  },
+  {
+   "id": "cf-clef-blog"
+  },
+  {
+   "id": "hf-clef-card"
+  },
+  {
+   "id": "strands-readme"
+  },
+  {
+   "id": "newstack-aws-strands"
+  },
+  {
+   "id": "newstack-openai-decisions"
+  },
+  {
+   "id": "kev-repo"
+  },
+  {
+   "id": "jevbench-repo"
+  },
+  {
+   "id": "jevbench-heaven-v1"
+  },
+  {
+   "id": "ts-blog-antibenchmaxxing"
+  },
+  {
+   "id": "flaviocopes-jev"
+  },
+  {
+   "id": "uTU5Ihgl_7Q",
+   "t": 552
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "You can use a decision model today from at least four places. They share one shape, but they differ in where they run, what they cost and how fast they answer from where you are. Let's lay them out, and then look at what we measured ourselves.",
+   "params": {
+    "kicker": "Lesson 4",
+    "module": "Module 1 · The idea",
+    "title": "Jev, Decisions, Clef, *Strands*",
+    "subtitle": "Four decision models, one shape, and how to choose.",
+    "cast": [
+     "snap",
+     "curly"
+    ]
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "The four",
+   "narration": "Jev, from TypeSafe, is a hosted API at four point two cents per million input tokens. OpenAI's Decisions API runs on GPT-6 Luna at ten cents. Cloudflare's Clef comes in two sizes on Workers AI, and you can download the weights. And AWS's Strands Decider is a two billion parameter model you run yourself, even on a laptop. All four charge nothing for output.",
+   "params": {
+    "title": "Decision models, October 2026",
+    "cols": [
+     "Model",
+     "From",
+     "$ / M input",
+     "Weights",
+     "Images"
+    ],
+    "widths": "1.5fr 1.1fr 1fr 1.1fr 0.9fr",
+    "rows": [
+     {
+      "cells": [
+       "Jev 1.13 · 1.14",
+       "TypeSafe AI",
+       "$0.042",
+       "closed",
+       "preview"
+      ],
+      "at": "Jev, from TypeSafe"
+     },
+     {
+      "cells": [
+       "Decisions API (gpt-6-luna)",
+       "OpenAI",
+       "$0.10",
+       "closed",
+       "yes"
+      ],
+      "at": "OpenAI's Decisions API"
+     },
+     {
+      "cells": [
+       "Clef 27B · Clef-flash 9B",
+       "Cloudflare",
+       "$0.24 · $0.038",
+       "*Apache-2.0*",
+       "yes"
+      ],
+      "at": "Cloudflare's Clef"
+     },
+     {
+      "cells": [
+       "Strands Decider 2B",
+       "AWS Strands Labs",
+       "free (your hardware)",
+       "*open + data*",
+       "v1 only"
+      ],
+      "at": "Strands Decider"
+     }
+    ],
+    "note": "Output is free on all four. Prices from each vendor's docs, 2026-10-15."
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "One shape",
+   "narration": "And they speak nearly the same language. Jev's request format became a de facto standard: Clef and Strands accept it as is, so switching is a change of endpoint. OpenAI uses the same idea with different names: input instead of state, predicate instead of noul.",
+   "params": {
+    "title": "One request shape, two dialects",
+    "cols": [
+     "Idea",
+     "Jev · Clef · Strands",
+     "OpenAI Decisions"
+    ],
+    "rows": [
+     {
+      "cells": [
+       "your data",
+       "`state`",
+       "`input`"
+      ],
+      "at": "same idea"
+     },
+     {
+      "cells": [
+       "yes / no",
+       "`noul`",
+       "`predicate`"
+      ],
+      "at": "predicate instead of noul"
+     },
+     {
+      "cells": [
+       "one of a set",
+       "`choice` + criteria map",
+       "`choice` + choices list"
+      ]
+     },
+     {
+      "cells": [
+       "ordered levels",
+       "`score` + criteria list",
+       "`score` + levels list"
+      ]
+     },
+     {
+      "cells": [
+       "endpoint",
+       "`POST /v1/systemone`",
+       "`POST /v1/decisions`"
+      ],
+      "at": "change of endpoint"
+     }
+    ]
+   }
+  },
+  {
+   "template": "chart",
+   "chapter": "What we measured",
+   "narration": "We ran all 3,080 messages of BANKING77, a public dataset of bank support questions with seventy seven intents, through each model we could reach. Jev 1.13 and 1.14 both got about eighty percent right. A fast LLM asked for its answer as JSON got seventy six. And Clef flash got ninety six percent.",
+   "params": {
+    "title": "BANKING77: 77-way intent, label names only",
+    "kind": "bar",
+    "ymax": 1.08,
+    "data": [
+     {
+      "x": "Jev 1.13",
+      "y": 0.801,
+      "label": "80.1%",
+      "at": "Jev 1.13"
+     },
+     {
+      "x": "Jev 1.14",
+      "y": 0.803,
+      "label": "80.3%"
+     },
+     {
+      "x": "Haiku 5.5 (JSON)",
+      "y": 0.761,
+      "label": "76.1%",
+      "tone": "s2",
+      "at": "seventy six"
+     },
+     {
+      "x": "Clef-flash",
+      "y": 0.96,
+      "label": "96.0%",
+      "hl": true,
+      "at": "Clef flash"
+     }
+    ],
+    "src": "Measured for this course, 2026-10-15. Haiku on a stratified 616-message subset."
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "What we measured",
+   "narration": "Before you crown a winner, notice something. BANKING77 has been public since 2020, and it's one of the benchmarks Cloudflare reports for Clef. Public test sets can end up in training data. So we built a fresh test: 279 news stories published after every one of these models was released. There, Jev 1.14 got eighty two percent, and the LLM eighty.",
+   "params": {
+    "eyebrow": "Public benchmarks leak",
+    "text": "A score on a public benchmark is *an upper bound*, not a forecast.",
+    "sub": "On 279 fresh news stories (8 sections): Jev 1.14 81.7% · Jev 1.13 79.6% · Haiku 5.5 79.6%.",
+    "sub_at": "fresh test",
+    "art": "mull",
+    "mood": "think",
+    "punch": "fresh test"
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "Latency is local",
+   "narration": "Latency tells a similar story. Vendors quote model time, often under a tenth of a second. From our server in Brazil, the full round trip told the truth: Jev answered in a quarter of a second, Clef flash in eight tenths, and the LLM in one point two.",
+   "params": {
+    "title": "Median round trip from a server in Brazil",
+    "items": [
+     {
+      "value": 0.26,
+      "decimals": 2,
+      "suffix": " s",
+      "label": "Jev 1.13",
+      "tone": "agent",
+      "at": "Jev answered"
+     },
+     {
+      "value": 0.81,
+      "decimals": 2,
+      "suffix": " s",
+      "label": "Clef-flash",
+      "tone": "s2",
+      "at": "Clef flash"
+     },
+     {
+      "value": 1.21,
+      "decimals": 2,
+      "suffix": " s",
+      "label": "Haiku 5.5, JSON",
+      "tone": "bad",
+      "at": "one point two"
+     }
+    ],
+    "src": "Vendors quote model time (Clef-flash: 39 ms median). Measure from where your code runs.",
+    "punch": false
+   }
+  },
+  {
+   "template": "stat",
+   "chapter": "Cents per thousand",
+   "narration": "And the bill? With seventy seven options in every question, about seventeen hundred tokens each, a thousand decisions cost about seven cents on Jev or on Clef flash. Even the LLM was only about eleven cents. At these prices, the question is never can we afford to ask. It's what else should we ask.",
+   "params": {
+    "title": "Cost per 1,000 decisions (77 options each)",
+    "items": [
+     {
+      "value": 0.071,
+      "decimals": 3,
+      "prefix": "$",
+      "label": "Jev 1.13",
+      "tone": "agent",
+      "at": "seven cents"
+     },
+     {
+      "value": 0.07,
+      "decimals": 3,
+      "prefix": "$",
+      "label": "Clef-flash",
+      "tone": "s2"
+     },
+     {
+      "value": 0.106,
+      "decimals": 3,
+      "prefix": "$",
+      "label": "Haiku 5.5, JSON",
+      "tone": "bad",
+      "at": "eleven cents"
+     }
+    ],
+    "src": "Measured token counts × list prices, 2026-10-15",
+    "punch": false
+   }
+  },
+  {
+   "template": "list",
+   "chapter": "How to choose",
+   "narration": "So how do you choose? Start from your constraints. If data can't leave your servers, run open weights: Strands Decider, or Clef yourself. If you need images, OpenAI and Clef read them today. Pick the region closest to your code. Compare the price per thousand of your decisions, not per token. And if you'll want to fine tune, Cloudflare offers that for Clef.",
+   "params": {
+    "title": "Choose on constraints, then measure",
+    "style": "num",
+    "items": [
+     {
+      "text": "**Data can't leave?** Open weights: Strands Decider, or self-hosted Clef",
+      "at": "data can't leave"
+     },
+     {
+      "text": "**Images?** OpenAI Decisions and Clef read them today",
+      "at": "images"
+     },
+     {
+      "text": "**Latency?** Measure the round trip from your own region",
+      "at": "closest to your code"
+     },
+     {
+      "text": "**Cost?** Price your real decisions per 1,000, not per token",
+      "at": "per thousand"
+     },
+     {
+      "text": "**Your domain?** Clef offers RL fine-tuning",
+      "at": "fine tune"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "How to choose",
+   "narration": "And whatever you pick, take TypeSafe's own advice from their essay on benchmarks: run your own private evals, treat public ones with a grain of salt, and don't amplify every number or plot you see. That includes ours.",
+   "params": {
+    "text": "Run your own private evals, treat public ones *with a grain of salt*, and don't amplify every number or plot you see.",
+    "who": "TypeSafe AI",
+    "role": "Lies, Damned Lies, and Benchmarks",
+    "src": "typesafe.ai blog, Sep 11 2026"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. Your customer data is not allowed to leave your own servers. Which option fits?",
+   "params": {
+    "q": "Your data **can't leave your servers**. Which option fits?",
+    "options": [
+     "Jev's hosted API with long context turned on",
+     "OpenAI's Decisions API",
+     "Strands Decider, or Clef's open weights, run on your hardware",
+     "Whichever topped the latest leaderboard"
+    ],
+    "answer": 2,
+    "explain": "Strands Decider and Clef publish their weights, so you can run them where your data lives. Then measure them on your own data."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent write one small adapter that can call any of these models with the same questions, and log the model, latency and probabilities, so every later lesson can compare them on your data.",
+   "params": {
+    "title": "One adapter, any decision model",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Write decide.py with one function: decide(state, questions, provider).\nquestions use the System One shape (noul / choice / score). Support:\n- jev: POST https://api.typesafe.ai/v1/systemone (TYPESAFE_API_KEY)\n- clef: Cloudflare Workers AI @cf/cloudflare/clef-flash (same body)\n- openai: POST /v1/decisions (map state->input, noul->predicate,\n  criteria->choices/levels; model gpt-6-luna)\nReturn the same shape for all. Log provider, model id, latency and\nprobabilities to decisions.jsonl. Add a test that runs one question\nthrough every provider that has a key set."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: four decision models, one shape, cents per thousand decisions. Public benchmarks are upper bounds, latency is local, and the only score that counts is the one on your data. That's module one. Next, how to ask good questions, starting with the simplest: the Noul.",
+   "params": {
+    "items": [
+     "Jev, OpenAI Decisions, Clef and Strands share one request shape.",
+     "Output is free; a thousand decisions cost cents.",
+     "Public benchmarks are upper bounds; leaderboards move.",
+     "Choose on constraints, then measure on your own data."
+    ],
+    "next": "Noul: the probability of yes",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

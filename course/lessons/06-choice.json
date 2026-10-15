@@ -1,0 +1,326 @@
+{
+ "id": "06-choice",
+ "number": 6,
+ "slug": "choice-questions",
+ "module": "Asking good questions",
+ "title": "Choice: one answer from a set",
+ "short": "Choice",
+ "summary": "A Choice picks one option from a set you define and returns a probability for every option. Here is how to read the distribution and its confidence, why a none-of-the-above option matters, how contrastive descriptions sharpen close calls, and what reversing the option order did to 3,080 real answers.",
+ "takeaways": [
+  "A Choice returns the chosen option, a probability for every option, and a confidence that summarizes how peaked that distribution is.",
+  "A split distribution is information: a ticket that belongs to two teams should look split.",
+  "Always offer a none-of-the-above option when inputs can fall outside your list; otherwise the model must pick something.",
+  "Option names and descriptions are both sent to the model; for close calls, describe what each option covers and what it doesn't.",
+  "Option order can sway uncertain answers: in our test, reversing 77 options changed 4.9% of answers, none above 0.9 probability."
+ ],
+ "practices": [
+  "Give every Choice the full list of options with short descriptions, plus an explicit other / none option when coverage isn't guaranteed.",
+  "Use contrastive descriptions (what it covers, what it is not for, examples) for options that get confused.",
+  "Treat low-confidence Choice answers as candidates for review, and re-check close calls with the options reordered."
+ ],
+ "sources": [
+  {
+   "id": "ts-docs-primitives-choice"
+  },
+  {
+   "id": "ts-docs-confidence"
+  },
+  {
+   "id": "ts-docs-concepts-how-to-build-with-system-one"
+  },
+  {
+   "id": "ts-docs-model-jaggedness-jev-1.13"
+  },
+  {
+   "id": "strands-readme"
+  },
+  {
+   "id": "arxiv-crash-narratives"
+  },
+  {
+   "id": "pezeshkpour-option-order"
+  },
+  {
+   "id": "zheng-llm-judge"
+  },
+  {
+   "id": "devto-model-doesnt-talk"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "Most decisions in software pick one thing from a list: which team, which category, which intent. That's a Choice. Let's see what it gives back, and the four habits that make it reliable.",
+   "params": {
+    "kicker": "Lesson 6",
+    "module": "Module 2 · Asking good questions",
+    "title": "Choice: one answer *from a set*",
+    "subtitle": "A probability for every option you offer.",
+    "cast": [
+     "snap",
+     "curly"
+    ],
+    "bubble": "returns · 0.63",
+    "bubble_at": "That's a Choice"
+   }
+  },
+  {
+   "template": "dist",
+   "chapter": "Reading a Choice",
+   "narration": "Here's a messy ticket. Shoes arrived late and in the wrong size, and there are two charges on the card. Which team should handle it? Returns wins at point six three, but billing gets point three three, because of the double charge. That split is honest. This ticket belongs to two teams.",
+   "params": {
+    "state": "Shoes arrived two weeks late and in the wrong size. Also I see two charges of $120 on my card. What are you going to do about this?",
+    "question": "Which team should handle this?",
+    "options": [
+     {
+      "label": "returns",
+      "desc": "exchanges, wrong or damaged items",
+      "p": 0.63
+     },
+     {
+      "label": "billing",
+      "desc": "charges, invoices, payment problems",
+      "p": 0.33
+     },
+     {
+      "label": "shipping",
+      "desc": "delivery status, delays",
+      "p": 0.04
+     }
+    ],
+    "at": "Returns wins",
+    "conf_at": "That split",
+    "formula": "confidence = (0.63 − 1/3) / (1 − 1/3) = 0.45"
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Reading a Choice",
+   "narration": "Confidence turns that shape into one number. Zero means the probability is spread evenly. One means it's all on one option. Here it's point four five. It's computed from the probabilities, so you can always check it, or use your own measure, like the gap between the top two options.",
+   "params": {
+    "eyebrow": "Confidence = how peaked the distribution is",
+    "text": "0 = spread evenly. 1 = all on one option. Here: *0.45*.",
+    "sub": "Computed from the probabilities: (p_max − 1/n) / (1 − 1/n). The top-two ratio works too.",
+    "sub_at": "computed from the probabilities",
+    "art": "gauge",
+    "tone": "agent",
+    "punch": "point four five"
+   }
+  },
+  {
+   "template": "compare",
+   "chapter": "None of the above",
+   "narration": "Habit one: always offer a way out. Someone writes in to apply for a designer job. Your options are returns, shipping and billing. Without an other option, the model has to pick something: billing, at point five, spread thin. Add other, described as none of the above, and it goes there with all the probability.",
+   "params": {
+    "title": "“I'd like to apply for the senior designer job you posted.”",
+    "left": {
+     "title": "returns · shipping · billing",
+     "tone": "bad",
+     "items": [
+      {
+       "text": "billing **0.50** · shipping 0.29 · returns 0.21",
+       "at": "billing, at point five"
+      },
+      {
+       "text": "Forced to pick something"
+      }
+     ],
+     "at": "Without an other option"
+    },
+    "right": {
+     "title": "… + other: “None of the above”",
+     "tone": "good",
+     "items": [
+      {
+       "text": "other **1.00**",
+       "at": "all the probability"
+      },
+      {
+       "text": "Your code can route it anywhere"
+      }
+     ],
+     "at": "Add other"
+    },
+    "vs": "vs"
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "Describe the options",
+   "narration": "Habit two: describe the options. The model reads both the option names and their descriptions. For options that get confused, say what each one covers, what it's not for, and give an example or two. On a borderline question about where a disposable card works, plain names gave point nine. Contrastive descriptions gave a clean one point oh.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.25,
+    "state": "Can I use a disposable card at any shop?",
+    "questions": [
+     {
+      "id": "plain",
+      "type": "choice",
+      "text": "Topic? (plain option names)",
+      "ans": {
+       "choice": "card_limits",
+       "p": 0.9
+      },
+      "say_at": "plain names"
+     },
+     {
+      "id": "rich",
+      "type": "choice",
+      "text": "Topic? (what / not_for / examples per option)",
+      "ans": {
+       "choice": "card_limits",
+       "p": 1.0
+      },
+      "say_at": "Contrastive descriptions"
+     }
+    ],
+    "send_at": "On a borderline",
+    "ans_at": "plain names gave",
+    "hl": "rich",
+    "hl_at": "clean one point oh",
+    "footer": "card_limits: “Quantity, transaction, or merchant restrictions” · not_for: “Purpose, eligibility, or setup”"
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Describe the options",
+   "narration": "In code, it looks like this. Each option gets the same fields, so the model can compare them side by side. You only need this for the pairs that actually get confused. Clear options can keep a one line description, or none at all.",
+   "params": {
+    "file": "questions.py",
+    "lang": "py",
+    "lines": [
+     "\"topic\": Choice(",
+     "  instructions=\"Which disposable virtual card topic is the user asking about?\",",
+     "  criteria={",
+     "    \"get_card\": {\"what\": \"Purpose, eligibility, or setup\",",
+     "                 \"not_for\": \"Quantity, transaction, or merchant limits\",",
+     "                 \"examples\": [\"What are disposable cards for?\"]},",
+     "    \"card_limits\": {\"what\": \"Quantity, transaction, or merchant limits\",",
+     "                    \"not_for\": \"Purpose, eligibility, or setup\",",
+     "                    \"examples\": [\"Where can I use a disposable card?\"]},",
+     "  })"
+    ],
+    "hl": [
+     {
+      "from": 4,
+      "to": 9,
+      "label": "same fields for every option",
+      "tone": "agent",
+      "at": "same fields"
+     }
+    ]
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Give the full list",
+   "narration": "Habit three: give the full list. Jev accepts up to two hundred fifty five options, and each one costs only a few tokens. Don't hand-pick a shortlist; offer every team, every category. For deep taxonomies with thousands of leaves, go level by level, which we'll cover in the composition module.",
+   "params": {
+    "eyebrow": "Up to 255 options per Choice",
+    "text": "Offer *every* option. A shortlist is a decision you made without the model.",
+    "art": "list",
+    "tone": "agent",
+    "punch": "every team"
+   }
+  },
+  {
+   "template": "chart",
+   "chapter": "Option order",
+   "narration": "Habit four: watch the order. TypeSafe's docs warn that Jev can lean toward the first option. So we reversed the order of all seventy seven intents and reran 3,080 messages. Four point nine percent of answers changed. But look where: thirty six percent of answers under point five flipped, and not a single answer above point nine.",
+   "params": {
+    "title": "Answers that changed when the 77 options were reversed",
+    "kind": "bar",
+    "ymax": 0.42,
+    "data": [
+     {
+      "x": "p < 0.5",
+      "y": 0.357,
+      "label": "36%",
+      "tone": "bad",
+      "at": "thirty six"
+     },
+     {
+      "x": "0.5 – 0.7",
+      "y": 0.231,
+      "label": "23%"
+     },
+     {
+      "x": "0.7 – 0.9",
+      "y": 0.048,
+      "label": "5%"
+     },
+     {
+      "x": "0.9 – 0.99",
+      "y": 0.0,
+      "label": "0%",
+      "at": "not a single"
+     },
+     {
+      "x": "≥ 0.99",
+      "y": 0.0,
+      "label": "0%",
+      "hl": true
+     }
+    ],
+    "src": "BANKING77, jev-1.13.0, 3,079 messages × 2 orders, measured 2026-10-15. Overall 150 flips (4.9%)."
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Option order",
+   "narration": "That's the pattern you'll see all through this course. When the model is sure, small changes don't move it. When it isn't, they do, and the probability tells you which case you're in. So route low confidence answers to review, and for close calls you care about, ask again with the options shuffled.",
+   "params": {
+    "text": "Low probability is where answers are *fragile*. The number tells you which case you're in.",
+    "art": "snap",
+    "mood": "sure",
+    "react": {
+     "at": "When the model is sure",
+     "mood": "sure"
+    },
+    "punch": "which case"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. A support bot classifies messages into five departments. A message arrives about something none of them handle. What happens if the Choice has no other option?",
+   "params": {
+    "q": "A message fits **none** of your five departments, and there's no “other” option. What happens?",
+    "options": [
+     "The API returns an error",
+     "The model returns an empty answer",
+     "The model must spread probability over your five options and pick one",
+     "The model invents a sixth department"
+    ],
+    "answer": 2,
+    "explain": "A Choice only scores the options you give it, so it has to pick one, usually with a flat, low-confidence distribution. Add “other” so it has somewhere honest to go."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent audit every Choice in your code for the four habits.",
+   "params": {
+    "title": "Audit your Choices",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Review every multiple-choice decision we ask a model to make. For each:\n1. Is the option list complete? Add an explicit \"other\" / none option\n   if inputs can fall outside it.\n2. Does each option have a one-line description? For options that are\n   often confused, add contrastive what / not_for / examples fields.\n3. Does code treat low-confidence answers differently?\n4. Add a test that re-asks 20 known close calls with the options\n   shuffled and reports any answer that changes."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: a Choice gives you a distribution, and its confidence says how peaked it is. Offer a way out. Describe the options that get confused. Give the full list. And remember that low confidence answers are the fragile ones. Next: the Score.",
+   "params": {
+    "items": [
+     "A Choice returns a probability for every option, plus confidence.",
+     "Always offer “other” when inputs can fall outside your list.",
+     "Describe confusable options: what, not_for, examples.",
+     "Low-confidence answers are fragile: review or re-ask shuffled."
+    ],
+    "next": "Score: a position on a scale you describe",
+    "next_at": "Next"
+   }
+  }
+ ]
+}

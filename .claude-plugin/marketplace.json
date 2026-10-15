@@ -1,0 +1,21 @@
+{
+  "name": "system-one",
+  "owner": {
+    "name": "System One course",
+    "url": "https://github.com/Haple/system-one"
+  },
+  "metadata": {
+    "description": "Free course on building software with decision models, packaged as skills.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "system-one",
+      "source": "./",
+      "description": "Decision-model practices + interactive course tutor + LLM-decision audit, from the free System One course.",
+      "version": "1.0.0",
+      "category": "development",
+      "homepage": "https://learn-system-one.pages.dev"
+    }
+  ]
+}

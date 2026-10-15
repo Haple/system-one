@@ -1,0 +1,403 @@
+{
+ "id": "12-decompose",
+ "number": 12,
+ "slug": "decompose-judgments",
+ "module": "Composing judgments",
+ "title": "Decompose: many small questions",
+ "short": "Decompose",
+ "summary": "TypeSafe calls it the most important concept in its guide: break one broad judgment into narrow questions and combine the answers in code. Here is what decomposition buys you (reasons, control, per-signal thresholds), why decision science has recommended it for seventy years, and the case where it made things worse.",
+ "takeaways": [
+  "A broad question hides several judgments behind one number; narrow questions expose them so you can inspect, tune and combine them.",
+  "The broad answer is often right, but only the narrow ones tell you why: which signal fired, which tool argument was wrong.",
+  "Combine in code: weighted sums for factors that trade off, separate hard rules for 'any serious violation'.",
+  "Decision science agrees: simple formulas over separately judged criteria beat holistic judgment (Meehl, Dawes, Kahneman, the Apgar score).",
+  "Decomposition is not magic: it can't turn a System Two problem into System One answers, so validate the combination on labeled data."
+ ],
+ "practices": [
+  "Split broad judgments into narrow, independent questions, each a few-second call for an expert; ask them in one request.",
+  "Combine answers in code with explicit weights or rules; keep the raw per-question answers for debugging and explanations.",
+  "Use separate conditions for veto rules instead of letting a weighted sum average a serious violation away.",
+  "Check on labeled data that the decomposed version actually beats the single question before switching."
+ ],
+ "sources": [
+  {
+   "id": "ts-docs-concepts-how-to-build-with-system-one"
+  },
+  {
+   "id": "ts-docs-patterns-composite-scoring"
+  },
+  {
+   "id": "ts-agent-skill"
+  },
+  {
+   "id": "simonw-jev"
+  },
+  {
+   "id": "wiYaXOGE_e4",
+   "t": 680
+  },
+  {
+   "id": "wiYaXOGE_e4",
+   "t": 584
+  },
+  {
+   "id": "CjVQJdIrDJ0",
+   "t": 1115
+  },
+  {
+   "id": "7IgUcZBq1ec",
+   "t": 113
+  },
+  {
+   "id": "apgar-score"
+  },
+  {
+   "id": "backnotprop-poker"
+  },
+  {
+   "id": "X117w2Rark8",
+   "t": 266
+  },
+  {
+   "id": "ts-blog-introducing-system-one-models-and-jev"
+  }
+ ],
+ "scenes": [
+  {
+   "template": "title",
+   "chapter": "Intro",
+   "narration": "If you remember one technique from this course, make it this one. Don't ask one big question. Ask several small ones, and combine the answers in code.",
+   "params": {
+    "kicker": "Lesson 12",
+    "module": "Module 4 · Composing judgments",
+    "title": "Decompose: *many small questions*",
+    "subtitle": "The most important idea in the TypeSafe guide.",
+    "cast": [
+     "snap",
+     "curly"
+    ]
+   }
+  },
+  {
+   "template": "decompose",
+   "chapter": "Small questions",
+   "narration": "Take spam. You could ask one question: is this message spam? Point nine seven. Fine, but why? Split it into narrow questions instead. Does it ask for a password? Point nine nine. Does it promise an unexpected reward? Point nine seven. Does it pressure you to act fast? Point nine eight. Does the sender's name clash with their domain? Point seven two. Now combine them in code, with weights you control.",
+   "params": {
+    "big": {
+     "text": "Is `message` spam?",
+     "p": 0.97
+    },
+    "parts": [
+     {
+      "text": "Asks for a password or login credential?",
+      "p": 0.99,
+      "w": 0.45
+     },
+     {
+      "text": "Promises an unexpected reward?",
+      "p": 0.97,
+      "w": 0.25
+     },
+     {
+      "text": "Pressures the reader to act quickly?",
+      "p": 0.98
+     },
+     {
+      "text": "Sender name clashes with the email domain?",
+      "p": 0.72,
+      "w": 0.3
+     }
+    ],
+    "split_at": "Split it",
+    "values_at": "ask for a password",
+    "result": {
+     "formula": "risk = 0.45 × 0.99 + 0.25 × 0.97 + 0.30 × 0.72",
+     "label": "spam risk",
+     "value": "0.90",
+     "at": "combine them"
+    }
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Small questions",
+   "narration": "The TypeSafe guide is blunt about it. This is probably the most important concept in this guide. Broad questions hide several judgments behind one answer. Atomic questions expose those judgments, so you can inspect, tune, and combine them in code.",
+   "params": {
+    "text": "This is probably *the most important concept* in this guide. Broad questions hide several judgments behind one answer.",
+    "who": "TypeSafe docs",
+    "role": "How to build with TypeSafe",
+    "src": "docs.typesafe.ai"
+   }
+  },
+  {
+   "template": "request",
+   "chapter": "Reasons, not just verdicts",
+   "narration": "Here's where it pays off. An agent was asked for tomorrow's weather in Seattle, in Fahrenheit. Ask the broad question, are these tool calls correct, and you get point one. Something's wrong, but what? Ask six narrow questions, and five come back near one. One doesn't: does the unit match the request? Point oh two. The agent asked for Celsius.",
+   "params": {
+    "model": "jev-1.13.0",
+    "latency": 0.3,
+    "state": {
+     "request": {
+      "text": "Weather in Seattle tomorrow in Fahrenheit?",
+      "unit": "fahrenheit"
+     },
+     "trace": {
+      "tool_calls": [
+       {
+        "name": "geocode_city",
+        "arguments": {
+         "city": "Seattle, WA"
+        }
+       },
+       {
+        "name": "get_weather",
+        "arguments": {
+         "latitude": 47.6062,
+         "longitude": -122.3321,
+         "unit": "celsius"
+        }
+       }
+      ]
+     }
+    },
+    "questions": [
+     {
+      "id": "broad",
+      "type": "noul",
+      "text": "Are `trace.tool_calls` correct for `request`?",
+      "ans": {
+       "v": 0.1
+      },
+      "at": "broad question"
+     },
+     {
+      "id": "geo",
+      "type": "noul",
+      "text": "Geocode call matches `request.location`?",
+      "ans": {
+       "v": 0.99
+      }
+     },
+     {
+      "id": "coords",
+      "type": "noul",
+      "text": "Weather call uses the geocoded coordinates?",
+      "ans": {
+       "v": 0.99
+      }
+     },
+     {
+      "id": "date",
+      "type": "noul",
+      "text": "Weather call date matches `request.date`?",
+      "ans": {
+       "v": 0.99
+      }
+     },
+     {
+      "id": "unit",
+      "type": "noul",
+      "text": "Weather call unit matches `request.unit`?",
+      "ans": {
+       "v": 0.02
+      },
+      "say_at": "does the unit match"
+     }
+    ],
+    "send_at": "Ask six narrow",
+    "ans_at": "five come back",
+    "hl": "unit",
+    "hl_at": "point oh two",
+    "footer": "Real answers, jev-1.13.0. Two more narrow questions (tool relevance) came back 0.97 and 0.89."
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Reasons, not just verdicts",
+   "narration": "Simon Willison worried, when Jev launched, that it's a black box. If it marks something as spam, which signals tipped it off? Decomposition is the answer. Each narrow question is a reason you can log, show to a reviewer, and test on its own.",
+   "params": {
+    "eyebrow": "Simon Willison, on black boxes",
+    "text": "“Which content signals tipped it off?” *Ask them one by one.*",
+    "sub": "Every narrow question is a reason you can log, show, and test.",
+    "sub_at": "Each narrow question",
+    "art": "eye",
+    "tone": "s2",
+    "punch": "Decomposition is the answer"
+   }
+  },
+  {
+   "template": "code",
+   "chapter": "Combine in code",
+   "narration": "Then combine them in code. For factors that trade off against each other, use a weighted sum. But don't let a weighted sum average away a serious violation. If a message asks for credentials, that should block it on its own, whatever else is true. Rules and weights both live in your code.",
+   "params": {
+    "file": "spam.py",
+    "lang": "py",
+    "lines": [
+     "a = {k: v.noul for k, v in response.answers.items()}",
+     "",
+     "if a[\"requests_credentials\"] > 0.9:      # a veto, not a weight",
+     "    return quarantine(msg, reason=\"asks for credentials\")",
+     "",
+     "risk = (0.45 * a[\"offers_unexpected_reward\"]",
+     "        + 0.30 * a[\"sender_identity_mismatch\"]",
+     "        + 0.25 * a[\"creates_time_pressure\"])",
+     "if risk > 0.6:",
+     "    return quarantine(msg, reason=top_signals(a))"
+    ],
+    "hl": [
+     {
+      "from": 3,
+      "to": 4,
+      "label": "hard rule",
+      "tone": "bad",
+      "at": "block it on its own"
+     },
+     {
+      "from": 6,
+      "to": 8,
+      "label": "weights trade off",
+      "tone": "agent",
+      "at": "weighted sum"
+     }
+    ]
+   }
+  },
+  {
+   "template": "quote",
+   "chapter": "Seventy years of evidence",
+   "narration": "This isn't new. Since Paul Meehl's work in the 1950s, study after study has found that simple mechanical rules beat expert intuition at many prediction tasks. As decision researcher Olivier Sibony puts it: even the simplest rule will typically make fewer mistakes than the humans who think they are much smarter than the simple rule.",
+   "params": {
+    "text": "Even the simplest rule will typically make *fewer mistakes* than the humans who think they are much smarter than the simple rule.",
+    "who": "Olivier Sibony",
+    "role": "co-author of Noise, with Daniel Kahneman",
+    "src": "CFA Institute talk",
+    "t": 680
+   }
+  },
+  {
+   "template": "table",
+   "chapter": "Seventy years of evidence",
+   "narration": "The classic example is the Apgar score, from 1952. Instead of a doctor's overall impression of a newborn, five quick judgments: appearance, pulse, grimace, activity, breathing. Each zero to two, added up. Seven or more is normal. Three or below means act now. Narrow judgments, a sum, and bands for action. That's the pattern.",
+   "params": {
+    "title": "The Apgar score (1952): five small judgments, one sum",
+    "cols": [
+     "Judged separately",
+     "0",
+     "1",
+     "2"
+    ],
+    "widths": "1.3fr 1fr 1fr 1fr",
+    "rows": [
+     {
+      "cells": [
+       "Appearance",
+       "blue all over",
+       "blue extremities",
+       "pink"
+      ],
+      "at": "appearance"
+     },
+     {
+      "cells": [
+       "Pulse",
+       "absent",
+       "< 100",
+       "≥ 100"
+      ],
+      "at": "pulse"
+     },
+     {
+      "cells": [
+       "Grimace",
+       "none",
+       "grimace",
+       "cry"
+      ]
+     },
+     {
+      "cells": [
+       "Activity",
+       "none",
+       "some flexion",
+       "active"
+      ]
+     },
+     {
+      "cells": [
+       "Respiration",
+       "absent",
+       "weak",
+       "strong cry"
+      ],
+      "at": "breathing"
+     },
+     {
+      "cells": [
+       "*Total 0–10*",
+       "*≤ 3: act now*",
+       "*4–6: low*",
+       "*≥ 7: normal*"
+      ],
+      "hl": true,
+      "at": "Seven or more"
+     }
+    ]
+   }
+  },
+  {
+   "template": "statement",
+   "chapter": "Where it fails",
+   "narration": "But decomposition is not magic. Mike Ramos tested Jev on poker decisions, where the right move depends on game theory. Six narrow judgments instead of one question changed forty seven actions. Twelve got better. Twenty one got worse. Poker strategy is a System Two problem, and splitting it into fast judgments didn't change that.",
+   "params": {
+    "eyebrow": "Mike Ramos, “Jev is the fish at the poker table”",
+    "text": "Decomposing changed 47 poker actions: *12 better, 21 worse*.",
+    "sub": "It can't turn a System Two problem into System One answers. Validate the combination on labeled data.",
+    "sub_at": "System Two problem",
+    "art": "dice",
+    "tone": "bad",
+    "punch": "Twenty one got worse"
+   }
+  },
+  {
+   "template": "quiz",
+   "chapter": "Quick check",
+   "narration": "Quick check. A content policy says: any threat of violence means removal, whatever else the post contains. How should that rule appear in code?",
+   "params": {
+    "q": "Policy: **any** threat of violence means removal. How do you encode it?",
+    "options": [
+     "As one weight in a weighted risk score",
+     "As its own Noul with a hard rule in code that removes on its own",
+     "Ask one broad question: does this break the policy?",
+     "Average three runs of the broad question"
+    ],
+    "answer": 1,
+    "explain": "A veto shouldn't be averaged away by other factors. Ask it as its own narrow question and enforce it with a separate rule in code."
+   }
+  },
+  {
+   "template": "exercise",
+   "chapter": "Try it",
+   "narration": "Try it. Have your agent decompose one broad judgment in your code, and compare it with the original on labeled data.",
+   "params": {
+    "title": "Decompose one judgment",
+    "intro": "Paste this into your coding agent:",
+    "prompt": "Pick one broad judgment we ask a model to make (spam, risk, quality,\npolicy violation). Split it into 4-8 narrow questions, each a few-second\njudgment for an expert, asked in ONE request. Combine them in code:\nhard rules for vetoes, weights for factors that trade off. Then run\nboth versions on 100 labeled examples and report accuracy, plus 5\nexamples where the narrow answers explain a decision the broad one got\nwrong (or right)."
+   }
+  },
+  {
+   "template": "recap",
+   "chapter": "Recap",
+   "narration": "So: ask many small questions and combine them in code. You get reasons, not just verdicts, and control over weights and vetoes. Decision science has backed this for seventy years. But it's not magic: validate it on your data. Next: asking all those questions at once.",
+   "params": {
+    "items": [
+     "Narrow questions expose the judgments a broad one hides.",
+     "You get reasons: which signal fired, which argument was wrong.",
+     "Weights for trade-offs; separate rules for vetoes.",
+     "Not magic: validate the combination on labeled data."
+    ],
+    "next": "Ask everything at once",
+    "next_at": "Next"
+   }
+  }
+ ]
+}
